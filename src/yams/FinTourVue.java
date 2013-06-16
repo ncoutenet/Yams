@@ -5,6 +5,7 @@
 package yams;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -57,7 +58,8 @@ public class FinTourVue extends JDialog{
     }
     
     private void setChoix(){
-        Object[] types = new Object[12];
+        Object[] types;
+        java.util.List<String> coups = new ArrayList<String>();
         int cpt = 0;
             int j;
         for(int i = 0; i < 12; i++){
@@ -103,10 +105,15 @@ public class FinTourVue extends JDialog{
                     break;
             }
             if(this._choixValides[this._noJoueur][i]){
-                types[cpt] = type;
-                cpt++;
+                coups.add(type);
             }
         }
+        
+        types = new Object[coups.size()];
+        for(int i = 0; i < coups.size(); i++){
+            types[i] = coups.get(i);
+        }
+        
         this._cbChoix = new JComboBox(types);
     }
     

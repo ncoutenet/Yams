@@ -22,6 +22,7 @@ public class JeuVue extends JFrame {
     private JLabel _nbLancers;
     private JButton _btnFinTour;
     private JButton _btnLancer;
+    private JLabel _labCoutsRestants;
     
     private int[] _valDes;
     private boolean[] _selDes;
@@ -120,6 +121,9 @@ public class JeuVue extends JFrame {
         btnQuitter.setActionCommand("quitter");
         panBtnBar.add(btnQuitter);
         
+        //label des couts restants
+        this._labCoutsRestants = new JLabel();
+        
         //assemblage des éléments de la fenêtre
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
@@ -128,6 +132,7 @@ public class JeuVue extends JFrame {
         JScrollPane spScores = new JScrollPane(this._tableau);
         spScores.setPreferredSize(this._tableau.getPreferredSize());
         pan.add(spScores, BorderLayout.CENTER);
+        pan.add(this._labCoutsRestants, BorderLayout.SOUTH);
         
         this.pack();
     }
@@ -149,6 +154,12 @@ public class JeuVue extends JFrame {
                 this._selDes[i] = false;
             }
         }
+    }
+    
+    public void majCoupsRestants(String coups){
+        String texte = new String("Coups restants: ");
+        texte += coups;
+        this._labCoutsRestants.setText(texte);
     }
     
     public void setEnabledDes(boolean enable){

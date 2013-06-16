@@ -34,6 +34,69 @@ public class YamControl {
         _connection.setJoueurs();
     }
     
+    private String getCoupsRestants(){
+        List<String> coups = new ArrayList<String>();
+        String result = new String();
+        int cpt = 0;
+            int j;
+        for(int i = 0; i < 12; i++){
+            String coup = new String();
+            switch(i){
+                case 0:
+                    coup = "1";
+                    break;
+                case 1:
+                    coup = "2";
+                    break;
+                case 2:
+                    coup = "3";
+                    break;
+                case 3:
+                    coup = "4";
+                    break;
+                case 4:
+                    coup = "5";
+                    break;
+                case 5:
+                    coup = "6";
+                    break;
+                case 6:
+                    coup = "+";
+                    break;
+                case 7:
+                    coup = "-";
+                    break;
+                case 8:
+                    coup = "suite";
+                    break;
+                case 9:
+                    coup = "full";
+                    break;
+                case 10:
+                    coup = "carré";
+                    break;
+                case 11:
+                    coup = "yam's";
+                    break;
+                default:
+                    break;
+            }
+            if(this._scoresValides[this._tour][i]){
+                coups.add(coup);
+            }
+        }
+        cpt = 0;
+        while(cpt < coups.size()){
+            result += coups.get(cpt);
+            if(cpt != coups.size()-1){
+                result += " ";
+            }
+            cpt++;
+        }
+        
+        return result;
+    }
+    
     public void commencer(){
         _nomsJoueurs = _connection.getNomsJoueurs();
         _nbJoueurs = _connection.getNbJoueurs();
@@ -50,6 +113,7 @@ public class YamControl {
         _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this);
         _connection.affichage(false);
         _jeu.affichage(true);
+        _jeu.majCoupsRestants(this.getCoupsRestants());
     }
     //problème ici
     public void lancer(){
@@ -257,6 +321,7 @@ public class YamControl {
             this._finPartie.affichage(true);
         }
         else{
+            this._jeu.majCoupsRestants(this.getCoupsRestants());
             this.tourSuivant();
         }
     }
