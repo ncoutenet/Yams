@@ -66,7 +66,6 @@ public class YamControl {
         }
         _jeu.setEnabledFinTour(true);
         _jeu.setEnabledDes(true);
-        //TODO gérer le lancer pour affichage
         if(lancesRestants == 0){
             _jeu.setEnabledLancer(false);
             _jeu.setEnabledDes(false);

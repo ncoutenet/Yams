@@ -80,7 +80,6 @@ public class JeuVue extends JFrame {
         JPanel panJeu = new JPanel(new BorderLayout());
         panJeu.add(_aQui, BorderLayout.NORTH);
         
-//        JPanel panDes = new JPanel(new GridLayout(5, 2, 0, 5));
         JPanel panDes = new JPanel(new GridLayout(5, 1, 0, 5));
         for(int i = 0; i < 5; i++)
         {
@@ -240,7 +239,6 @@ public class JeuVue extends JFrame {
     public void setScore(int joueur, int index, int score){
         this._tabModel.setScoreJoueur(joueur, index, score);
         this._tableau.updateUI();
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public boolean[] getSelectedDes(){
