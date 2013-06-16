@@ -184,7 +184,9 @@ public class YamControl {
             }
             Collections.sort(listDes);
             for(int i = 0; i < 4; i++){
-                if(listDes.get(i) != listDes.get(i+1)+1){
+                int de1 = listDes.get(i);
+                int de2 = listDes.get(i+1) - 1;
+                if(de1 != de2){
                     suite = false;
                 }
             }
