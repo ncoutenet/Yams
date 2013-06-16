@@ -75,37 +75,4 @@ public class ModeleTableScore extends AbstractTableModel{
     public String getColumnName(int columnIndex){
         return this._entetes[columnIndex];
     }
-    
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        switch(columnIndex){
-            case 0:
-                return false;
-            case 7:
-                return false;
-            case 8:
-                return false;
-            case 9:
-                return false;
-            case 12:
-                return false;
-            case 17:
-                return false;
-            default:
-                return true;
-        }
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//        if(aValue != null){
-            Joueur j = this._joueurs.get(rowIndex);
-
-            if(columnIndex > 0){
-                if((columnIndex != 7) && (columnIndex != 8) && (columnIndex != 9) && (columnIndex != 12) && (columnIndex != 17)){
-                    j.setScore(columnIndex-1, (Integer)aValue);
-                }
-            }
-//        }
-    }
 }
