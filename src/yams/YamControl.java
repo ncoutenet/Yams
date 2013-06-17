@@ -38,7 +38,7 @@ public class YamControl {
         List<String> coups = new ArrayList<String>();
         String result = new String();
         int cpt = 0;
-            int j;
+        
         for(int i = 0; i < 12; i++){
             String coup = new String();
             switch(i){
@@ -85,7 +85,7 @@ public class YamControl {
                 coups.add(coup);
             }
         }
-        cpt = 0;
+        
         while(cpt < coups.size()){
             result += coups.get(cpt);
             if(cpt != coups.size()-1){
@@ -117,9 +117,8 @@ public class YamControl {
     }
     
     public void lancer(){
-        int[]des = new int[5];
+        int[]des;
         int lancesRestants = _jeu.getLancesRestants();
-        System.out.println("lancés restants : " + lancesRestants);
         
         des = _modele.lancer();
         lancesRestants = _modele.majNbLances(lancesRestants);
@@ -163,7 +162,7 @@ public class YamControl {
     }
     
     public void validationScore(){
-        String choix = new String();
+        String choix;
         choix = this._finTour.getChoix();
         
         int[] des = this._jeu.getDes();

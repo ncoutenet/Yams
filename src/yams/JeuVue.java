@@ -6,7 +6,6 @@ package yams;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import yams.table.ModeleTableScore;
 
@@ -157,12 +156,12 @@ public class JeuVue extends JFrame {
     }
     
     public void majCoupsRestants(String coups){
-        String texte = new String("Coups restants: ");
+        String texte = "Coups restants: ";
         texte += coups;
         this._labCoutsRestants.setText(texte);
     }
     
-    public void setEnabledDes(boolean enable){
+    public final void setEnabledDes(boolean enable){
         for(int i = 0; i < 5; i++){
             this._selectionDes[i].setEnabled(enable);
         }
@@ -183,7 +182,7 @@ public class JeuVue extends JFrame {
         return this._valDes;
     }
     
-    public void setEnabledFinTour(boolean enable){
+    public final void setEnabledFinTour(boolean enable){
         this._btnFinTour.setEnabled(enable);
     }
     
@@ -192,14 +191,14 @@ public class JeuVue extends JFrame {
     }
     
     private void setAQui(int index){
-        String tour = new String("Tour de: ");
-        String nom = new String(this._nomsJoueurs[index]);
+        String tour = "Tour de: ";
+        String nom = this._nomsJoueurs[index];
             tour += nom;
         this._aQui.setText(tour);
     }
     
-    public void setNbLancers(int nb){
-        String lancer = new String("Reste ");
+    public final void setNbLancers(int nb){
+        String lancer = "Reste ";
         
         lancer += String.valueOf(nb);
         lancer += " lancés";
@@ -207,7 +206,7 @@ public class JeuVue extends JFrame {
         this._lancesRestants = nb;
     }
     
-    public void refreshDes(){
+    public final void refreshDes(){
         for(int i = 0; i < 5; i++){
             _labDes[i].setIcon(_des[_valDes[i]]);
         }
@@ -227,7 +226,7 @@ public class JeuVue extends JFrame {
     
     public void set_nb_Lances(){
         int nb = this.getLancesRestants();
-        String lances = new String("Reste ");
+        String lances = "Reste ";
         lances += String.valueOf(nb);
         lances += " lancers.";
         
@@ -238,7 +237,7 @@ public class JeuVue extends JFrame {
         return this._lancesRestants;
     }
     
-    public void setJoueurs(String[] joueurs){
+    public final void setJoueurs(String[] joueurs){
         this._nomsJoueurs = new String[joueurs.length];
         for(int i = 0; i < joueurs.length; i++){
             Joueur j = new Joueur(joueurs[i]);

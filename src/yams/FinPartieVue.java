@@ -19,8 +19,8 @@ public class FinPartieVue extends JDialog {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this._myControler = yc;
         
-        String strGagnant = new String(gagnant.getNom());
-        String strChoix = new String("Que souhaitez-vous faire?");
+        String strGagnant = gagnant.getNom();
+        String strChoix = "Que souhaitez-vous faire?";
         
         strGagnant += " à gagné la partie avec " + gagnant.getScore(16) + " points!!!";
         

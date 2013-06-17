@@ -4,7 +4,6 @@
  */
 package yams;
 
-import java.awt.event.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 

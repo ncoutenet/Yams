@@ -59,14 +59,14 @@ public class ConnectionVue extends JFrame{
         this.setVisible(enable);
     }
     
-    public void setJoueurs(){
+    public final void setJoueurs(){
         String strJ;
         JPanel panel;
         JLabel labJ;
         _panJoueurs.removeAll();
         _joueurs = new JTextField[(Integer)_spinner.getValue()];
         for(int i = 0; i < (Integer)_spinner.getValue(); i++){
-            strJ = new String("Joueur ");
+            strJ = "Joueur ";
             strJ += String.valueOf(i+1);
             _joueurs[i] = new JTextField(10);
             _joueurs[i].addActionListener(new YamEvents(_myControler));
