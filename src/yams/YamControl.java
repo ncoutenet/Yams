@@ -34,7 +34,7 @@ public class YamControl {
         _connection.setJoueurs();
     }
     
-    private String getCoupsRestants(){
+    private String getCoupsRestants(int joueur){
         List<String> coups = new ArrayList<String>();
         String result = new String();
         int cpt = 0;
@@ -81,7 +81,7 @@ public class YamControl {
                 default:
                     break;
             }
-            if(this._scoresValides[this._tour][i]){
+            if(this._scoresValides[joueur][i]){
                 coups.add(coup);
             }
         }
@@ -113,9 +113,9 @@ public class YamControl {
         _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this);
         _connection.affichage(false);
         _jeu.affichage(true);
-        _jeu.majCoupsRestants(this.getCoupsRestants());
+        _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
     }
-    //problème ici
+    
     public void lancer(){
         int[]des = new int[5];
         int lancesRestants = _jeu.getLancesRestants();
@@ -321,7 +321,6 @@ public class YamControl {
             this._finPartie.affichage(true);
         }
         else{
-            this._jeu.majCoupsRestants(this.getCoupsRestants());
             this.tourSuivant();
         }
     }
@@ -334,5 +333,6 @@ public class YamControl {
         this._modele.changerJoueur();
         this._tour = this._modele.getTour();
         this._jeu.setTour(this._tour);
+        this._jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
     }
 }
