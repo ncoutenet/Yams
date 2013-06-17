@@ -47,11 +47,13 @@ public class ConnectionVue extends JFrame{
         pan.add(_panJoueurs);
         
         JButton btnValider = new JButton("Commencer");
+        btnValider.setHorizontalAlignment(JButton.CENTER);
         btnValider.addActionListener(new YamEvents(_myControler));
         btnValider.setActionCommand("commencer");
         pan.add(btnValider);
         
         this.pack();
+        this.setLocationRelativeTo(this.getParent());
         
     }
     

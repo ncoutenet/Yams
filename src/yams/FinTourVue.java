@@ -48,6 +48,7 @@ public class FinTourVue extends JDialog{
         pan.add(this._btnVal, BorderLayout.SOUTH);
         
         this.pack();
+        this.setLocationRelativeTo(this.getParent());
     }
     
     public String getChoix(){

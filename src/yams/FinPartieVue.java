@@ -13,7 +13,6 @@ import java.awt.*;
 public class FinPartieVue extends JDialog {
     private YamControl _myControler;
     
-    
     public FinPartieVue(YamControl yc, Joueur gagnant){
         super.setTitle("Fin de la partie");
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -32,6 +31,8 @@ public class FinPartieVue extends JDialog {
         JPanel panBoutons = new JPanel(new FlowLayout());
         JPanel panLabels = new JPanel(new GridLayout(2, 1, 0, 5));
         
+        labGagnant.setHorizontalAlignment(JLabel.CENTER);
+        labChoix.setHorizontalAlignment(JLabel.CENTER);
         panLabels.add(labGagnant);
         panLabels.add(labChoix);
         
@@ -50,6 +51,7 @@ public class FinPartieVue extends JDialog {
         pan.add(panBoutons, BorderLayout.SOUTH);
         
         this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*3);
+        this.setLocationRelativeTo(this.getParent());
     }
     
     public void affichage(boolean enable){

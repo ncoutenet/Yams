@@ -21,7 +21,7 @@ public class JeuVue extends JFrame {
     private JLabel _nbLancers;
     private JButton _btnFinTour;
     private JButton _btnLancer;
-    private JLabel _labCoutsRestants;
+    private JLabel _labCoupsRestants;
     
     private int[] _valDes;
     private boolean[] _selDes;
@@ -63,6 +63,7 @@ public class JeuVue extends JFrame {
         this._selDes = new boolean[5];
         this._selectionDes = new JCheckBox[5];
         this._aQui = new JLabel();
+        this._aQui.setHorizontalAlignment(JLabel.CENTER);
         for(int i = 0; i < 5; i++){
             _selectionDes[i] = new JCheckBox();
             _selectionDes[i].addActionListener(new YamEvents(_myControler));
@@ -97,6 +98,7 @@ public class JeuVue extends JFrame {
         _btnLancer.addActionListener(new YamEvents(_myControler));
         _btnLancer.setActionCommand("lancer");
         this._nbLancers = new JLabel();
+        this._nbLancers.setHorizontalAlignment(JLabel.CENTER);
         this.setNbLancers(3);
         _btnFinTour = new JButton("Fin du Tour");
         _btnFinTour.addActionListener(new YamEvents(_myControler));
@@ -121,7 +123,8 @@ public class JeuVue extends JFrame {
         panBtnBar.add(btnQuitter);
         
         //label des couts restants
-        this._labCoutsRestants = new JLabel();
+        this._labCoupsRestants = new JLabel();
+        this._labCoupsRestants.setHorizontalAlignment(JLabel.CENTER);
         
         //assemblage des éléments de la fenêtre
         Container pan = this.getContentPane();
@@ -131,9 +134,10 @@ public class JeuVue extends JFrame {
         JScrollPane spScores = new JScrollPane(this._tableau);
         spScores.setPreferredSize(this._tableau.getPreferredSize());
         pan.add(spScores, BorderLayout.CENTER);
-        pan.add(this._labCoutsRestants, BorderLayout.SOUTH);
+        pan.add(this._labCoupsRestants, BorderLayout.SOUTH);
         
         this.pack();
+        this.setLocationRelativeTo(this.getParent());
     }
     
     public void affichage(boolean enable){
@@ -158,7 +162,7 @@ public class JeuVue extends JFrame {
     public void majCoupsRestants(String coups){
         String texte = "Coups restants: ";
         texte += coups;
-        this._labCoutsRestants.setText(texte);
+        this._labCoupsRestants.setText(texte);
     }
     
     public final void setEnabledDes(boolean enable){
