@@ -132,6 +132,7 @@ public class YamControl {
         if(lancesRestants == 0){
             _jeu.setEnabledLancer(false);
             _jeu.setEnabledDes(false);
+            this.finTour(true);
         }
     }
     
@@ -152,8 +153,13 @@ public class YamControl {
     
     public void finTour(){
         _jeu.setTour(_tour);
-        _jeu.setEnabledDes(false);
-        _finTour = new FinTourVue(_scoresValides, _tour, this);
+        _finTour = new FinTourVue(_scoresValides, _tour, this, false);
+        _finTour.setAffichage(true);
+    }
+    
+    private void finTour(boolean fin){
+        _jeu.setTour(_tour);
+        _finTour = new FinTourVue(_scoresValides, _tour, this, fin);
         _finTour.setAffichage(true);
     }
     
@@ -279,13 +285,23 @@ public class YamControl {
             this._jeu.setScore(this._tour, 13, score);
         }
         else if(choix.equals("carré")){
+            boolean carre = false;
+            List<Integer> listDes = new ArrayList<Integer>(5);
+            for(int i = 0; i < 5; i++){
+                Integer val = new Integer(des[i]);
+                listDes.add(val);
+            }
+            Collections.sort(listDes);
             
-           for(int i = 0; i < 5; i++){
-               
-           }
-           score = 40;
-           this._scoresValides[this._tour][10] = false;
-           this._jeu.setScore(this._tour, 14, score);
+            if((listDes.get(0).equals(listDes.get(1)) && listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3))) || (listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4)))){
+                carre = true;
+            }
+            
+            if(carre){
+                score = 40;
+            }
+            this._scoresValides[this._tour][10] = false;
+            this._jeu.setScore(this._tour, 14, score);
         }
         else if(choix.equals("yam's")){
             boolean yam = true;
@@ -329,6 +345,7 @@ public class YamControl {
         this._jeu.setEnabledLancer(true);
         this._jeu.initDes();
         this._jeu.setNbLancers(3);
+        this._jeu.setEnabledDes(false);
         this._modele.changerJoueur();
         this._tour = this._modele.getTour();
         this._jeu.setTour(this._tour);

@@ -20,9 +20,12 @@ public class FinTourVue extends JDialog{
     private int _noJoueur;
     private JButton _btnVal;
 
-    public FinTourVue(boolean[][] choix, int joueur, YamControl yc){
+    public FinTourVue(boolean[][] choix, int joueur, YamControl yc, boolean fin){
         super.setTitle("Fin Du Tour");
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        if(fin){
+            this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        }
+        else this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this._myControler = yc;
         
         //initialisation des variables locales
