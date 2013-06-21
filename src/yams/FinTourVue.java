@@ -22,6 +22,7 @@ public class FinTourVue extends JDialog{
 
     public FinTourVue(boolean[][] choix, int joueur, YamControl yc, boolean fin){
         super.setTitle("Fin Du Tour");
+        super.setResizable(false);
         if(fin){
             this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         }

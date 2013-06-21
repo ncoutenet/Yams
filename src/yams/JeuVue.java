@@ -13,7 +13,7 @@ import yams.table.ModeleTableScore;
  *
  * @author nicolas
  */
-public class JeuVue extends JFrame {
+public class JeuVue extends JWindow {
     private Icon[] _des;
     private JCheckBox[] _selectionDes;
     private JLabel _aQui;
@@ -34,8 +34,8 @@ public class JeuVue extends JFrame {
     private YamControl _myControler;
     
     public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc){
-        super("Jeu du Yam's");
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+//        super("Jeu du Yam's");
+//        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         _myControler = yc;
         
         //initialisation des images des dés
