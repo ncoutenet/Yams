@@ -4,9 +4,11 @@
  */
 package yams;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import yams.regles.ReglesAleatoiresVue;
 
 /**
  *
@@ -350,5 +352,15 @@ public class YamControl {
         this._tour = this._modele.getTour();
         this._jeu.setTour(this._tour);
         this._jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
+    }
+    
+    public void affichageRegles() /*throws IOException*/{
+//        try{
+            ReglesAleatoiresVue rav = new ReglesAleatoiresVue();
+            rav.setVisible(true);
+//        }
+//        catch(IOException ioe){
+//            System.err.println("Impossible d'afficher les règles");
+//        }
     }
 }

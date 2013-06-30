@@ -4,9 +4,11 @@
  */
 package yams;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.*;
-import java.awt.*;
-
 import yams.table.ModeleTableScore;
 
 /**
@@ -117,6 +119,10 @@ public class JeuVue extends JWindow {
         btnNouveau.addActionListener(new YamEvents(_myControler));
         btnNouveau.setActionCommand("nouveau");
         panBtnBar.add(btnNouveau);
+        JButton btnRegles = new JButton("Règles");
+        btnRegles.addActionListener(new YamEvents(_myControler));
+        btnRegles.setActionCommand("regles");
+        panBtnBar.add(btnRegles);
         JButton btnQuitter = new JButton("Quitter");
         btnQuitter.addActionListener(new YamEvents(_myControler));
         btnQuitter.setActionCommand("quitter");

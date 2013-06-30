@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package yams;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -42,6 +43,13 @@ public class YamEvents implements ActionListener{
         }
         if(ae.getActionCommand().equals("recommencer")){
             _myControler.recommencer();
+        }
+        if(ae.getActionCommand().equals("regles")){
+//            try {
+                _myControler.affichageRegles();
+//            } catch (IOException ex) {
+//                System.out.println("Problème d'affichage!");
+//            }
         }
     }
     
