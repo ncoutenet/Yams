@@ -6,8 +6,10 @@ package yams.regles;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.io.IOException;
-import java.net.URL;
+import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollBar;
@@ -25,18 +27,36 @@ public class ReglesAleatoiresVue extends JFrame {
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         
-        JEditorPane jep = new JEditorPane("text/html", "regles_simples.html"); //prise en compte du fichier html à revoir
+        StringBuffer nom;
+        nom = saisieTexte("src/yams/regles/regles_simples.html");
+        
+        JEditorPane jep = new JEditorPane("text/html", new String(nom));
         jep.setEditable(false);
         JScrollBar jsbv = new JScrollBar(JScrollBar.VERTICAL);
-        JScrollPane jsp = new JScrollPane();
-        jsp.setSize(500, 800);
-        jsp.setPreferredSize(jsp.getSize());
+        jep.setPreferredSize(new Dimension(500, 800));
+        
+        JScrollPane jsp = new JScrollPane(jep);
         jsp.setVerticalScrollBar(jsbv);
-        jsp.add(jep);
             
         pan.add(jsp, BorderLayout.CENTER);
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+    }
+    
+    private StringBuffer saisieTexte(String nomFichier){
+       File fichier = new File(nomFichier);
+	StringBuffer texte = new StringBuffer();
+	
+	try {
+	Scanner lecteur = new Scanner(fichier);
+	
+	while (lecteur.hasNext()) texte.append(lecteur.nextLine());
+	}
+	catch (FileNotFoundException exc) {
+	System.err.println("Fichier inexistant " + exc);
+	}
+	return texte; 
     }
 }
