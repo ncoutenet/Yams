@@ -4,8 +4,11 @@
  */
 package yams;
 
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  *
