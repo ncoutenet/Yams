@@ -5,15 +5,8 @@
 package yams.table;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
 import yams.JeuVue;
 import yams.Joueur;
 
