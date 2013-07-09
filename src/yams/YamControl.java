@@ -25,6 +25,7 @@ public class YamControl {
     private int _nbJoueurs;
     private boolean[][] _scoresValides;
     private int _tour;
+    private int _mode;
     
     public YamControl(){
         _connection = new ConnectionVue(this);
@@ -99,6 +100,7 @@ public class YamControl {
     }
     
     public void commencer(){
+        _mode = _connection.getModeJeu();
         _nomsJoueurs = _connection.getNomsJoueurs();
         _nbJoueurs = _connection.getNbJoueurs();
         _modele = new YamModele(_nbJoueurs);
@@ -154,8 +156,181 @@ public class YamControl {
     
     public void finTour(){
         _jeu.setTour(_tour);
-        _finTour = new FinTourVue(_scoresValides, _tour, this, false);
-        _finTour.setAffichage(true);
+        if(_mode == 0){
+            _finTour = new FinTourVue(_scoresValides, _tour, this, false);
+            _finTour.setAffichage(true);
+        }
+        else if(_mode == 1){
+            int i = 0;
+            while(!_scoresValides[_tour][i]){
+                i++;
+            }
+            finTourMontantDescendant(_tour, i);
+        }
+        else if(_mode == 2){
+            int i = 11;
+            while(!_scoresValides[_tour][i]){
+                i--;
+            }
+            finTourMontantDescendant(_tour, i);
+        }
+        else{
+            System.err.println("[ERREUR] mode de jeu faux");
+            System.exit(1);
+        }
+    }
+    
+    private void finTourMontantDescendant(int joueur, int index){
+        int[] des = this._jeu.getDes();
+        int score = 0;
+        List<Integer> listDes = new ArrayList(5);
+        switch(index){
+            case 0:
+                for(int i = 0; i < 5; i++){
+                    if(des[i] == 1){
+                        score += des[i];
+                    }
+                }
+                this._scoresValides[this._tour][0] = false;
+                this._jeu.setScore(this._tour, 0, score);
+                break;
+            case 1:
+                for(int i = 0; i < 5; i++){
+                    if(des[i] == 2){
+                        score += des[i];
+                    }
+                }
+                this._scoresValides[this._tour][1] = false;
+                this._jeu.setScore(this._tour, 1, score);
+                break;
+            case 2:
+                for(int i = 0; i < 5; i++){
+                    if(des[i] == 3){
+                        score += des[i];
+                    }
+                }
+                this._scoresValides[this._tour][2] = false;
+                this._jeu.setScore(this._tour, 2, score);
+                break;
+            case 3:
+                for(int i = 0; i < 5; i++){
+                    if(des[i] == 4){
+                        score += des[i];
+                    }
+                }
+                this._scoresValides[this._tour][3] = false;
+                this._jeu.setScore(this._tour, 3, score);
+                break;
+            case 4:
+                for(int i = 0; i < 5; i++){
+                    if(des[i] == 5){
+                        score += des[i];
+                    }
+                }
+                this._scoresValides[this._tour][4] = false;
+                this._jeu.setScore(this._tour, 4, score);
+                break;
+            case 5:
+                for(int i = 0; i < 5; i++){
+                    if(des[i] == 6){
+                        score += des[i];
+                    }
+                }
+                this._scoresValides[this._tour][5] = false;
+                this._jeu.setScore(this._tour, 5, score);
+                break;
+            case 6:
+                for(int i = 0; i < 5; i++){
+                    score += des[i];
+                }
+                this._scoresValides[this._tour][6] = false;
+                this._jeu.setScore(this._tour, 9, score);
+                break;
+            case 7:
+                for(int i = 0; i < 5; i++){
+                   score += des[i];
+                }
+                this._scoresValides[this._tour][7] = false;
+                this._jeu.setScore(this._tour, 10, score);
+                break;
+            case 8:
+                boolean suite = true;
+                listDes = new ArrayList(5);
+                for(int i = 0; i < 5; i++){
+                    Integer val = new Integer(des[i]);
+                    listDes.add(val);
+                }
+                Collections.sort(listDes);
+                for(int i = 0; i < 4; i++){
+                    int de1 = listDes.get(i);
+                    int de2 = listDes.get(i+1) - 1;
+                    if(de1 != de2){
+                        suite = false;
+                    }
+                }
+                if(suite){
+                    score = 20;
+                }
+                this._scoresValides[this._tour][8] = false;
+                this._jeu.setScore(this._tour, 12, score);
+                break;
+            case 9:
+                boolean full = false;
+                listDes = new ArrayList(5);
+                for(int i = 0; i < 5; i++){
+                    Integer val = new Integer(des[i]);
+                    listDes.add(val);
+                }
+                Collections.sort(listDes);
+                if(listDes.get(0).equals(listDes.get(1)) && listDes.get(0).equals(listDes.get(2)) && (listDes.get(0) != listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
+                    full = true;
+                }
+                else if(listDes.get(0).equals(listDes.get(1)) && (listDes.get(0) != listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
+                    full = true;
+                }
+                if(full){
+                    score = 30;
+                }
+                this._scoresValides[this._tour][9] = false;
+                this._jeu.setScore(this._tour, 13, score);
+                break;
+            case 10:
+                boolean carre = false;
+                listDes = new ArrayList<Integer>(5);
+                for(int i = 0; i < 5; i++){
+                    Integer val = new Integer(des[i]);
+                    listDes.add(val);
+                }
+                Collections.sort(listDes);
+
+                if((listDes.get(0).equals(listDes.get(1)) && listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3))) || (listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4)))){
+                    carre = true;
+                }
+
+                if(carre){
+                    score = 40;
+                }
+                this._scoresValides[this._tour][10] = false;
+                this._jeu.setScore(this._tour, 14, score);
+                break;
+            case 11:
+                boolean yam = true;
+                int i = 0;
+                while((i < 4) && (yam)){
+                    if(des[i] != des[i+1]){
+                        yam = false;
+                    }
+                    i++;
+                }
+                if(yam){
+                    score = 50;
+                }
+                this._scoresValides[this._tour][11] = false;
+                this._jeu.setScore(this._tour, 15, score);
+                break;
+            default: //n'arrive jamais
+                break;
+        }
     }
     
     private void finTour(boolean fin){

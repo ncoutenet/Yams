@@ -24,6 +24,7 @@ public class ConnectionVue extends JFrame{
     private JSpinner _spinner;
     private JTextField[] _joueurs;
     private JPanel _panJoueurs;
+    private JComboBox _cbModeJeu;
     
     public ConnectionVue(YamControl yc){
         super("Yam's");
@@ -31,6 +32,18 @@ public class ConnectionVue extends JFrame{
         _myControler = yc;
         Container pan = this.getContentPane();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+        
+        Object[] modes = new Object[3];
+        modes[0] = new String("Aléatoire");
+        modes[1] = new String("Montant");
+        modes[2] = new String("Descendant");
+        
+        this._cbModeJeu = new JComboBox(modes);
+        JLabel labModes = new JLabel("Mode de jeu: ");
+        
+        JPanel panModesJeu = new JPanel(new FlowLayout());
+        panModesJeu.add(labModes);
+        panModesJeu.add(this._cbModeJeu);
         
         JLabel labMessage = new JLabel("Veuillez choisir le nombre de joueurs (" + MAX + " joueurs max) et indiquer leurs noms");
         labMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -96,5 +109,21 @@ public class ConnectionVue extends JFrame{
     
     public int getNbJoueurs(){
         return _joueurs.length;
+    }
+    
+    public int getModeJeu(){
+        if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
+            if(this._cbModeJeu.getSelectedItem().equals("Aléatoire")){
+                return 0;
+            }
+            else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
+                return 1;
+            }
+            else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
+                return 2;
+            }
+        }
+        
+        return -1;
     }
 }
