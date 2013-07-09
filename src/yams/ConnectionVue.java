@@ -44,6 +44,7 @@ public class ConnectionVue extends JFrame{
         JPanel panModesJeu = new JPanel(new FlowLayout());
         panModesJeu.add(labModes);
         panModesJeu.add(this._cbModeJeu);
+        pan.add(panModesJeu);
         
         JLabel labMessage = new JLabel("Veuillez choisir le nombre de joueurs (" + MAX + " joueurs max) et indiquer leurs noms");
         labMessage.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -4,9 +4,12 @@
  */
 package yams;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import yams.regles.ReglesAleatoiresVue;
 
 /**
@@ -101,6 +104,7 @@ public class YamControl {
     
     public void commencer(){
         _mode = _connection.getModeJeu();
+        System.out.println(_connection.getModeJeu());
         _nomsJoueurs = _connection.getNomsJoueurs();
         _nbJoueurs = _connection.getNbJoueurs();
         _modele = new YamModele(_nbJoueurs);
@@ -331,12 +335,37 @@ public class YamControl {
             default: //n'arrive jamais
                 break;
         }
+        
+        if(this._modele.finPartie(this._scoresValides)){
+            Joueur[] joueurs = new Joueur[this._nbJoueurs];
+            int max = 0;
+            
+            for(int i = 0; i < this._nbJoueurs; i++){
+                joueurs[i] = this._jeu.getJoueur(i);
+            }
+            
+            for(int i = 1; i < this._nbJoueurs; i++){
+                if(joueurs[max].getScore(16) < joueurs[i].getScore(16)){
+                    max = i;
+                }
+            }
+            this._finPartie = new FinPartieVue(this, joueurs[max]);
+            this._finPartie.affichage(true);
+        }
+        else{
+            this.tourSuivant();
+        }
     }
     
     private void finTour(boolean fin){
         _jeu.setTour(_tour);
-        _finTour = new FinTourVue(_scoresValides, _tour, this, fin);
-        _finTour.setAffichage(true);
+        if(_mode == 0){
+            _finTour = new FinTourVue(_scoresValides, _tour, this, fin);
+            _finTour.setAffichage(true);
+        }
+        else{
+            this.finTour();
+        }
     }
     
     public void majSelectDes(){
