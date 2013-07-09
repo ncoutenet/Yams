@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import yams.regles.ReglesAleatoiresVue;
+import yams.regles.ReglesVue;
 
 /**
  *
@@ -558,6 +558,6 @@ public class YamControl {
     }
     
     public void affichageRegles() {
-            ReglesAleatoiresVue rav = new ReglesAleatoiresVue();
+            ReglesVue rav = new ReglesVue(_mode);
     }
 }

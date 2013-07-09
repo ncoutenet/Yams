@@ -15,10 +15,13 @@ import javax.swing.JScrollPane;
  *
  * @author nicolas
  */
-public class ReglesAleatoiresVue extends JFrame {
+public class ReglesVue extends JFrame {
+    private int _mode;
 
-    public ReglesAleatoiresVue() {
+    public ReglesVue(int mode) {
         super("Règles du Jeu");
+        
+        this._mode = mode;
         
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
@@ -41,8 +44,16 @@ public class ReglesAleatoiresVue extends JFrame {
     
     private StringBuffer saisieTexte(){
 	StringBuffer texte = new StringBuffer();
-        
+        if(this._mode == 0){
         texte.append("<h1 align='center' color='red'>Règles du Yam's aléatoire</h1>");
+        }
+        else if(this._mode == 1){
+        texte.append("<h1 align='center' color='red'>Règles du Yam's montant</h1>");
+        }
+        else if(this._mode == 2){
+        texte.append("<h1 align='center' color='red'>Règles du Yam's descendant</h1>");
+        }
+        
         texte.append("<p>Au Yam’s le nombre de joueur n'est pas fixé, pour des raisons techniques ce logiciel ne gère que 10 joueurs maximum.</p>");
         texte.append("<p>Le but est, pour chaque joueur, de remplir une grille en totalisant un maximum de points. Pour remplir la grille il faut lancer des dés et réaliser des figures.</p>");
         texte.append("<p>Chaque joueur joue à tour de rôle. À chaque tour le joueur dispose de trois lancés de cinq dés. À l'issu des deux premiers lancés il peut:</p>");
@@ -51,10 +62,22 @@ public class ReglesAleatoiresVue extends JFrame {
         texte.append("    <li>écarter une partie des dés et relancer les autre.</li>");
         texte.append("</ul>");
         texte.append("<p>Pour garder les 5 dés il suffit de cliquer sur le bouton 'fin du tour'.<br/>Pour écarter un dé, il suffit de cliquer sur la case à cocher se trouvant à sa gauche</p>");
+        if(this._mode == 0){
         texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
                 + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
                 + "plus tard, elle est retirée des figures à obtenir.</p>");
-        texte.append("<p>Il y a 12 figures à réaliser:</p>");
+        texte.append("<p>Il y a 12 figures à réaliser dans le désordre:</p>");
+        }
+        else if(this._mode == 1){
+        texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
+                + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
+        texte.append("<p>Il y a 12 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
+        }
+        else if(this._mode == 2){
+        texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
+                + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
+        texte.append("<p>Il y a 12 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");
+        }
         texte.append("<table border='1' align='center'>");
         texte.append("    <thead>");
         texte.append("        <tr>");
