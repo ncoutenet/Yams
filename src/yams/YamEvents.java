@@ -45,11 +45,7 @@ public class YamEvents implements ActionListener{
             _myControler.recommencer();
         }
         if(ae.getActionCommand().equals("regles")){
-//            try {
                 _myControler.affichageRegles();
-//            } catch (IOException ex) {
-//                System.out.println("Problème d'affichage!");
-//            }
         }
     }
     
