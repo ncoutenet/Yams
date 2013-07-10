@@ -23,9 +23,9 @@ public class FinTourVue extends JDialog{
     private boolean[][] _choixValides;
     private int _noJoueur;
     private JButton _btnVal;
-
-    public FinTourVue(boolean[][] choix, int joueur, YamControl yc, boolean fin){
-        super.setTitle("Fin Du Tour");
+    
+    public FinTourVue(boolean[][] choix, int joueur, YamControl yc, boolean fin, JeuVue parent){
+        super(parent, "Fin Du Tour", true);
         super.setResizable(false);
         
         if(fin){

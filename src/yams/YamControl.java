@@ -4,12 +4,9 @@
  */
 package yams;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import yams.regles.ReglesVue;
 
 /**
@@ -104,7 +101,6 @@ public class YamControl {
     
     public void commencer(){
         _mode = _connection.getModeJeu();
-        System.out.println(_connection.getModeJeu());
         _nomsJoueurs = _connection.getNomsJoueurs();
         _nbJoueurs = _connection.getNbJoueurs();
         _modele = new YamModele(_nbJoueurs);
@@ -117,7 +113,7 @@ public class YamControl {
         _tour = _modele.getTour();
         
         //initialisation et mise à jour des vues
-        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this);
+        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode);
         _connection.affichage(false);
         _jeu.affichage(true);
         _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
@@ -129,7 +125,6 @@ public class YamControl {
         
         des = _modele.lancer();
         lancesRestants = _modele.majNbLances(lancesRestants);
-        System.out.println("lancés restants : " + lancesRestants);
         _jeu.setNbLancers(lancesRestants);
         for(int i = 0; i < 5; i++){
             _jeu.setValDe(i, des[i]);
@@ -161,7 +156,7 @@ public class YamControl {
     public void finTour(){
         _jeu.setTour(_tour);
         if(_mode == 0){
-            _finTour = new FinTourVue(_scoresValides, _tour, this, false);
+            _finTour = new FinTourVue(_scoresValides, _tour, this, false, this._jeu);
             _finTour.setAffichage(true);
         }
         else if(_mode == 1){
@@ -187,7 +182,7 @@ public class YamControl {
     private void finTourMontantDescendant(int joueur, int index){
         int[] des = this._jeu.getDes();
         int score = 0;
-        List<Integer> listDes = new ArrayList(5);
+        List<Integer> listDes;
         switch(index){
             case 0:
                 for(int i = 0; i < 5; i++){
@@ -360,7 +355,7 @@ public class YamControl {
     private void finTour(boolean fin){
         _jeu.setTour(_tour);
         if(_mode == 0){
-            _finTour = new FinTourVue(_scoresValides, _tour, this, fin);
+            _finTour = new FinTourVue(_scoresValides, _tour, this, fin, this._jeu);
             _finTour.setAffichage(true);
         }
         else{
