@@ -15,7 +15,7 @@ import yams.table.ModeleTableScore;
  *
  * @author nicolas
  */
-public class JeuVue extends JWindow {
+public class JeuVue extends JFrame {
     private Icon[] _des;
     private JCheckBox[] _selectionDes;
     private JLabel _aQui;
@@ -35,9 +35,17 @@ public class JeuVue extends JWindow {
     private ModeleTableScore _tabModel;
     private YamControl _myControler;
     
-    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc){
-//        super("Jeu du Yam's");
-//        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode){
+        if(mode == 0)
+        {
+            this.setTitle("Jeu du Yam's Aléatoire");
+        }
+        else if(mode == 1){
+            this.setTitle("Jeu du Yam's Montant");
+        }
+        else if(mode == 2){
+            this.setTitle("Jeu du Yam's Descendant");
+        }
         _myControler = yc;
         
         //initialisation des images des dés
@@ -143,6 +151,8 @@ public class JeuVue extends JWindow {
         pan.add(this._labCoupsRestants, BorderLayout.SOUTH);
         
         this.pack();
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
     }
     
