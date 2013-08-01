@@ -125,7 +125,7 @@ public class JeuVue extends JFrame {
         JPanel panBtnBar = new JPanel(new FlowLayout());
         JButton btnNouveau = new JButton("Nouveau");
         btnNouveau.addActionListener(new YamEvents(_myControler));
-        btnNouveau.setActionCommand("nouveau");
+        btnNouveau.setActionCommand("confirmNouveau");
         panBtnBar.add(btnNouveau);
         JButton btnRegles = new JButton("Règles");
         btnRegles.addActionListener(new YamEvents(_myControler));
@@ -133,7 +133,7 @@ public class JeuVue extends JFrame {
         panBtnBar.add(btnRegles);
         JButton btnQuitter = new JButton("Quitter");
         btnQuitter.addActionListener(new YamEvents(_myControler));
-        btnQuitter.setActionCommand("quitter");
+        btnQuitter.setActionCommand("confirmQuit");
         panBtnBar.add(btnQuitter);
         
         //label des couts restants

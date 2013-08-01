@@ -47,6 +47,15 @@ public class YamEvents implements ActionListener{
         if(ae.getActionCommand().equals("regles")){
                 _myControler.affichageRegles();
         }
+        if (ae.getActionCommand().equals("annuler")){
+            _myControler.annuler();
+        }
+        if(ae.getActionCommand().equals("confirmNouveau")){
+            _myControler.confirmQuit(false);
+        }
+        if (ae.getActionCommand().equals("confirmQuit")){
+            _myControler.confirmQuit(true);
+        }
     }
     
 }

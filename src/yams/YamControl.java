@@ -20,6 +20,7 @@ public class YamControl {
     private JeuVue _jeu;
     private FinTourVue _finTour;
     private FinPartieVue _finPartie;
+    private ConfirmQuitVue _confirmQuit;
     
     private String[] _nomsJoueurs;
     private int _nbJoueurs;
@@ -554,5 +555,14 @@ public class YamControl {
     
     public void affichageRegles() {
             ReglesVue rav = new ReglesVue(_mode);
+    }
+    
+    public void annuler(){
+        this._confirmQuit.activation(false);
+    }
+    
+    public void confirmQuit(boolean quit){
+        this._confirmQuit = new ConfirmQuitVue(quit, this._jeu, this);
+        this._confirmQuit.activation(true);
     }
 }
