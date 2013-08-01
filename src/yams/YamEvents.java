@@ -56,6 +56,9 @@ public class YamEvents implements ActionListener{
         if (ae.getActionCommand().equals("confirmQuit")){
             _myControler.confirmQuit(true);
         }
+        if (ae.getActionCommand().equals("confScore")){
+            _myControler.confScores();
+        }
     }
     
 }

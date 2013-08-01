@@ -21,6 +21,7 @@ public class YamControl {
     private FinTourVue _finTour;
     private FinPartieVue _finPartie;
     private ConfirmQuitVue _confirmQuit;
+    private InfoScoreVue _confScores;
     
     private String[] _nomsJoueurs;
     private int _nbJoueurs;
@@ -181,6 +182,7 @@ public class YamControl {
     }
     
     private void finTourMontantDescendant(int joueur, int index){
+        String strScore = new String();
         int[] des = this._jeu.getDes();
         int score = 0;
         List<Integer> listDes;
@@ -193,6 +195,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][0] = false;
                 this._jeu.setScore(this._tour, 0, score);
+                strScore = "1";
                 break;
             case 1:
                 for(int i = 0; i < 5; i++){
@@ -202,6 +205,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][1] = false;
                 this._jeu.setScore(this._tour, 1, score);
+                strScore = "2";
                 break;
             case 2:
                 for(int i = 0; i < 5; i++){
@@ -211,6 +215,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][2] = false;
                 this._jeu.setScore(this._tour, 2, score);
+                strScore = "3";
                 break;
             case 3:
                 for(int i = 0; i < 5; i++){
@@ -220,6 +225,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][3] = false;
                 this._jeu.setScore(this._tour, 3, score);
+                strScore = "4";
                 break;
             case 4:
                 for(int i = 0; i < 5; i++){
@@ -229,6 +235,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][4] = false;
                 this._jeu.setScore(this._tour, 4, score);
+                strScore = "5";
                 break;
             case 5:
                 for(int i = 0; i < 5; i++){
@@ -238,6 +245,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][5] = false;
                 this._jeu.setScore(this._tour, 5, score);
+                strScore = "6";
                 break;
             case 6:
                 for(int i = 0; i < 5; i++){
@@ -245,6 +253,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][6] = false;
                 this._jeu.setScore(this._tour, 9, score);
+                strScore = "+";
                 break;
             case 7:
                 for(int i = 0; i < 5; i++){
@@ -252,6 +261,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][7] = false;
                 this._jeu.setScore(this._tour, 10, score);
+                strScore = "-";
                 break;
             case 8:
                 boolean suite = true;
@@ -273,6 +283,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][8] = false;
                 this._jeu.setScore(this._tour, 12, score);
+                strScore = "suite";
                 break;
             case 9:
                 boolean full = false;
@@ -293,6 +304,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][9] = false;
                 this._jeu.setScore(this._tour, 13, score);
+                strScore = "full";
                 break;
             case 10:
                 boolean carre = false;
@@ -312,6 +324,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][10] = false;
                 this._jeu.setScore(this._tour, 14, score);
+                strScore = "carré";
                 break;
             case 11:
                 boolean yam = true;
@@ -327,10 +340,19 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][11] = false;
                 this._jeu.setScore(this._tour, 15, score);
+                strScore = "yam's";
                 break;
             default: //n'arrive jamais
                 break;
         }
+        
+        //affichage de la fenetre d'information
+        this._confScores = new InfoScoreVue(score, strScore, _jeu, this);
+        this._confScores.activation(true);
+    }
+    
+    public void confScores(){
+        this._confScores.activation(false);
         
         if(this._modele.finPartie(this._scoresValides)){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
