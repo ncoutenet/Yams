@@ -5,6 +5,7 @@
 package yams;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -92,12 +93,17 @@ public class JeuVue extends JFrame {
         panJeu.add(_aQui, BorderLayout.NORTH);
         
         JPanel panDes = new JPanel(new GridLayout(5, 1, 0, 5));
+        
+        Color couleur = new Color(43, 133, 53);
+        
         for(int i = 0; i < 5; i++)
         {
             JPanel panel = new JPanel(new FlowLayout());
+            panel.setBackground(couleur);
             panel.add(this._selectionDes[i]);
             panel.add(this._labDes[i]);
             panDes.add(panel);
+            panDes.setBackground(couleur);
         }
         this.setEnabledDes(false);
         panJeu.add(panDes, BorderLayout.CENTER);
