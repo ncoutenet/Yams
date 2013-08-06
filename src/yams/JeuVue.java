@@ -49,7 +49,7 @@ public class JeuVue extends JFrame {
         }
         _myControler = yc;
         
-        //initialisation des images des dés
+        //initialisation des images des dés et de la couleur de fond
         this._des = new Icon[7];
         this._des[0] = new ImageIcon(getClass().getResource("images/dés/indef.gif"));
         this._des[1] = new ImageIcon(getClass().getResource("images/dés/1.gif"));
@@ -59,6 +59,7 @@ public class JeuVue extends JFrame {
         this._des[5] = new ImageIcon(getClass().getResource("images/dés/5.gif"));
         this._des[6] = new ImageIcon(getClass().getResource("images/dés/6.gif"));
         this._labDes = new JLabel[5];
+        Color couleur = new Color(43, 133, 53);
         for(int i = 0; i < 5; i++)
             this._labDes[i] = new JLabel();
         
@@ -75,6 +76,7 @@ public class JeuVue extends JFrame {
         this._selectionDes = new JCheckBox[5];
         this._aQui = new JLabel();
         this._aQui.setHorizontalAlignment(JLabel.CENTER);
+        this._aQui.setForeground(new Color(255, 255, 255, 255));
         for(int i = 0; i < 5; i++){
             _selectionDes[i] = new JCheckBox();
             _selectionDes[i].addActionListener(new YamEvents(_myControler));
@@ -91,10 +93,9 @@ public class JeuVue extends JFrame {
         //fabrication de la fenêtre
         JPanel panJeu = new JPanel(new BorderLayout());
         panJeu.add(_aQui, BorderLayout.NORTH);
+        panJeu.setBackground(couleur);
         
         JPanel panDes = new JPanel(new GridLayout(5, 1, 0, 5));
-        
-        Color couleur = new Color(43, 133, 53);
         
         for(int i = 0; i < 5; i++)
         {
@@ -103,10 +104,12 @@ public class JeuVue extends JFrame {
             panel.add(this._selectionDes[i]);
             panel.add(this._labDes[i]);
             panDes.add(panel);
-            panDes.setBackground(couleur);
         }
+        panDes.setBackground(couleur);
+        
         this.setEnabledDes(false);
         panJeu.add(panDes, BorderLayout.CENTER);
+        panJeu.setBackground(couleur);
         
         //emplacement des dés
         JPanel panLancement = new JPanel(new GridLayout(2, 1));
@@ -123,8 +126,11 @@ public class JeuVue extends JFrame {
         JPanel panBtnLancement = new JPanel(new FlowLayout());
         panBtnLancement.add(_btnLancer);
         panBtnLancement.add(this._btnFinTour);
+        panBtnLancement.setBackground(couleur);
         panLancement.add(panBtnLancement);
         panLancement.add(this._nbLancers);
+        this._nbLancers.setForeground(new Color(255, 255, 255));
+        panLancement.setBackground(couleur);
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
         //barre des menus
@@ -141,6 +147,7 @@ public class JeuVue extends JFrame {
         btnQuitter.addActionListener(new YamEvents(_myControler));
         btnQuitter.setActionCommand("confirmQuit");
         panBtnBar.add(btnQuitter);
+        panBtnBar.setBackground(couleur);
         
         //label des couts restants
         this._labCoupsRestants = new JLabel();
@@ -155,6 +162,8 @@ public class JeuVue extends JFrame {
         spScores.setPreferredSize(this._tableau.getPreferredSize());
         pan.add(spScores, BorderLayout.CENTER);
         pan.add(this._labCoupsRestants, BorderLayout.SOUTH);
+        this._labCoupsRestants.setForeground(new Color(255, 255, 255));
+        pan.setBackground(couleur);
         
         this.pack();
         this.setResizable(false);
