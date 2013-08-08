@@ -20,8 +20,8 @@ import javax.swing.JPanel;
 public class FinPartieVue extends JDialog {
     private YamControl _myControler;
     
-    public FinPartieVue(YamControl yc, Joueur gagnant){
-        super.setTitle("Fin de la partie");
+    public FinPartieVue(YamControl yc, JeuVue parent, Joueur gagnant){
+        super(parent, "Fin de la partie", true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this._myControler = yc;
         Color couleur = new Color(43, 133, 53);

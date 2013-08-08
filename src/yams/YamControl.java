@@ -367,7 +367,7 @@ public class YamControl {
                     max = i;
                 }
             }
-            this._finPartie = new FinPartieVue(this, joueurs[max]);
+            this._finPartie = new FinPartieVue(this, this._jeu, joueurs[max]);
             this._finPartie.affichage(true);
         }
         else{
@@ -555,7 +555,7 @@ public class YamControl {
                     max = i;
                 }
             }
-            this._finPartie = new FinPartieVue(this, joueurs[max]);
+            this._finPartie = new FinPartieVue(this, this._jeu, joueurs[max]);
             this._finPartie.affichage(true);
         }
         else{
