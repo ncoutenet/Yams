@@ -59,6 +59,9 @@ public class YamEvents implements ActionListener{
         if (ae.getActionCommand().equals("confScore")){
             _myControler.confScores();
         }
+        if (ae.getActionCommand().equals("aperçuRegles")){
+            _myControler.apercuRegle();
+        }
     }
     
 }

@@ -587,4 +587,9 @@ public class YamControl {
         this._confirmQuit = new ConfirmQuitVue(quit, this._jeu, this);
         this._confirmQuit.activation(true);
     }
+    
+    public void apercuRegle(){
+        int mode = this._connection.getModeJeu();
+        ReglesVue rv = new ReglesVue(mode);
+    }
 }

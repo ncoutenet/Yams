@@ -33,17 +33,26 @@ public class ConnectionVue extends JFrame{
         Container pan = this.getContentPane();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         
+        //initialisation du menu déroulant
         Object[] modes = new Object[3];
         modes[0] = new String("Aléatoire");
         modes[1] = new String("Montant");
         modes[2] = new String("Descendant");
         
+        //instanciation du menu
         this._cbModeJeu = new JComboBox(modes);
         JLabel labModes = new JLabel("Mode de jeu: ");
         
+        //création du bouton des règles
+        JButton btnRegles = new JButton("Règles");
+        btnRegles.addActionListener(new YamEvents(_myControler));
+        btnRegles.setActionCommand("aperçuRegles");
+        
+        //assemblage
         JPanel panModesJeu = new JPanel(new FlowLayout());
         panModesJeu.add(labModes);
         panModesJeu.add(this._cbModeJeu);
+        panModesJeu.add(btnRegles);
         pan.add(panModesJeu);
         
         JLabel labMessage = new JLabel("Veuillez choisir le nombre de joueurs (" + MAX + " joueurs max) et indiquer leurs noms");
