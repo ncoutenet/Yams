@@ -51,13 +51,13 @@ public class JeuVue extends JFrame {
         
         //initialisation des images des dés et de la couleur de fond
         this._des = new Icon[7];
-        this._des[0] = new ImageIcon(getClass().getResource("images/dés/indef.gif"));
-        this._des[1] = new ImageIcon(getClass().getResource("images/dés/1.gif"));
-        this._des[2] = new ImageIcon(getClass().getResource("images/dés/2.gif"));
-        this._des[3] = new ImageIcon(getClass().getResource("images/dés/3.gif"));
-        this._des[4] = new ImageIcon(getClass().getResource("images/dés/4.gif"));
-        this._des[5] = new ImageIcon(getClass().getResource("images/dés/5.gif"));
-        this._des[6] = new ImageIcon(getClass().getResource("images/dés/6.gif"));
+        this._des[0] = new ImageIcon(getClass().getResource("images/dés/indef.png"));
+        this._des[1] = new ImageIcon(getClass().getResource("images/dés/1.png"));
+        this._des[2] = new ImageIcon(getClass().getResource("images/dés/2.png"));
+        this._des[3] = new ImageIcon(getClass().getResource("images/dés/3.png"));
+        this._des[4] = new ImageIcon(getClass().getResource("images/dés/4.png"));
+        this._des[5] = new ImageIcon(getClass().getResource("images/dés/5.png"));
+        this._des[6] = new ImageIcon(getClass().getResource("images/dés/6.png"));
         this._labDes = new JLabel[5];
         Color couleur = new Color(43, 133, 53);
         for(int i = 0; i < 5; i++)
