@@ -4,6 +4,7 @@
  */
 package yams;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -21,6 +22,8 @@ public class InfoScoreVue extends JDialog{
         super(parent, true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
+        Color couleur = new Color(43, 133, 53);
+        
         String strScore = new String("Vous venez de marquer ");
         strScore += String.valueOf(score);
         strScore += " points";
@@ -29,10 +32,13 @@ public class InfoScoreVue extends JDialog{
         strCase += index;
         strCase += "!";
         JLabel labScore = new JLabel(strScore);
+        labScore.setForeground(Color.WHITE);
         JLabel labCase = new JLabel(strCase);
+        labCase.setForeground(Color.WHITE);
         
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panel.add(labCase);
+        panel.setBackground(couleur);
         
         JButton btnValider = new JButton("Ok");
         btnValider.addActionListener(new YamEvents(yc));
@@ -40,6 +46,7 @@ public class InfoScoreVue extends JDialog{
         
         Container pan = this.getContentPane();
         pan.setLayout(new GridLayout(3, 1));
+        pan.setBackground(couleur);
         
         
         pan.add(labScore);

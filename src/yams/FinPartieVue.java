@@ -5,6 +5,7 @@
 package yams;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -23,6 +24,7 @@ public class FinPartieVue extends JDialog {
         super.setTitle("Fin de la partie");
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this._myControler = yc;
+        Color couleur = new Color(43, 133, 53);
         
         String strGagnant = gagnant.getNom();
         String strChoix = "Que souhaitez-vous faire?";
@@ -30,12 +32,16 @@ public class FinPartieVue extends JDialog {
         strGagnant += " à gagné la partie avec " + gagnant.getScore(16) + " points!!!";
         
         JLabel labGagnant = new JLabel(strGagnant);
+        labGagnant.setForeground(Color.WHITE);
         JLabel labChoix = new JLabel(strChoix);
+        labChoix.setForeground(Color.WHITE);
         JButton btnNouveau = new JButton("Nouveau");
         JButton btnQuitter = new JButton("Quitter");
         
         JPanel panBoutons = new JPanel(new FlowLayout());
+        panBoutons.setBackground(couleur);
         JPanel panLabels = new JPanel(new GridLayout(2, 1, 0, 5));
+        panLabels.setBackground(couleur);
         
         labGagnant.setHorizontalAlignment(JLabel.CENTER);
         labChoix.setHorizontalAlignment(JLabel.CENTER);
@@ -49,9 +55,11 @@ public class FinPartieVue extends JDialog {
         btnQuitter.addActionListener(new YamEvents(_myControler));
         btnQuitter.setActionCommand("quitter");
         panBoutons.add(btnQuitter);
+        panBoutons.setBackground(couleur);
         
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
+        pan.setBackground(couleur);
         
         pan.add(panLabels, BorderLayout.CENTER);
         pan.add(panBoutons, BorderLayout.SOUTH);

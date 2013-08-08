@@ -5,6 +5,7 @@
 package yams;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -28,6 +29,8 @@ public class FinTourVue extends JDialog{
         super(parent, "Fin Du Tour", true);
         super.setResizable(false);
         
+        Color couleur = new Color(43, 133, 53);
+        
         if(fin){
             this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         }
@@ -40,6 +43,7 @@ public class FinTourVue extends JDialog{
         
         //création du message
         JLabel labMessage = new JLabel("Choisissez où vous voulez placer les points");
+        labMessage.setForeground(Color.WHITE);
         
         //création du bouton valider
         this._btnVal = new JButton("Valider");
@@ -51,6 +55,7 @@ public class FinTourVue extends JDialog{
         
         //assemblage de la fenêtre
         Container pan = this.getContentPane();
+        pan.setBackground(couleur);
         pan.setLayout(new BorderLayout());
         pan.add(labMessage, BorderLayout.NORTH);
         pan.add(this._cbChoix, BorderLayout.CENTER);

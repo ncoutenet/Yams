@@ -76,7 +76,7 @@ public class JeuVue extends JFrame {
         this._selectionDes = new JCheckBox[5];
         this._aQui = new JLabel();
         this._aQui.setHorizontalAlignment(JLabel.CENTER);
-        this._aQui.setForeground(new Color(255, 255, 255, 255));
+        this._aQui.setForeground(Color.WHITE);
         for(int i = 0; i < 5; i++){
             _selectionDes[i] = new JCheckBox();
             _selectionDes[i].addActionListener(new YamEvents(_myControler));
@@ -129,7 +129,7 @@ public class JeuVue extends JFrame {
         panBtnLancement.setBackground(couleur);
         panLancement.add(panBtnLancement);
         panLancement.add(this._nbLancers);
-        this._nbLancers.setForeground(new Color(255, 255, 255));
+        this._nbLancers.setForeground(Color.WHITE);
         panLancement.setBackground(couleur);
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
@@ -162,7 +162,7 @@ public class JeuVue extends JFrame {
         spScores.setPreferredSize(this._tableau.getPreferredSize());
         pan.add(spScores, BorderLayout.CENTER);
         pan.add(this._labCoupsRestants, BorderLayout.SOUTH);
-        this._labCoupsRestants.setForeground(new Color(255, 255, 255));
+        this._labCoupsRestants.setForeground(Color.WHITE);
         pan.setBackground(couleur);
         
         this.pack();

@@ -4,6 +4,7 @@
  */
 package yams;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -20,7 +21,11 @@ public class ConfirmQuitVue extends JDialog{
     public ConfirmQuitVue(boolean quit, JeuVue parent, YamControl yc){
         super(parent, true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        Color couleur = new Color(43, 133, 53);
+        
         Container pan = this.getContentPane();
+        pan.setBackground(couleur);
         
         if(quit){
             this.setTitle("Quitter");
@@ -30,6 +35,7 @@ public class ConfirmQuitVue extends JDialog{
         }
         
         JLabel label = new JLabel("Êtes-vous sûr de vouloir abandonner cette partie?");
+        label.setForeground(Color.WHITE);
         JButton btnValider = new JButton("Oui");
         btnValider.addActionListener(new YamEvents(yc));
         if(!quit){
@@ -44,6 +50,7 @@ public class ConfirmQuitVue extends JDialog{
         btnAnnuler.setActionCommand("annuler");
         
         JPanel panBtn = new JPanel(new FlowLayout());
+        panBtn.setBackground(couleur);
         panBtn.add(btnValider);
         panBtn.add(btnAnnuler);
         
