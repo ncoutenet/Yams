@@ -56,7 +56,7 @@ public class FinTourVue extends JDialog{
         //assemblage de la fenêtre
         Container pan = this.getContentPane();
         pan.setBackground(couleur);
-        pan.setLayout(new BorderLayout());
+        pan.setLayout(new BorderLayout(0, 10));
         pan.add(labMessage, BorderLayout.NORTH);
         pan.add(this._cbChoix, BorderLayout.CENTER);
         pan.add(this._btnVal, BorderLayout.SOUTH);
