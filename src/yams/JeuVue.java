@@ -236,7 +236,7 @@ public class JeuVue extends JFrame {
         String lancer = "Reste ";
         
         lancer += String.valueOf(nb);
-        lancer += " lancés";
+        lancer += " lancers";
         this._nbLancers.setText(lancer);
         this._lancesRestants = nb;
     }
