@@ -20,18 +20,6 @@ public class YamModele {
         this._joueur = 0;
     }
     
-    public int[] premierlancer(){
-        int[] lancer = new int[5];
-        Random r = new Random();
-        
-        for(int i = 0; i < 5; i++)
-        {
-            lancer[i] = 1 + r.nextInt(6);
-        }
-        
-        return lancer;
-    }
-    
     public int[] lancer(){
          int[] resultat = new int[5];
          Random r = new Random();
