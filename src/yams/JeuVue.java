@@ -204,6 +204,7 @@ public class JeuVue extends JFrame {
     
     private void majDes(int index){
         this._labDes[index].setIcon(this._des[this._valDes[index]]);
+        this.getContentPane().repaint();
     }
     
     public void setValDe(int index, int val){
