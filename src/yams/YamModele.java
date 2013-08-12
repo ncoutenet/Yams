@@ -4,6 +4,9 @@
  */
 package yams;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.MalformedURLException;
 import java.util.Random;
 
 /**
@@ -29,6 +32,15 @@ public class YamModele {
             resultat[i] = 1 + r.nextInt(6);
         }
          return resultat;
+    }
+    
+    public void playSound(){
+//        String fichier = String.valueOf(getClass().getResource("sons/dé_roulant.wav"));
+//        File son = new File(fichier);
+        AudioClip clip;
+        
+        clip = Applet.newAudioClip(getClass().getResource("sons/dé_roulant.wav"));
+        clip.play();
     }
     
     public void changerJoueur(){
