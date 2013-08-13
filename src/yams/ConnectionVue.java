@@ -5,6 +5,8 @@
 package yams;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 /**
@@ -17,10 +19,11 @@ public class ConnectionVue extends JFrame{
     private int MIN = 1;
     private int MAX = 10;
     private Color COULEUR;
+    private Integer _oldVal;
     
     private YamControl _myControler;
     private JSpinner _spinner;
-    private JTextField[] _joueurs;
+    private List<JTextField> _joueurs;
     private JPanel _panJoueurs;
     private JComboBox _cbModeJeu;
     
@@ -30,6 +33,10 @@ public class ConnectionVue extends JFrame{
         _myControler = yc;
         Container pan = this.getContentPane();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+        
+        //initialisation des variables internes
+        this._oldVal = new Integer(0);
+        this._joueurs = new ArrayList<JTextField>();
         
         //initialisation de la couleur de fond
         COULEUR = new Color(43, 133, 53);
@@ -102,40 +109,63 @@ public class ConnectionVue extends JFrame{
         this.setVisible(enable);
     }
     
-    public final void setJoueurs(){
-        String strJ;
+    private void addJoueurs(){
+        String string;
         JPanel panel;
-        JLabel labJ;
-        _panJoueurs.removeAll();
-        _joueurs = new JTextField[(Integer)_spinner.getValue()];
-        for(int i = 0; i < (Integer)_spinner.getValue(); i++){
-            strJ = "Joueur ";
-            strJ += String.valueOf(i+1);
-            _joueurs[i] = new JTextField(10);
-            _joueurs[i].addActionListener(new YamEvents(_myControler));
-            _joueurs[i].setText(strJ);
+        JLabel label;
+        JTextField textField;
+        
+        for(Integer i = this._oldVal; i < (Integer)this._spinner.getValue(); i++){
+            string = "Joueur ";
+            string += String.valueOf(i+1);
+            textField = new JTextField(10);
             panel = new JPanel(new FlowLayout());
             panel.setBackground(COULEUR);
-            strJ += ":";
-            labJ = new JLabel(strJ);
-            labJ.setForeground(Color.WHITE);
-            panel.add(labJ);
-            panel.add(_joueurs[i]);
-            _panJoueurs.add(panel);
+            label = new JLabel();
+            
+//            textField.addActionListener(new YamEvents(_myControler));
+            textField.setText(string);
+            this._joueurs.add(textField);
+            
+            string += ":";
+            label.setText(string);
+            label.setForeground(Color.WHITE);
+            
+            panel.add(label);
+            panel.add(this._joueurs.get(i));
+            this._panJoueurs.add(panel);
         }
+    }
+    
+    private void delJoueurs(){
+        for(Integer i = this._oldVal; i > (Integer)this._spinner.getValue(); i--){
+            this._panJoueurs.remove(i-1);
+            this._joueurs.remove(i-1);
+        }
+    }
+    
+    public final void setJoueurs(){
+        if(this._oldVal < (Integer)this._spinner.getValue()){
+            this.addJoueurs();
+        }
+        else if(this._oldVal > (Integer)this._spinner.getValue()){
+            this.delJoueurs();
+        }
+        
+        this._oldVal = (Integer)this._spinner.getValue();
         _panJoueurs.updateUI();
     }
     
     public String[] getNomsJoueurs(){
-        String[] noms = new String[_joueurs.length];
-        for(int i = 0; i < _joueurs.length; i++){
-            noms[i] = _joueurs[i].getText();
+        String[] noms = new String[_joueurs.size()];
+        for(int i = 0; i < _joueurs.size(); i++){
+            noms[i] = _joueurs.get(i).getText();
         }
         return noms;
     }
     
     public int getNbJoueurs(){
-        return _joueurs.length;
+        return _joueurs.size();
     }
     
     public int getModeJeu(){
