@@ -4,11 +4,7 @@
  */
 package yams;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import javax.swing.*;
 import yams.table.ModeleTableScore;
 
@@ -77,6 +73,7 @@ public class JeuVue extends JFrame {
         this._aQui = new JLabel();
         this._aQui.setHorizontalAlignment(JLabel.CENTER);
         this._aQui.setForeground(Color.WHITE);
+        this._aQui.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         for(int i = 0; i < 5; i++){
             _selectionDes[i] = new JCheckBox();
             _selectionDes[i].addActionListener(new YamEvents(_myControler));
@@ -118,6 +115,7 @@ public class JeuVue extends JFrame {
         _btnLancer.setActionCommand("lancer");
         this._nbLancers = new JLabel();
         this._nbLancers.setHorizontalAlignment(JLabel.CENTER);
+        this._nbLancers.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         this.setNbLancers(3);
         _btnFinTour = new JButton("Fin du Tour");
         _btnFinTour.addActionListener(new YamEvents(_myControler));
@@ -152,6 +150,7 @@ public class JeuVue extends JFrame {
         //label des couts restants
         this._labCoupsRestants = new JLabel();
         this._labCoupsRestants.setHorizontalAlignment(JLabel.CENTER);
+        this._labCoupsRestants.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         
         //assemblage des éléments de la fenêtre
         Container pan = this.getContentPane();
