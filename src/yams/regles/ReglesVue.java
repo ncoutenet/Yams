@@ -4,9 +4,10 @@
  */
 package yams.regles;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -44,6 +45,9 @@ public class ReglesVue extends JFrame {
     
     private StringBuffer saisieTexte(){
 	StringBuffer texte = new StringBuffer();
+        ImageIcon imgTab = new ImageIcon(getClass().getResource("../images/touches/tab.png"));
+        ImageIcon imgEspace = new ImageIcon("..images/touches/espace.gif");
+        
         if(this._mode == 0){
         texte.append("<h1 align='center' color='red'>Règles du Yam's aléatoire</h1>");
         }
@@ -152,13 +156,8 @@ public class ReglesVue extends JFrame {
         texte.append("<p>Remarque: Si un joueur totalise 60 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 30 points.</p>");
         texte.append("<h2> Commandes de jeu </h2>");
         texte.append("<p>Pour jouer, vous pouvez cliquer sur les boutons à l'aide d'une souris. <br/>");
-        texte.append("Autrement vous pouvez utiliser la touche ");
-        texte.append("<img src='");
-        texte.append(getClass().getResource("../images/touches/tab.png").toString());
-        texte.append("' alt='tabulation' /> pour sélectionner le bouton à cliquer. ");
-        texte.append("La touche <img src='");
-        texte.append(getClass().getResource("../images/touches/espace.gif").toString());
-        texte.append("' alt='espace' /> vous permttra de valider.</p>");
+        texte.append("Autrement vous pouvez utiliser la touche tabulation pour sélectionner le bouton à cliquer. ");
+        texte.append("La touche espace vous permttra de valider.</p>");
         
 	return texte; 
     }
