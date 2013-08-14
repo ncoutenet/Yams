@@ -45,8 +45,6 @@ public class ReglesVue extends JFrame {
     
     private StringBuffer saisieTexte(){
 	StringBuffer texte = new StringBuffer();
-        ImageIcon imgTab = new ImageIcon(getClass().getResource("../images/touches/tab.png"));
-        ImageIcon imgEspace = new ImageIcon("..images/touches/espace.gif");
         
         if(this._mode == 0){
         texte.append("<h1 align='center' color='red'>Règles du Yam's aléatoire</h1>");
