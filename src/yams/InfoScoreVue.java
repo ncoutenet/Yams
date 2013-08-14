@@ -8,8 +8,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author nicolas
  */
-public class InfoScoreVue extends JDialog implements KeyListener{
+public class InfoScoreVue extends JDialog{
     private YamControl myControler;
     private JButton btnValider;
     
@@ -49,7 +47,6 @@ public class InfoScoreVue extends JDialog implements KeyListener{
         btnValider = new JButton("Ok");
         btnValider.addActionListener(new YamEvents(myControler));
         btnValider.setActionCommand("confScore");
-        btnValider.addKeyListener(this);
         
         Container pan = this.getContentPane();
         pan.setLayout(new GridLayout(3, 1));
@@ -66,22 +63,5 @@ public class InfoScoreVue extends JDialog implements KeyListener{
     
     public void activation(boolean enabled){
         this.setVisible(enabled);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke) {
-        System.out.println("Touche pressée: " + ke.getKeyCode());
-        if(ke.getKeyCode() == KeyEvent.VK_ENTER){
-            this.btnValider.doClick();
-        }
-    }
-    
+    }    
 }

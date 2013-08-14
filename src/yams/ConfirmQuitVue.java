@@ -8,8 +8,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author nicolas
  */
-public class ConfirmQuitVue extends JDialog implements KeyListener{
+public class ConfirmQuitVue extends JDialog{
     private JButton btnValider;
     private JButton btnAnnuler;
     
@@ -43,7 +41,6 @@ public class ConfirmQuitVue extends JDialog implements KeyListener{
         label.setForeground(Color.WHITE);
         btnValider = new JButton("Oui");
         btnValider.addActionListener(new YamEvents(yc));
-        btnValider.addKeyListener(this);
         
         if(!quit){
             btnValider.setActionCommand("nouveau");
@@ -72,25 +69,5 @@ public class ConfirmQuitVue extends JDialog implements KeyListener{
     
     public void activation(boolean enabled){
         this.setVisible(enabled);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-    }
-
-    
-    @Override
-    public void keyReleased(KeyEvent ke) {
-        System.out.println("Touche pressée: " + ke.getKeyCode());
-        if(ke.getKeyCode() == KeyEvent.VK_ENTER){
-            this.btnValider.doClick();
-        }
-        if(ke.getKeyCode() == KeyEvent.VK_ESCAPE){
-            this.btnAnnuler.doClick();
-        }
     }
 }

@@ -64,6 +64,7 @@ public class JeuVue extends JFrame {
         this.setJoueurs(noms);
         this._tableau = new JTable(_tabModel);
         this._tableau.setName("Tableau des scores");
+        this._tableau.setFocusable(false);
         
         //initialisation du tour, des valeurs et des sélections des dés
         this._tour = tour;
