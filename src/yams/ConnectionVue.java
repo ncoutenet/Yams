@@ -123,6 +123,7 @@ public class ConnectionVue extends JFrame{
             panel.setBackground(COULEUR);
             label = new JLabel();
             
+//            textField.addActionListener(new YamEvents(_myControler));
             textField.setText(string);
             this._joueurs.add(textField);
             
