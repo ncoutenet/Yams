@@ -4,11 +4,7 @@
  */
 package yams;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -17,8 +13,10 @@ import javax.swing.JPanel;
  *
  * @author nicolas
  */
-public class FinPartieVue extends JDialog {
+public class FinPartieVue extends JDialog{
     private YamControl _myControler;
+    private JButton btnNouveau;
+    private JButton btnQuitter;
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur gagnant){
         super(parent, "Fin de la partie", true);
@@ -35,8 +33,8 @@ public class FinPartieVue extends JDialog {
         labGagnant.setForeground(Color.WHITE);
         JLabel labChoix = new JLabel(strChoix);
         labChoix.setForeground(Color.WHITE);
-        JButton btnNouveau = new JButton("Nouveau");
-        JButton btnQuitter = new JButton("Quitter");
+        btnNouveau = new JButton("Nouveau");
+        btnQuitter = new JButton("Quitter");
         
         JPanel panBoutons = new JPanel(new FlowLayout());
         panBoutons.setBackground(couleur);
