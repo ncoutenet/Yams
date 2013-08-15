@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
  *
  * @author nicolas
  */
+
+/*
+ * Classe gérant les clics sur les boutons
+ */
 public class YamEvents implements ActionListener{
     private YamControl _myControler;
     

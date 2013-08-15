@@ -12,6 +12,10 @@ import java.util.Random;
  *
  * @author nicolas
  */
+
+/*
+ * Classe gérant le jeu
+ */
 public class YamModele {
     private int _joueur;
     private int _nbJoueur;
@@ -22,6 +26,9 @@ public class YamModele {
         this._joueur = 0;
     }
     
+    /*
+     * Lancement des dés
+     */
     public int[] lancer(){
          int[] resultat = new int[5];
          Random r = new Random();
@@ -33,19 +40,26 @@ public class YamModele {
          return resultat;
     }
     
+    /*
+     * Joue un son lors du lancer
+     */
     public void playSound(){
-//        String fichier = String.valueOf(getClass().getResource("sons/dé_roulant.wav"));
-//        File son = new File(fichier);
         AudioClip clip;
         
         clip = Applet.newAudioClip(getClass().getResource("sons/dé_roulant.wav"));
         clip.play();
     }
     
+    /*
+     * change le joueur en train de jouer
+     */
     public void changerJoueur(){
         this._joueur = (this._joueur + 1) % this._nbJoueur;
     }
     
+    /*
+     * gère la fin de partie
+     */
     public boolean finPartie(boolean[][] scores){
         boolean result = true;
         for(int i = 0; i < this._nbJoueur; i++){
@@ -58,10 +72,16 @@ public class YamModele {
         return result;
     }
     
+    /*
+     * Retourne le code du joueur à qui c'est de jouer
+     */
     public int getTour(){
         return this._joueur;
     }
     
+    /*
+     * met à jour le nombre de lancés restants
+     */
     public int majNbLances(int nb){
         int result;
         

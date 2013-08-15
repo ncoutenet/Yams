@@ -17,6 +17,10 @@ import javax.swing.JPanel;
  *
  * @author nicolas
  */
+
+/*
+ * Fenêtre s'affichant à la fin de chaque tour en mode montant et descandant
+ */
 public class InfoScoreVue extends JDialog{
     private YamControl myControler;
     private JButton btnValider;
@@ -61,6 +65,9 @@ public class InfoScoreVue extends JDialog{
         this.pack();
     }
     
+    /*
+     * gère l'affichage
+     */
     public void activation(boolean enabled){
         this.setVisible(enabled);
     }    

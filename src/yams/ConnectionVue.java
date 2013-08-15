@@ -13,6 +13,10 @@ import javax.swing.*;
  *
  * @author nicolas
  */
+
+/*
+ * Fenêtrre permettant de choisir le mode de jeu, le nombre de joueurs et leur pseudo
+ */
 public class ConnectionVue extends JFrame{
     
     private int VAL = 1;
@@ -31,6 +35,7 @@ public class ConnectionVue extends JFrame{
         super("Yam's");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         _myControler = yc;
+        //initialisation du conteneur principal
         Container pan = this.getContentPane();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         
@@ -100,15 +105,21 @@ public class ConnectionVue extends JFrame{
         btnValider.setActionCommand("commencer");
         pan.add(btnValider);
         
+        //compactage et placement dans l'écran
         this.pack();
         this.setLocationRelativeTo(this.getParent());
         
     }
     
+    /*
+     * Permet l'affichage/masquage de la fenêtre
+     */
     public void affichage(boolean enable){
         this.setVisible(enable);
     }
-    
+    /*
+     * Ajout d'un joueur, cette fonction permet de conserver les pseudos des joueurs précédants
+     */
     private void addJoueurs(){
         String string;
         JPanel panel;
@@ -123,7 +134,6 @@ public class ConnectionVue extends JFrame{
             panel.setBackground(COULEUR);
             label = new JLabel();
             
-//            textField.addActionListener(new YamEvents(_myControler));
             textField.setText(string);
             this._joueurs.add(textField);
             
@@ -137,6 +147,9 @@ public class ConnectionVue extends JFrame{
         }
     }
     
+    /*
+     * Suppression d'un joueur
+     */
     private void delJoueurs(){
         for(Integer i = this._oldVal; i > (Integer)this._spinner.getValue(); i--){
             this._panJoueurs.remove(i-1);
@@ -144,6 +157,9 @@ public class ConnectionVue extends JFrame{
         }
     }
     
+    /*
+     * Deffinition du nombre de joueurs
+     */
     public final void setJoueurs(){
         if(this._oldVal < (Integer)this._spinner.getValue()){
             this.addJoueurs();
@@ -156,6 +172,9 @@ public class ConnectionVue extends JFrame{
         _panJoueurs.updateUI();
     }
     
+    /*
+     * Retourne les pseudos des joueurs
+     */
     public String[] getNomsJoueurs(){
         String[] noms = new String[_joueurs.size()];
         for(int i = 0; i < _joueurs.size(); i++){
@@ -164,10 +183,16 @@ public class ConnectionVue extends JFrame{
         return noms;
     }
     
+    /*
+     * Retourne le nombre de joueurs
+     */
     public int getNbJoueurs(){
         return _joueurs.size();
     }
     
+    /*
+     * Retourne le code du mode de jeu
+     */
     public int getModeJeu(){
         if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
             if(this._cbModeJeu.getSelectedItem().equals("Aléatoire")){

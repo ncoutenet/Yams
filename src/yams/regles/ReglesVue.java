@@ -16,6 +16,10 @@ import javax.swing.JScrollPane;
  *
  * @author nicolas
  */
+
+/*
+ * Fenêtre d'affichage des règles
+ */
 public class ReglesVue extends JFrame {
     private int _mode;
 
@@ -43,6 +47,9 @@ public class ReglesVue extends JFrame {
         this.setVisible(true);
     }
     
+    /*
+     * Retourne les règles suivant le mode de jeu
+     */
     private StringBuffer saisieTexte(){
 	StringBuffer texte = new StringBuffer();
         

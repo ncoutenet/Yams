@@ -12,6 +12,11 @@ import yams.table.ModeleTableScore;
  *
  * @author nicolas
  */
+
+/*
+ * Fenêtre principale du jeu.
+ * Elle contient les dés et le tableau des scores
+ */
 public class JeuVue extends JFrame {
     private Icon[] _des;
     private JCheckBox[] _selectionDes;
@@ -33,6 +38,7 @@ public class JeuVue extends JFrame {
     private YamControl _myControler;
     
     public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode){
+        //prise en compte du mode de jeu
         if(mode == 0)
         {
             this.setTitle("Jeu du Yam's Aléatoire");
@@ -43,6 +49,8 @@ public class JeuVue extends JFrame {
         else if(mode == 2){
             this.setTitle("Jeu du Yam's Descendant");
         }
+        
+        //sauvegarde du contrôleur
         _myControler = yc;
         
         //initialisation des images des dés et de la couleur de fond
@@ -137,14 +145,17 @@ public class JeuVue extends JFrame {
         JButton btnNouveau = new JButton("Nouveau");
         btnNouveau.addActionListener(new YamEvents(_myControler));
         btnNouveau.setActionCommand("confirmNouveau");
+        btnNouveau.setFocusable(false);
         panBtnBar.add(btnNouveau);
         JButton btnRegles = new JButton("Règles");
         btnRegles.addActionListener(new YamEvents(_myControler));
         btnRegles.setActionCommand("regles");
+        btnRegles.setFocusable(false);
         panBtnBar.add(btnRegles);
         JButton btnQuitter = new JButton("Quitter");
         btnQuitter.addActionListener(new YamEvents(_myControler));
         btnQuitter.setActionCommand("confirmQuit");
+        btnQuitter.setFocusable(false);
         panBtnBar.add(btnQuitter);
         panBtnBar.setBackground(couleur);
         
@@ -165,20 +176,30 @@ public class JeuVue extends JFrame {
         this._labCoupsRestants.setForeground(Color.WHITE);
         pan.setBackground(couleur);
         
+        //mise en place des détails de la fenêtre
         this.pack();
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
     }
     
+    /*
+     * Affichage de la fenêtre
+     */
     public void affichage(boolean enable){
         this.setVisible(enable);
     }
     
+    /*
+     * Prend le numéro du joueur en paramètre et retourne le joueur correspondant
+     */
     public Joueur getJoueur(int index){
         return this._tabModel.getJoueur(index);
     }
     
+    /*
+     * Met en relation les cases à cocher et les dés via le tableau de booléens _selDes
+     */
     public void majSelDes(){
         for(int i = 0; i < 5; i++){
             if(this._selectionDes[i].isSelected()){
@@ -190,23 +211,35 @@ public class JeuVue extends JFrame {
         }
     }
     
+    /*
+     * Prend la liste des coups restants en paramètres et permet son affichage
+     */
     public void majCoupsRestants(String coups){
         String texte = "Coups restants: ";
         texte += coups;
         this._labCoupsRestants.setText(texte);
     }
     
+    /*
+     * Permet l'activation/désactivation des cases à cocher
+     */
     public final void setEnabledDes(boolean enable){
         for(int i = 0; i < 5; i++){
             this._selectionDes[i].setEnabled(enable);
         }
     }
     
+    /*
+     * Permet la mise à jour des affichages des dés
+     */
     private void majDes(int index){
         this._labDes[index].setIcon(this._des[this._valDes[index]]);
         this.getContentPane().repaint();
     }
     
+    /*
+     * Permet la mise à jour de la valeur d'un dé
+     */
     public void setValDe(int index, int val){
         if(!this._selDes[index]){
             this._valDes[index] = val;
@@ -214,18 +247,30 @@ public class JeuVue extends JFrame {
         }
     }
     
+    /*
+     * Retourne la valeur des dés
+     */
     public int[] getDes(){
         return this._valDes;
     }
     
+    /*
+     * Permet l'activation/désactivation du bouton "Fin du tour"
+     */
     public final void setEnabledFinTour(boolean enable){
         this._btnFinTour.setEnabled(enable);
     }
     
+    /*
+     * Permet l'activation/désactivation du bouton "lancer"
+     */
     public void setEnabledLancer(boolean enable){
         this._btnLancer.setEnabled(enable);
     }
     
+    /*
+     * Permet d'afficher le tour du joueur
+     */
     private void setAQui(int index){
         String tour = "Tour de: ";
         String nom = this._nomsJoueurs[index];
@@ -233,6 +278,9 @@ public class JeuVue extends JFrame {
         this._aQui.setText(tour);
     }
     
+    /*
+     * Permet d'afficher le nombre de lancers restant avant la fin du tour
+     */
     public final void setNbLancers(int nb){
         String lancer = "Reste ";
         
@@ -242,12 +290,18 @@ public class JeuVue extends JFrame {
         this._lancesRestants = nb;
     }
     
+    /*
+     * Permet la mise à jour de l'affichage des dés
+     */
     public final void refreshDes(){
         for(int i = 0; i < 5; i++){
             _labDes[i].setIcon(_des[_valDes[i]]);
         }
     }
     
+    /*
+     * Permet l'initialisation des cases à cocher et l'affichage des dés au début de chaque tour
+     */
     public void initDes(){
         for(int i = 0; i < 5; i++){
             if(this._selectionDes[i].isSelected()){
@@ -259,7 +313,9 @@ public class JeuVue extends JFrame {
             this.setValDe(i, 0);
         }
     }
-    
+    /*
+     * met à jour l'affichage du nombrre de lancés restants
+     */
     public void set_nb_Lances(){
         int nb = this.getLancesRestants();
         String lances = "Reste ";
@@ -268,11 +324,16 @@ public class JeuVue extends JFrame {
         
         this._nbLancers.setText(lances);
     }
-    
+    /*
+     * retourne le nombre de lancés restants
+     */
     public int getLancesRestants(){
         return this._lancesRestants;
     }
     
+    /*
+     * Ajoute les joueurs au tableau des scores
+     */
     public final void setJoueurs(String[] joueurs){
         this._nomsJoueurs = new String[joueurs.length];
         for(int i = 0; i < joueurs.length; i++){
@@ -282,15 +343,24 @@ public class JeuVue extends JFrame {
         }
     }
     
+    /*
+     * Met à jour le tableau des scores
+     */
     public void setScore(int joueur, int index, int score){
         this._tabModel.setScoreJoueur(joueur, index, score);
         this._tableau.updateUI();
     }
     
+    /*
+     * Retourne le tableau de la séléction des dés
+     */
     public boolean[] getSelectedDes(){
         return this._selDes;
     }
     
+    /*
+     * Définit à qui est le tour
+     */
     public void setTour(int tour){
         this._tour = tour;
         this.setAQui(this._tour);

@@ -13,14 +13,18 @@ import javax.swing.JPanel;
  *
  * @author nicolas
  */
+
+/*
+ * Fenêtre affichée en fin de partie. Elle donne le pseudo et le score du gagnant puis elle demande à l'utilisateur ce qu'il veux faire
+ */
 public class FinPartieVue extends JDialog{
     private YamControl _myControler;
     private JButton btnNouveau;
     private JButton btnQuitter;
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur gagnant){
-        super(parent, "Fin de la partie", true);
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        super(parent, "Fin de la partie", true); //fenêtre modale
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
         this._myControler = yc;
         Color couleur = new Color(43, 133, 53);
         
@@ -66,6 +70,9 @@ public class FinPartieVue extends JDialog{
         this.setLocationRelativeTo(this.getParent());
     }
     
+    /*
+     * Gère l'affichage
+     */
     public void affichage(boolean enable){
         this.setVisible(enable);
     }

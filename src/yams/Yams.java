@@ -8,6 +8,10 @@ package yams;
  *
  * @author nicolas
  */
+
+/*
+ * Classe principale permettant le lancement du programme
+ */
 public class Yams {
 
     /**

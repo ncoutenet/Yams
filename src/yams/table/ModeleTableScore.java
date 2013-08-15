@@ -14,6 +14,10 @@ import yams.Joueur;
  *
  * @author nicolas
  */
+
+/*
+ * Classe gérant le tableau des scores
+ */
 public class ModeleTableScore extends AbstractTableModel{
     private List<Joueur> _joueurs;
     private int _cptJoueurs;
@@ -27,6 +31,9 @@ public class ModeleTableScore extends AbstractTableModel{
         this._maVue = vue;
     }
 
+    /*
+     * ajoute un joueur
+     */
     public void addJoueur(Joueur j){
         this._joueurs.add(j);
         _cptJoueurs += 1;
@@ -34,10 +41,16 @@ public class ModeleTableScore extends AbstractTableModel{
         fireTableRowsInserted(this._joueurs.size() -1, this._joueurs.size() -1);
     }
     
+    /*
+     * retourne un joueur
+     */
     public Joueur getJoueur(int index){
         return this._joueurs.get(index);
     }
     
+    /*
+     * Enregistre le score du joueur indexé à l'emplacement désigné par l'index du score
+     */
     public void setScoreJoueur(int index, int indexScore, int score){
         this._joueurs.get(index).setScore(indexScore, score);
         fireTableCellUpdated(index, indexScore);

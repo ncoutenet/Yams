@@ -11,6 +11,10 @@ import javax.swing.event.ChangeListener;
  *
  * @author nicolas
  */
+
+/*
+ * Classe gérant les modifications du nombre de joueurs
+ */
 public class NbJoueursEvents implements ChangeListener{
     private YamControl _myControler;
     

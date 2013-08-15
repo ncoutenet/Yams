@@ -14,6 +14,9 @@ import yams.regles.ReglesVue;
  * @author nicolas
  */
 
+/*
+ * Classe controleur, elle gère le bon fonctionnement du jeu
+ */
 public class YamControl {
     private ConnectionVue _connection;
     private YamModele _modele;
@@ -34,10 +37,16 @@ public class YamControl {
         _connection.affichage(true);
     }
     
+    /*
+     * Initialise les joueurs
+     */
     public void setNomsJoueurs(){
         _connection.setJoueurs();
     }
     
+    /*
+     * Retourne les coups restants
+     */
     private String getCoupsRestants(int joueur){
         List<String> coups = new ArrayList<String>();
         String result = new String();
@@ -101,6 +110,9 @@ public class YamControl {
         return result;
     }
     
+    /*
+     * fonction d'initialisation de la partie
+     */
     public void commencer(){
         _mode = _connection.getModeJeu();
         _nomsJoueurs = _connection.getNomsJoueurs();
@@ -142,21 +154,33 @@ public class YamControl {
         }
     }
     
+    /*
+     * nouvelle partie (après abandon)
+     */
     public void nouveau(){
         _jeu.affichage(false);
         _connection.affichage(true);
     }
     
+    /*
+     * nouvelle partie
+     */
     public void recommencer(){
         _finPartie.affichage(false);
         _jeu.affichage(false);
         _connection.affichage(true);
     }
     
+    /*
+     * fermeture du programme
+     */
     public void quitter(){
         System.exit(0);
     }
     
+    /*
+     * gestion de la fin du tour
+     */
     public void finTour(){
         _jeu.setTour(_tour);
         if(_mode == 0){
@@ -352,7 +376,9 @@ public class YamControl {
         this._confScores = new InfoScoreVue(score, strScore, _jeu, this);
         this._confScores.activation(true);
     }
-    
+    /*
+     * gestion de la fin du tour en montante/descendante
+     */
     public void confScores(){
         this._confScores.activation(false);
         
@@ -377,6 +403,9 @@ public class YamControl {
         }
     }
     
+    /*
+     * gestion de la fin de partie
+     */
     private void finTour(boolean fin){
         _jeu.setTour(_tour);
         if(_mode == 0){
@@ -388,10 +417,16 @@ public class YamControl {
         }
     }
     
+    /*
+     * mise à jour des dés sélectionnés
+     */
     public void majSelectDes(){
         this._jeu.majSelDes();
     }
     
+    /*
+     * enregistrement des scores choisis
+     */
     public void validationScore(){
         String choix;
         choix = this._finTour.getChoix();
@@ -565,6 +600,9 @@ public class YamControl {
         }
     }
     
+    /*
+     * préparation du tour suivant
+     */
     private void tourSuivant(){
         this._jeu.setEnabledFinTour(false);
         this._jeu.setEnabledLancer(true);
@@ -577,19 +615,31 @@ public class YamControl {
         this._jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
     }
     
+    /*
+     * gestion de l'affichage des règles
+     */
     public void affichageRegles() {
             ReglesVue rav = new ReglesVue(_mode);
     }
     
+    /*
+     * gestion de l'annulation de l'abandon de la partie
+     */
     public void annuler(){
         this._confirmQuit.activation(false);
     }
     
+    /*
+     * gestion de la confirmation de l'abandon
+     */
     public void confirmQuit(boolean quit){
         this._confirmQuit = new ConfirmQuitVue(quit, this._jeu, this);
         this._confirmQuit.activation(true);
     }
     
+    /*
+     * gestion des règles lors du choix du mode
+     */
     public void apercuRegle(){
         int mode = this._connection.getModeJeu();
         ReglesVue rv = new ReglesVue(mode);

@@ -17,6 +17,15 @@ import javax.swing.JLabel;
  *
  * @author nicolas
  */
+
+/*
+ * TODO colorier en rouge les cases "rayées" et en vert les cases déjà sélectionnées
+ */
+
+/*
+ * Fenêtre s'affichant à la fin de chaque tour en mode aléatoire
+ * Elle permet au joueur de sélectionner la case où il veut placer ses points
+ */
 public class FinTourVue extends JDialog{
     private YamControl _myControler;
     
@@ -65,6 +74,9 @@ public class FinTourVue extends JDialog{
         this.setLocationRelativeTo(this.getParent());
     }
     
+    /*
+     * Retourne la sélection du joueur
+     */
     public String getChoix(){
         if(this._cbChoix.getSelectedItem().getClass().equals(String.class)){
             return (String)this._cbChoix.getSelectedItem();
@@ -72,6 +84,9 @@ public class FinTourVue extends JDialog{
         else return null;
     }
     
+    /*
+     * Permet la mise à jour des choix possibles
+     */
     private void setChoix(){
         Object[] types;
         java.util.List<String> coups = new ArrayList<String>();
@@ -132,6 +147,9 @@ public class FinTourVue extends JDialog{
         this._cbChoix = new JComboBox(types);
     }
     
+    /*
+     * gère l'affichage
+     */
     public void setAffichage(boolean enable){
         this.setVisible(enable);
     }

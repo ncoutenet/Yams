@@ -8,6 +8,10 @@ package yams;
  *
  * @author nicolas
  */
+
+/*
+ * Classe définissant un joueur et son score
+ */
 public class Joueur {
     private String _nom;
     private int[] _score;
@@ -22,19 +26,31 @@ public class Joueur {
             this._util[i] = false;
         }
     }
-
+    
+    /*
+     * Retourne le pseudo du joueur
+     */
     public String getNom() {
         return _nom;
     }
 
+    /*
+     * définit le nom du joueur
+     */
     public void setNom(String nom) {
         this._nom = nom;
     }
 
+    /*
+     * Retourne le score correspondant à l'index passé en paramètre
+     */
     public int getScore(int index) {
         return _score[index];
     }
 
+    /*
+     * Enregistre le score passé en paramètre dans la case donnée en paramètre
+     */
     public void setScore(int index, int score) {
         if(!this._util[index]){
             this._score[index] = score;
@@ -53,6 +69,9 @@ public class Joueur {
         }
     }
     
+    /*
+     * Calcule les differants totaux
+     */
     private void setTotal(int index){
         switch(index){
             case 6:
