@@ -6,6 +6,7 @@ package yams;
 
 import java.awt.*;
 import javax.swing.*;
+import yams.table.ColorTab;
 import yams.table.ModeleTableScore;
 
 /**
@@ -35,6 +36,7 @@ public class JeuVue extends JFrame {
     
     private JTable _tableau;
     private ModeleTableScore _tabModel;
+    private ColorTab _gestionnaire;
     private YamControl _myControler;
     
     public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode){
@@ -73,6 +75,24 @@ public class JeuVue extends JFrame {
         this._tableau = new JTable(_tabModel);
         this._tableau.setName("Tableau des scores");
         this._tableau.setFocusable(false);
+        
+        //initialisation du tableau des couleurs du tableau des scores
+        int[][] colorTab = new int[nbJoueurs][18];
+        for(int i = 0; i < nbJoueurs; i++){
+            for(int j = 0; j < 18; j++){
+                if((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17)){
+                    colorTab[i][j] = 2;
+                }
+                else colorTab[i][j] = 0;
+            }
+        }
+        
+        //initialisation du gestionnaire de couleurs
+        this._gestionnaire = new ColorTab(colorTab, nbJoueurs);
+        
+        //liaison du tableau avec son gestionnaire de couleur
+        this._tableau.setDefaultRenderer(Object.class, this._gestionnaire);
+        this._tableau.updateUI();
         
         //initialisation du tour, des valeurs et des sélections des dés
         this._tour = tour;
@@ -195,6 +215,14 @@ public class JeuVue extends JFrame {
      */
     public Joueur getJoueur(int index){
         return this._tabModel.getJoueur(index);
+    }
+    
+    /*
+     * Met à jour la couleur du tableau suivant les index donnés
+     */
+    public void majColorTab(int joueur, int index, int type){
+        this._gestionnaire.setCouleurs(joueur, index, type);
+//        this._tableau.updateUI();
     }
     
     /*

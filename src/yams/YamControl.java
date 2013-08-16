@@ -221,6 +221,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][0] = false;
                 this._jeu.setScore(this._tour, 0, score);
+                this._jeu.majColorTab(this._tour, 1, 1);
                 strScore = "1";
                 break;
             case 1:
@@ -231,6 +232,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][1] = false;
                 this._jeu.setScore(this._tour, 1, score);
+                this._jeu.majColorTab(this._tour, 2, 1);
                 strScore = "2";
                 break;
             case 2:
@@ -241,6 +243,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][2] = false;
                 this._jeu.setScore(this._tour, 2, score);
+                this._jeu.majColorTab(this._tour, 3, 1);
                 strScore = "3";
                 break;
             case 3:
@@ -251,6 +254,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][3] = false;
                 this._jeu.setScore(this._tour, 3, score);
+                this._jeu.majColorTab(this._tour, 4, 1);
                 strScore = "4";
                 break;
             case 4:
@@ -261,6 +265,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][4] = false;
                 this._jeu.setScore(this._tour, 4, score);
+                this._jeu.majColorTab(this._tour, 5, 1);
                 strScore = "5";
                 break;
             case 5:
@@ -271,6 +276,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][5] = false;
                 this._jeu.setScore(this._tour, 5, score);
+                this._jeu.majColorTab(this._tour, 6, 1);
                 strScore = "6";
                 break;
             case 6:
@@ -279,6 +285,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][6] = false;
                 this._jeu.setScore(this._tour, 9, score);
+                this._jeu.majColorTab(this._tour, 10, 1);
                 strScore = "+";
                 break;
             case 7:
@@ -287,6 +294,7 @@ public class YamControl {
                 }
                 this._scoresValides[this._tour][7] = false;
                 this._jeu.setScore(this._tour, 10, score);
+                this._jeu.majColorTab(this._tour, 11, 1);
                 strScore = "-";
                 break;
             case 8:
@@ -306,6 +314,10 @@ public class YamControl {
                 }
                 if(suite){
                     score = 20;
+                    this._jeu.majColorTab(this._tour, 13, 1);
+                }
+                else {
+                    this._jeu.majColorTab(this._tour, 13, -1);
                 }
                 this._scoresValides[this._tour][8] = false;
                 this._jeu.setScore(this._tour, 12, score);
@@ -327,6 +339,10 @@ public class YamControl {
                 }
                 if(full){
                     score = 30;
+                    this._jeu.majColorTab(this._tour, 14, 1);
+                }
+                else {
+                    this._jeu.majColorTab(this._tour, 14, -1);
                 }
                 this._scoresValides[this._tour][9] = false;
                 this._jeu.setScore(this._tour, 13, score);
@@ -347,6 +363,10 @@ public class YamControl {
 
                 if(carre){
                     score = 40;
+                    this._jeu.majColorTab(this._tour, 15, 1);
+                }
+                else{
+                    this._jeu.majColorTab(this._tour, 15, -1);
                 }
                 this._scoresValides[this._tour][10] = false;
                 this._jeu.setScore(this._tour, 14, score);
@@ -363,6 +383,10 @@ public class YamControl {
                 }
                 if(yam){
                     score = 50;
+                    this._jeu.majColorTab(this._tour, 16, 1);
+                }
+                else{
+                    this._jeu.majColorTab(this._tour, 16, -1);
                 }
                 this._scoresValides[this._tour][11] = false;
                 this._jeu.setScore(this._tour, 15, score);
@@ -442,6 +466,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][0] = false;
            this._jeu.setScore(this._tour, 0, score);
+           this._jeu.majColorTab(this._tour, 1, 1);
         }
         else if(choix.equals("2")){
            for(int i = 0; i < 5; i++){
@@ -450,7 +475,8 @@ public class YamControl {
                }
            }
            this._scoresValides[this._tour][1] = false;
-           this._jeu.setScore(this._tour, 1, score); 
+           this._jeu.setScore(this._tour, 1, score);
+           this._jeu.majColorTab(this._tour, 2, 1);
         }
         else if(choix.equals("3")){
             for(int i = 0; i < 5; i++){
@@ -460,6 +486,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][2] = false;
            this._jeu.setScore(this._tour, 2, score);
+           this._jeu.majColorTab(this._tour, 3, 1);
         }
         else if(choix.equals("4")){
             for(int i = 0; i < 5; i++){
@@ -469,6 +496,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][3] = false;
            this._jeu.setScore(this._tour, 3, score);
+           this._jeu.majColorTab(this._tour, 4, 1);
         }
         else if(choix.equals("5")){
             for(int i = 0; i < 5; i++){
@@ -478,6 +506,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][4] = false;
            this._jeu.setScore(this._tour, 4, score);
+           this._jeu.majColorTab(this._tour, 5, 1);
         }
         else if(choix.equals("6")){
             for(int i = 0; i < 5; i++){
@@ -487,6 +516,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][5] = false;
            this._jeu.setScore(this._tour, 5, score);
+           this._jeu.majColorTab(this._tour, 6, 1);
         }
         else if(choix.equals("+")){
             for(int i = 0; i < 5; i++){
@@ -494,6 +524,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][6] = false;
            this._jeu.setScore(this._tour, 9, score);
+           this._jeu.majColorTab(this._tour, 10, 1);
         }
         else if(choix.equals("-")){
             
@@ -502,6 +533,7 @@ public class YamControl {
            }
            this._scoresValides[this._tour][7] = false;
            this._jeu.setScore(this._tour, 10, score);
+           this._jeu.majColorTab(this._tour, 11, 1);
         }
         else if(choix.equals("suite")){
             boolean suite = true;
@@ -520,6 +552,10 @@ public class YamControl {
             }
             if(suite){
                 score = 20;
+                this._jeu.majColorTab(this._tour, 13, 1);
+            }
+            else{
+                this._jeu.majColorTab(this._tour, 13, -1);
             }
            this._scoresValides[this._tour][8] = false;
             this._jeu.setScore(this._tour, 12, score);
@@ -540,6 +576,10 @@ public class YamControl {
             }
             if(full){
                 score = 30;
+                this._jeu.majColorTab(this._tour, 14, 1);
+            }
+            else{
+                this._jeu.majColorTab(this._tour, 14, -1);
             }
            this._scoresValides[this._tour][9] = false;
             this._jeu.setScore(this._tour, 13, score);
@@ -559,6 +599,10 @@ public class YamControl {
             
             if(carre){
                 score = 40;
+                this._jeu.majColorTab(this._tour, 15, 1);
+            }
+            else{
+                this._jeu.majColorTab(this._tour, 15, -1);
             }
             this._scoresValides[this._tour][10] = false;
             this._jeu.setScore(this._tour, 14, score);
@@ -574,6 +618,10 @@ public class YamControl {
            }
             if(yam){
                 score = 50;
+                this._jeu.majColorTab(this._tour, 16, 1);
+            }
+            else{
+                this._jeu.majColorTab(this._tour, 16, -1);
             }
            this._scoresValides[this._tour][11] = false;
            this._jeu.setScore(this._tour, 15, score);
