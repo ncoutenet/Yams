@@ -6,9 +6,9 @@ package yams;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
+//import javax.swing.table.JTableHeader;
 import yams.table.ColorTab;
-import yams.table.HeaderRenderer;
+//import yams.table.HeaderRenderer;
 import yams.table.ModeleTableScore;
 
 /**
@@ -209,7 +209,6 @@ public class JeuVue extends JFrame {
         
         //mise en place des détails de la fenêtre
         this.pack();
-        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
     }
