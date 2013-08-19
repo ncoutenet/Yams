@@ -433,6 +433,7 @@ public class YamControl {
         }
         else{
             this.tourSuivant();
+            this._jeu.setTotalPoints(true);
         }
     }
     
