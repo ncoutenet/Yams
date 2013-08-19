@@ -6,7 +6,9 @@ package yams;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import yams.table.ColorTab;
+import yams.table.HeaderRenderer;
 import yams.table.ModeleTableScore;
 
 /**
@@ -70,11 +72,15 @@ public class JeuVue extends JFrame {
             this._labDes[i] = new JLabel();
         
         //initialisation du tableau des scores
-        this._tabModel = new ModeleTableScore(nbJoueurs, this);
+        this._tabModel = new ModeleTableScore(nbJoueurs);
         this.setJoueurs(noms);
         this._tableau = new JTable(_tabModel);
         this._tableau.setName("Tableau des scores");
         this._tableau.setFocusable(false);
+        Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
+        this._tableau.setFont(font);
+        this._tableau.setGridColor(Color.black);
+//        this._tableau.getTableHeader().setDefaultRenderer(new HeaderRenderer());
         
         //initialisation du tableau des couleurs du tableau des scores
         int[][] colorTab = new int[nbJoueurs][18];

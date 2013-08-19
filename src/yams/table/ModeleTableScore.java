@@ -22,13 +22,11 @@ public class ModeleTableScore extends AbstractTableModel{
     private List<Joueur> _joueurs;
     private int _cptJoueurs;
     private final String[] _entetes = {"Joueur", "1", "2", "3", "4","5", "6", "Total", "Bonus", "Total", "+", "-", "Total", "suite", "full", "carré", "yam's", "TOTAL"};
-    private JeuVue _maVue;
     
-    public ModeleTableScore(int nbJoueurs, JeuVue vue){
+    public ModeleTableScore(int nbJoueurs){
         super();
         this._joueurs = new ArrayList<Joueur>();
         this._cptJoueurs = 0;
-        this._maVue = vue;
     }
 
     /*
@@ -36,7 +34,7 @@ public class ModeleTableScore extends AbstractTableModel{
      */
     public void addJoueur(Joueur j){
         this._joueurs.add(j);
-        _cptJoueurs += 1;
+        this._cptJoueurs += 1;
         
         fireTableRowsInserted(this._joueurs.size() -1, this._joueurs.size() -1);
     }

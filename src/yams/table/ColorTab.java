@@ -6,9 +6,10 @@ package yams.table;
 
 import java.awt.Color;
 import java.awt.Component;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import yams.JeuVue;
 
 /**
  *
@@ -39,24 +40,25 @@ public class ColorTab extends DefaultTableCellRenderer{
     
     @Override
     public Component getTableCellRendererComponent (JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column){
-          Component cell = super.getTableCellRendererComponent (table,value,isSelected,hasFocus,row,column); 
+          super.getTableCellRendererComponent (table,value,isSelected,hasFocus,row,column); 
           if (this._colorTable[row][column] == -1) { 
-              cell.setBackground(rate);
+              this.setBackground(rate);
           }
           else {
               if (this._colorTable[row][column] == 1) { 
-                   cell.setBackground(valide);
+                   this.setBackground(valide);
               }
               else {
                   if (this._colorTable[row][column] == 2){
-                      cell.setBackground(titre);
+                      this.setBackground(titre);
                   }
                   else {
-                   cell.setBackground(Color.white);
+                   this.setBackground(Color.white);
                   }
               }      
           }
-          return cell;
+          this.setHorizontalAlignment(JLabel.CENTER);
+          return this;
     }
     
     /*
