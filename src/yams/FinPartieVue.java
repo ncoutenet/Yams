@@ -21,6 +21,7 @@ public class FinPartieVue extends JDialog{
     private YamControl _myControler;
     private JButton btnNouveau;
     private JButton btnQuitter;
+    private JButton btnRecommencer;
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur gagnant){
         super(parent, "Fin de la partie", true); //fenêtre modale
@@ -39,6 +40,7 @@ public class FinPartieVue extends JDialog{
         labChoix.setForeground(Color.WHITE);
         btnNouveau = new JButton("Nouveau");
         btnQuitter = new JButton("Quitter");
+        btnRecommencer = new JButton("Recommencer");
         
         JPanel panBoutons = new JPanel(new FlowLayout());
         panBoutons.setBackground(couleur);
@@ -51,8 +53,12 @@ public class FinPartieVue extends JDialog{
         panLabels.add(labChoix);
         
         btnNouveau.addActionListener(new YamEvents(_myControler));
-        btnNouveau.setActionCommand("recommencer");
+        btnNouveau.setActionCommand("nouvellePartie");
         panBoutons.add(btnNouveau);
+        
+        btnRecommencer.addActionListener(new YamEvents(_myControler));
+        btnRecommencer.setActionCommand("recommencer");
+        panBoutons.add(btnRecommencer);
         
         btnQuitter.addActionListener(new YamEvents(_myControler));
         btnQuitter.setActionCommand("quitter");

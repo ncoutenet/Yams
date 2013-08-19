@@ -48,6 +48,9 @@ public class YamEvents implements ActionListener{
         if(ae.getActionCommand().equals("selDé")){
             _myControler.majSelectDes();
         }
+        if(ae.getActionCommand().equals("nouvellePartie")){
+            _myControler.nouvellePartie();
+        }
         if(ae.getActionCommand().equals("recommencer")){
             _myControler.recommencer();
         }

@@ -147,6 +147,7 @@ public class YamControl {
         }
         _jeu.setEnabledFinTour(true);
         _jeu.setEnabledDes(true);
+        _jeu.setTotalPoints(false);
         if(lancesRestants == 0){
             _jeu.setEnabledLancer(false);
             _jeu.setEnabledDes(false);
@@ -165,10 +166,18 @@ public class YamControl {
     /*
      * nouvelle partie
      */
-    public void recommencer(){
+    public void nouvellePartie(){
         _finPartie.affichage(false);
         _jeu.affichage(false);
         _connection.affichage(true);
+    }
+    
+    /*
+     * Nouvelle partie avec les mêmes joueurs que précédement
+     */
+    public void recommencer(){
+        _finPartie.affichage(false);
+        this.commencer();
     }
     
     /*
@@ -627,6 +636,7 @@ public class YamControl {
            this._jeu.setScore(this._tour, 15, score);
         }
         this._finTour.setAffichage(false);
+        this._jeu.setTotalPoints(true);
         if(this._modele.finPartie(this._scoresValides)){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;

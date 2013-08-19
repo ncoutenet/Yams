@@ -28,6 +28,7 @@ public class JeuVue extends JFrame {
     private JLabel _nbLancers;
     private JButton _btnFinTour;
     private JButton _btnLancer;
+    private JLabel _labTotalPoints;
     private JLabel _labCoupsRestants;
     
     private int[] _valDes;
@@ -144,7 +145,7 @@ public class JeuVue extends JFrame {
         panJeu.setBackground(couleur);
         
         //emplacement des dés
-        JPanel panLancement = new JPanel(new GridLayout(2, 1));
+        JPanel panLancement = new JPanel(new GridLayout(3, 1));
         _btnLancer = new JButton("Lancer");
         _btnLancer.addActionListener(new YamEvents(_myControler));
         _btnLancer.setActionCommand("lancer");
@@ -156,13 +157,17 @@ public class JeuVue extends JFrame {
         _btnFinTour.addActionListener(new YamEvents(_myControler));
         _btnFinTour.setActionCommand("finTour");
         this.setEnabledFinTour(false);
+        _labTotalPoints = new JLabel("0 points");
         JPanel panBtnLancement = new JPanel(new FlowLayout());
         panBtnLancement.add(_btnLancer);
         panBtnLancement.add(this._btnFinTour);
         panBtnLancement.setBackground(couleur);
         panLancement.add(panBtnLancement);
+        panLancement.add(this._labTotalPoints);
         panLancement.add(this._nbLancers);
         this._nbLancers.setForeground(Color.WHITE);
+        this._labTotalPoints.setForeground(Color.WHITE);
+        this._labTotalPoints.setHorizontalAlignment(JLabel.CENTER);
         panLancement.setBackground(couleur);
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
@@ -286,6 +291,25 @@ public class JeuVue extends JFrame {
      */
     public int[] getDes(){
         return this._valDes;
+    }
+    
+    /*
+     * calcule le nombre de points tirés aux dés
+     */
+    public void setTotalPoints(boolean init){
+        int somme = 0;
+        String texte;
+        if(!init){
+            for(int i = 0; i < 5; i++){
+                somme += this._valDes[i];
+            }
+        }
+        
+        texte = String.valueOf(somme);
+        texte += " points";
+        
+        this._labTotalPoints.setText(texte);
+        this._labTotalPoints.setForeground(Color.WHITE);
     }
     
     /*
