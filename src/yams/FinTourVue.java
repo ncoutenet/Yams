@@ -7,19 +7,13 @@ package yams;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 /**
  *
  * @author nicolas
- */
-
-/*
- * TODO colorier en rouge les cases "rayées" et en vert les cases déjà sélectionnées
  */
 
 /*
@@ -33,6 +27,7 @@ public class FinTourVue extends JDialog{
     private boolean[][] _choixValides;
     private int _noJoueur;
     private JButton _btnVal;
+    private  JButton _btnAnnuler;
     
     public FinTourVue(boolean[][] choix, int joueur, YamControl yc, boolean fin, JeuVue parent){
         super(parent, "Fin Du Tour", true);
@@ -43,7 +38,9 @@ public class FinTourVue extends JDialog{
         if(fin){
             this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         }
-        else this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        else{
+            this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
         this._myControler = yc;
         
         //initialisation des variables locales
@@ -54,10 +51,21 @@ public class FinTourVue extends JDialog{
         JLabel labMessage = new JLabel("Choisissez où vous voulez placer les points");
         labMessage.setForeground(Color.WHITE);
         
-        //création du bouton valider
+        //création des boutons de validation
         this._btnVal = new JButton("Valider");
         this._btnVal.addActionListener(new YamEvents(this._myControler));
         this._btnVal.setActionCommand("validerFinTour");
+            this._btnAnnuler = new JButton("Annuler");
+            this._btnAnnuler.addActionListener(new YamEvents(this._myControler));
+            this._btnAnnuler.setActionCommand("annulerFinTour");
+        
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(couleur);
+        if(!fin){
+            panel.add(this._btnVal);
+            panel.add(this._btnAnnuler);
+            panel.setSize(panel.getWidth(), _btnVal.getHeight());
+        }
         //création de la liste déroulante
         this.setChoix();
         
@@ -68,7 +76,10 @@ public class FinTourVue extends JDialog{
         pan.setLayout(new BorderLayout(0, 10));
         pan.add(labMessage, BorderLayout.NORTH);
         pan.add(this._cbChoix, BorderLayout.CENTER);
-        pan.add(this._btnVal, BorderLayout.SOUTH);
+        if(!fin){
+            pan.add(panel, BorderLayout.SOUTH);
+        }
+        else pan.add(this._btnVal, BorderLayout.SOUTH);
         
         this.pack();
         this.setLocationRelativeTo(this.getParent());

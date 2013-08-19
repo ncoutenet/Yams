@@ -649,6 +649,14 @@ public class YamControl {
     }
     
     /*
+     * ferme la fenêtre de fin du tour
+     */
+    public void annulerFinTour(){
+        this._finTour.setAffichage(false);
+//        this._finTour.dispose();
+    }
+    
+    /*
      * préparation du tour suivant
      */
     private void tourSuivant(){
