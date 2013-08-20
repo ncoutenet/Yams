@@ -6,6 +6,9 @@ package yams;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,11 +22,13 @@ import java.util.Random;
 public class YamModele {
     private int _joueur;
     private int _nbJoueur;
+    private YamControl _myControler;
     
-    public YamModele(int nbJoueurs){
+    public YamModele(int nbJoueurs, YamControl yc){
         //initialisation des variables locales
         this._nbJoueur = nbJoueurs;
         this._joueur = 0;
+        this._myControler = yc;
     }
     
     /*
@@ -55,6 +60,30 @@ public class YamModele {
      */
     public void changerJoueur(){
         this._joueur = (this._joueur + 1) % this._nbJoueur;
+    }
+    
+    /*
+     * Trie les joueurs par score
+     */
+    public Joueur[] sortJoueurs(Joueur[] joueurs){
+        List<Joueur> liste = new ArrayList<Joueur>();
+        Joueur[] listeTriee = new Joueur[this._myControler.getNbJoueurs()];
+        int min;
+        int index = 0;
+        
+        liste.addAll(Arrays.asList(joueurs));
+        
+        for(int i = 0; i < joueurs.length; i++){
+            min = 0;
+            for(int j = 1; j < liste.size(); j++){
+                if(liste.get(min).getScore(16) > liste.get(j).getScore(16)){
+                    min = j;
+                }
+            }
+            listeTriee[i] = liste.remove(min);
+        }
+        
+        return listeTriee;
     }
     
     /*

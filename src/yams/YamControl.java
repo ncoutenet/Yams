@@ -5,6 +5,7 @@
 package yams;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import yams.regles.ReglesVue;
@@ -117,7 +118,7 @@ public class YamControl {
         _mode = _connection.getModeJeu();
         _nomsJoueurs = _connection.getNomsJoueurs();
         _nbJoueurs = _connection.getNbJoueurs();
-        _modele = new YamModele(_nbJoueurs);
+        _modele = new YamModele(_nbJoueurs, this);
         _scoresValides = new boolean[_nbJoueurs][12];
         for(int i = 0; i < _nbJoueurs; i++){
             for(int j = 0; j < 12; j++){
@@ -159,6 +160,7 @@ public class YamControl {
      * nouvelle partie (après abandon)
      */
     public void nouveau(){
+        _confirmQuit.activation(false);
         _jeu.affichage(false);
         _connection.affichage(true);
     }
@@ -413,6 +415,7 @@ public class YamControl {
      * gestion de la fin du tour en montante/descendante
      */
     public void confScores(){
+        Joueur[] listeJoueurs = new Joueur[_nbJoueurs];
         this._confScores.activation(false);
         
         if(this._modele.finPartie(this._scoresValides)){
@@ -423,18 +426,22 @@ public class YamControl {
                 joueurs[i] = this._jeu.getJoueur(i);
             }
             
-            for(int i = 1; i < this._nbJoueurs; i++){
-                if(joueurs[max].getScore(16) < joueurs[i].getScore(16)){
-                    max = i;
-                }
-            }
-            this._finPartie = new FinPartieVue(this, this._jeu, joueurs[max]);
+            joueurs = this._modele.sortJoueurs(joueurs);
+            
+            this._finPartie = new FinPartieVue(this, this._jeu, joueurs);
             this._finPartie.affichage(true);
         }
         else{
             this.tourSuivant();
             this._jeu.setTotalPoints(true);
         }
+    }
+    
+    /*
+     * Retourne le nombre de joueurs
+     */
+    public int getNbJoueurs(){
+        return this._nbJoueurs;
     }
     
     /*
@@ -646,12 +653,8 @@ public class YamControl {
                 joueurs[i] = this._jeu.getJoueur(i);
             }
             
-            for(int i = 1; i < this._nbJoueurs; i++){
-                if(joueurs[max].getScore(16) < joueurs[i].getScore(16)){
-                    max = i;
-                }
-            }
-            this._finPartie = new FinPartieVue(this, this._jeu, joueurs[max]);
+            joueurs = this._modele.sortJoueurs(joueurs);
+            this._finPartie = new FinPartieVue(this, this._jeu, joueurs);
             this._finPartie.affichage(true);
         }
         else{

@@ -5,10 +5,7 @@
 package yams;
 
 import java.awt.*;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 /**
  *
  * @author nicolas
@@ -23,16 +20,36 @@ public class FinPartieVue extends JDialog{
     private JButton btnQuitter;
     private JButton btnRecommencer;
     
-    public FinPartieVue(YamControl yc, JeuVue parent, Joueur gagnant){
+    public FinPartieVue(YamControl yc, JeuVue parent, Joueur[] gagnants){
         super(parent, "Fin de la partie", true); //fenêtre modale
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
         this._myControler = yc;
         Color couleur = new Color(43, 133, 53);
+        int max = gagnants.length-1;
         
-        String strGagnant = gagnant.getNom();
+        String strGagnant = gagnants[max].getNom();
         String strChoix = "Que souhaitez-vous faire?";
         
-        strGagnant += " à gagné la partie avec " + gagnant.getScore(16) + " points!!!";
+        strGagnant += " à gagné la partie avec " + gagnants[max].getScore(16) + " points!!!";
+        
+        JEditorPane listeJoueurs;
+        StringBuffer liste = new StringBuffer();
+        int position = 2;
+        for(max = gagnants.length-2; max >= 0; max--){
+            String texte = new String("<center><b><span color='white'>");
+            texte += String.valueOf(position);
+            texte += "ème: ";
+            texte += gagnants[max].getNom();
+            texte += " avec ";
+            texte += gagnants[max].getScore(16);
+            texte += " points</span></b></center>";
+            liste.append(texte);
+            position++;
+        }
+        
+        listeJoueurs = new JEditorPane("text/html", new String(liste));
+        listeJoueurs.setEditable(false);
+        listeJoueurs.setBackground(couleur);
         
         JLabel labGagnant = new JLabel(strGagnant);
         labGagnant.setForeground(Color.WHITE);
@@ -44,12 +61,13 @@ public class FinPartieVue extends JDialog{
         
         JPanel panBoutons = new JPanel(new FlowLayout());
         panBoutons.setBackground(couleur);
-        JPanel panLabels = new JPanel(new GridLayout(2, 1, 0, 5));
+        JPanel panLabels = new JPanel(new GridLayout(3, 1, 0, 5));
         panLabels.setBackground(couleur);
         
         labGagnant.setHorizontalAlignment(JLabel.CENTER);
         labChoix.setHorizontalAlignment(JLabel.CENTER);
         panLabels.add(labGagnant);
+        panLabels.add(listeJoueurs);
         panLabels.add(labChoix);
         
         btnNouveau.addActionListener(new YamEvents(_myControler));
