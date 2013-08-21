@@ -178,6 +178,7 @@ public class YamControl {
      */
     public void recommencer(){
         _finPartie.affichage(false);
+        _jeu.affichage(false);
         this.commencer();
     }
     
