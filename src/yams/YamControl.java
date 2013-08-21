@@ -138,7 +138,7 @@ public class YamControl {
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();
         
-        _modele.playSound();
+        _modele.playSoundDe();
         
         des = _modele.lancer();
         lancesRestants = _modele.majNbLances(lancesRestants);

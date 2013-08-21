@@ -48,10 +48,20 @@ public class YamModele {
     /*
      * Joue un son lors du lancer
      */
-    public void playSound(){
+    public void playSoundDe(){
         AudioClip clip;
         
         clip = Applet.newAudioClip(getClass().getResource("sons/dé_roulant.wav"));
+        clip.play();
+    }
+    
+    /*
+     * Joue un son lors de la fin de la partie
+     */
+    public void playSoundFin(){
+        AudioClip clip;
+        
+        clip = Applet.newAudioClip(getClass().getResource("sons/applaudissements.wav"));
         clip.play();
     }
     
@@ -98,6 +108,11 @@ public class YamModele {
                 }
             }
         }
+        
+        if(result){
+            this.playSoundFin();
+        }
+        
         return result;
     }
     
