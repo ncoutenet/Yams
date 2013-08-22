@@ -69,13 +69,42 @@ public class FinTourVue extends JDialog{
         //création de la liste déroulante
         this.setChoix();
         
-        
-        //assemblage de la fenêtre
+        //initialisation du panel principal
         Container pan = this.getContentPane();
-        pan.setBackground(couleur);
         pan.setLayout(new BorderLayout(0, 10));
-        pan.add(labMessage, BorderLayout.NORTH);
-        pan.add(this._cbChoix, BorderLayout.CENTER);
+        
+        //verification du dernier lancer
+        boolean[] scores = _myControler.getScoresValides();
+        int cpt = 0;
+        for(int i = 0; i < 12; i++){
+            if(!scores[i]){
+                cpt++;
+            }
+        }
+        if(cpt == 11){
+            int index = 0;
+            while(!scores[index]){
+                index++;
+            }
+            JLabel message = new JLabel("Il ne reste qu'un score à ajouter:");
+            message.setForeground(Color.WHITE);
+            JLabel score = new JLabel(this.getDernierScore());
+            score.setForeground(Color.WHITE);
+            score.setHorizontalAlignment(JLabel.CENTER);
+            pan.add(message, BorderLayout.NORTH);
+            pan.add(score, BorderLayout.CENTER);
+            
+        }
+        else {
+            System.out.println(cpt);
+            pan.add(labMessage, BorderLayout.NORTH);
+            pan.add(this._cbChoix, BorderLayout.CENTER);
+        }
+        
+        //deffinition de la couleur de fond de la fenêtre
+        pan.setBackground(couleur);
+        
+        //deffinition du nombre de boutons utiles
         if(!fin){
             pan.add(panel, BorderLayout.SOUTH);
         }
@@ -101,8 +130,6 @@ public class FinTourVue extends JDialog{
     private void setChoix(){
         Object[] types;
         java.util.List<String> coups = new ArrayList<String>();
-        int cpt = 0;
-            int j;
         for(int i = 0; i < 12; i++){
             String type = new String();
             switch(i){
@@ -156,6 +183,61 @@ public class FinTourVue extends JDialog{
         }
         
         this._cbChoix = new JComboBox(types);
+    }
+    
+    /*
+     * Retourne le dernier score à effectuer
+     */
+    private String getDernierScore(){
+        String score = null;
+        
+        for(int i = 0; i < 12; i++){
+            String type = new String();
+            switch(i){
+                case 0:
+                    type = "1";
+                    break;
+                case 1:
+                    type = "2";
+                    break;
+                case 2:
+                    type = "3";
+                    break;
+                case 3:
+                    type = "4";
+                    break;
+                case 4:
+                    type = "5";
+                    break;
+                case 5:
+                    type = "6";
+                    break;
+                case 6:
+                    type = "+";
+                    break;
+                case 7:
+                    type = "-";
+                    break;
+                case 8:
+                    type = "suite";
+                    break;
+                case 9:
+                    type = "full";
+                    break;
+                case 10:
+                    type = "carré";
+                    break;
+                case 11:
+                    type = "yam's";
+                    break;
+                default:
+                    break;
+            }
+            if(this._choixValides[this._noJoueur][i]){
+                score = type;
+            }
+        }
+        return score;
     }
     
     /*

@@ -111,6 +111,17 @@ public class YamControl {
     }
     
     /*
+     * Retourne les scores validés du joueur en train de jouer sous forme de tableau de booléens
+     */
+    public boolean[] getScoresValides(){
+        boolean[] scores = new boolean[12];
+        
+        System.arraycopy(_scoresValides[_tour], 0, scores, 0, 12);
+        
+        return scores;
+    }
+    
+    /*
      * fonction d'initialisation de la partie
      */
     public void commencer(){
