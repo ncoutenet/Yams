@@ -34,11 +34,16 @@ public class FinPartieVue extends JDialog{
         
         JEditorPane listeJoueurs;
         StringBuffer liste = new StringBuffer();
-        int position = 2;
-        for(max = gagnants.length-2; max >= 0; max--){
+        int position = 1;
+        for(max = gagnants.length-1; max >= 0; max--){
             String texte = new String("<center><b><span color='white'>");
             texte += String.valueOf(position);
-            texte += "ème: ";
+            if(max == gagnants.length-1){
+                texte += "er: ";
+            }
+            else{
+                texte += "ème: ";
+            }
             texte += gagnants[max].getNom();
             texte += " avec ";
             texte += gagnants[max].getScore(16);
@@ -53,6 +58,7 @@ public class FinPartieVue extends JDialog{
         
         JLabel labGagnant = new JLabel(strGagnant);
         labGagnant.setForeground(Color.WHITE);
+        labGagnant.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
         JLabel labChoix = new JLabel(strChoix);
         labChoix.setForeground(Color.WHITE);
         btnNouveau = new JButton("Nouveau");
