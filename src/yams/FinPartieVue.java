@@ -34,22 +34,24 @@ public class FinPartieVue extends JDialog{
         
         JEditorPane listeJoueurs;
         StringBuffer liste = new StringBuffer();
-        int position = 1;
-        for(max = gagnants.length-1; max >= 0; max--){
-            String texte = new String("<center><b><span color='white'>");
-            texte += String.valueOf(position);
-            if(max == gagnants.length-1){
-                texte += "er: ";
+        if(gagnants.length > 1){
+            int position = 1;
+            for(max = gagnants.length-1; max >= 0; max--){
+                String texte = new String("<center><b><span color='white'>");
+                texte += String.valueOf(position);
+                if(max == gagnants.length-1){
+                    texte += "er: ";
+                }
+                else{
+                    texte += "ème: ";
+                }
+                texte += gagnants[max].getNom();
+                texte += " avec ";
+                texte += gagnants[max].getScore(16);
+                texte += " points</span></b></center>";
+                liste.append(texte);
+                position++;
             }
-            else{
-                texte += "ème: ";
-            }
-            texte += gagnants[max].getNom();
-            texte += " avec ";
-            texte += gagnants[max].getScore(16);
-            texte += " points</span></b></center>";
-            liste.append(texte);
-            position++;
         }
         
         listeJoueurs = new JEditorPane("text/html", new String(liste));
@@ -73,7 +75,9 @@ public class FinPartieVue extends JDialog{
         labGagnant.setHorizontalAlignment(JLabel.CENTER);
         labChoix.setHorizontalAlignment(JLabel.CENTER);
         panLabels.add(labGagnant);
-        panLabels.add(listeJoueurs);
+        if(gagnants.length > 1){
+            panLabels.add(listeJoueurs);
+        }
         panLabels.add(labChoix);
         
         btnNouveau.addActionListener(new YamEvents(_myControler));
@@ -96,7 +100,13 @@ public class FinPartieVue extends JDialog{
         pan.add(panLabels, BorderLayout.CENTER);
         pan.add(panBoutons, BorderLayout.SOUTH);
         
-        this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*3);
+        if(gagnants.length == 1){
+            this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*2);
+            
+        }
+        else {
+            this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*3);
+        }
         this.setLocationRelativeTo(this.getParent());
     }
     
