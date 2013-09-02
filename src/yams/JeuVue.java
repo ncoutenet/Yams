@@ -6,9 +6,7 @@ package yams;
 
 import java.awt.*;
 import javax.swing.*;
-//import javax.swing.table.JTableHeader;
 import yams.table.ColorTab;
-//import yams.table.HeaderRenderer;
 import yams.table.ModeleTableScore;
 
 /**
