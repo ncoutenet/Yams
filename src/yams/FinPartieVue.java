@@ -108,6 +108,9 @@ public class FinPartieVue extends JDialog{
             this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*3);
         }
         this.setLocationRelativeTo(this.getParent());
+        Point p = this.getLocation();
+        p.setLocation(p.getX(), p.getY() + (parent.getLocation().getY() - (this.getHeight()/2)));
+        this.setLocation(p);
     }
     
     /*
