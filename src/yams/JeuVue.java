@@ -17,6 +17,7 @@ import yams.table.ModeleTableScore;
 // TODO ajouter des préférences pour le son, les differents coups, et la manière de sélectionner les dés à garder
 // TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 // TODO rendre les dés clicables et masquer les cases à cocher
+// TODO mettre le skin des dés à jour lors de la sélection
 
 /*
  * Fenêtre principale du jeu.
