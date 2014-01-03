@@ -17,7 +17,6 @@ import yams.table.ModeleTableScore;
 // TODO ajouter des préférences pour le son, les differents coups, et la manière de sélectionner les dés à garder
 // TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 // TODO rendre les dés clicables et masquer les cases à cocher
-// TODO mettre le skin des dés à jour lors de la sélection
 
 /*
  * Fenêtre principale du jeu.
@@ -25,6 +24,7 @@ import yams.table.ModeleTableScore;
  */
 public class JeuVue extends JFrame {
     private Icon[] _des;
+    private Icon[]  _delSelect;
     private JCheckBox[] _selectionDes;
     private JLabel _aQui;
     private JLabel[] _labDes;
@@ -63,6 +63,14 @@ public class JeuVue extends JFrame {
         _myControler = yc;
         
         //initialisation des images des dés et de la couleur de fond
+        this._delSelect = new Icon[6];
+        this._delSelect[0] = new ImageIcon(getClass().getResource("images/dés/1_sel.png"));
+        this._delSelect[1] = new ImageIcon(getClass().getResource("images/dés/2_sel.png"));
+        this._delSelect[2] = new ImageIcon(getClass().getResource("images/dés/3_sel.png"));
+        this._delSelect[3] = new ImageIcon(getClass().getResource("images/dés/4_sel.png"));
+        this._delSelect[4] = new ImageIcon(getClass().getResource("images/dés/5_sel.png"));
+        this._delSelect[5] = new ImageIcon(getClass().getResource("images/dés/6_sel.png"));
+        
         this._des = new Icon[7];
         this._des[0] = new ImageIcon(getClass().getResource("images/dés/indef.png"));
         this._des[1] = new ImageIcon(getClass().getResource("images/dés/1.png"));
@@ -251,9 +259,11 @@ public class JeuVue extends JFrame {
         for(int i = 0; i < 5; i++){
             if(this._selectionDes[i].isSelected()){
                 this._selDes[i] = true; 
+                this._labDes[i].setIcon(this._delSelect[this._valDes[i]-1]);
             }
             else {
                 this._selDes[i] = false;
+                this._labDes[i].setIcon(this._des[this._valDes[i]]);
             }
         }
         this.setPointsSelect();
