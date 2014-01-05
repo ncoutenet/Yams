@@ -4,10 +4,9 @@
  */
 package yams.regles;
 
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import javax.swing.ImageIcon;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -159,10 +158,6 @@ public class ReglesVue extends JFrame {
         texte.append("    </tbody>");
         texte.append("</table>");
         texte.append("<p>Remarque: Si un joueur totalise 60 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 30 points.</p>");
-        texte.append("<h2> Commandes de jeu </h2>");
-        texte.append("<p>Pour jouer, vous pouvez cliquer sur les boutons à l'aide d'une souris. <br/>");
-        texte.append("Autrement vous pouvez utiliser la touche tabulation pour sélectionner le bouton à cliquer. ");
-        texte.append("La touche espace vous permttra de valider.</p>");
         
 	return texte; 
     }
