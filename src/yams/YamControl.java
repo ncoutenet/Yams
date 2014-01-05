@@ -157,11 +157,9 @@ public class YamControl {
             _jeu.setValDe(i, des[i]);
         }
         _jeu.setEnabledFinTour(true);
-        _jeu.setEnabledDes(true);
         _jeu.setTotalPoints(false);
         if(lancesRestants == 0){
             _jeu.setEnabledLancer(false);
-            _jeu.setEnabledDes(false);
             this.finTour(true);
         }
     }
@@ -488,13 +486,6 @@ public class YamControl {
     }
     
     /*
-     * mise à jour des dés sélectionnés
-     */
-    public void majSelectDes(){
-        this._jeu.majSelDes();
-    }
-    
-    /*
      * enregistrement des scores choisis
      */
     public void validationScore(){
@@ -725,7 +716,6 @@ public class YamControl {
         this._jeu.setEnabledLancer(true);
         this._jeu.initDes();
         this._jeu.setNbLancers(3);
-        this._jeu.setEnabledDes(false);
         this._modele.changerJoueur();
         this._tour = this._modele.getTour();
         this._jeu.setTour(this._tour);

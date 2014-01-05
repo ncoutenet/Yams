@@ -45,9 +45,6 @@ public class YamEvents implements ActionListener{
         if(ae.getActionCommand().equals("annulerFinTour")){
             _myControler.annulerFinTour();
         }
-        if(ae.getActionCommand().equals("selDé")){
-            _myControler.majSelectDes();
-        }
         if(ae.getActionCommand().equals("nouvellePartie")){
             _myControler.nouvellePartie();
         }

@@ -6,6 +6,7 @@ package yams;
 
 import java.awt.*;
 import javax.swing.*;
+import yams.mouseEvents.*;
 import yams.table.ColorTab;
 import yams.table.ModeleTableScore;
 
@@ -16,7 +17,6 @@ import yams.table.ModeleTableScore;
 
 // TODO ajouter des préférences pour le son, les differents coups, et la manière de sélectionner les dés à garder
 // TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
-// TODO rendre les dés clicables et masquer les cases à cocher
 
 /*
  * Fenêtre principale du jeu.
@@ -25,7 +25,6 @@ import yams.table.ModeleTableScore;
 public class JeuVue extends JFrame {
     private Icon[] _des;
     private Icon[]  _delSelect;
-    private JCheckBox[] _selectionDes;
     private JLabel _aQui;
     private JLabel[] _labDes;
     private JLabel _nbLancers;
@@ -81,8 +80,29 @@ public class JeuVue extends JFrame {
         this._des[6] = new ImageIcon(getClass().getResource("images/dés/6.png"));
         this._labDes = new JLabel[5];
         Color couleur = new Color(43, 133, 53);
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 5; i++){
             this._labDes[i] = new JLabel();
+            switch(i){
+                case 0:
+                    this._labDes[i].addMouseListener(new YamMouseEvent1(this));
+                    break;
+                case 1:
+                    this._labDes[i].addMouseListener(new YamMouseEvent2(this));
+                    break;
+                case 2:
+                    this._labDes[i].addMouseListener(new YamMouseEvent3(this));
+                    break;
+                case 3:
+                    this._labDes[i].addMouseListener(new YamMouseEvent4(this));
+                    break;
+                case 4:
+                    this._labDes[i].addMouseListener(new YamMouseEvent5(this));
+                    break;
+                default: //n'arrivera jamais
+                    System.err.println("ERREUR: mauvais ID de label de dé");
+                    break;
+            }
+        }
         
         //initialisation du tableau des scores
         this._tabModel = new ModeleTableScore(nbJoueurs);
@@ -117,15 +137,11 @@ public class JeuVue extends JFrame {
         this._tour = tour;
         this._valDes = new int[5];
         this._selDes = new boolean[5];
-        this._selectionDes = new JCheckBox[5];
         this._aQui = new JLabel();
         this._aQui.setHorizontalAlignment(JLabel.CENTER);
         this._aQui.setForeground(Color.WHITE);
         this._aQui.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         for(int i = 0; i < 5; i++){
-            _selectionDes[i] = new JCheckBox();
-            _selectionDes[i].addActionListener(new YamEvents(_myControler));
-            _selectionDes[i].setActionCommand("selDé");
             _selDes[i] = false;
             _valDes[i] = 0;
         }
@@ -146,13 +162,11 @@ public class JeuVue extends JFrame {
         {
             JPanel panel = new JPanel(new FlowLayout());
             panel.setBackground(couleur);
-            panel.add(this._selectionDes[i]);
             panel.add(this._labDes[i]);
             panDes.add(panel);
         }
         panDes.setBackground(couleur);
         
-        this.setEnabledDes(false);
         panJeu.add(panDes, BorderLayout.CENTER);
         panJeu.setBackground(couleur);
         
@@ -253,20 +267,22 @@ public class JeuVue extends JFrame {
     }
     
     /*
-     * Met en relation les cases à cocher et les dés via le tableau de booléens _selDes
+     * Met de coté les dés à conserver via le tableau de booléens _selDes
      */
-    public void majSelDes(){
-        for(int i = 0; i < 5; i++){
-            if(this._selectionDes[i].isSelected()){
-                this._selDes[i] = true; 
-                this._labDes[i].setIcon(this._delSelect[this._valDes[i]-1]);
-            }
-            else {
-                this._selDes[i] = false;
-                this._labDes[i].setIcon(this._des[this._valDes[i]]);
-            }
+    public void majSelDes(int index){
+        if(this._valDes[index] == 0){
+            System.err.println("Erreur: Dé non lancé!!!");
         }
-        this.setPointsSelect();
+        else {
+            this._selDes[index] = !_selDes[index];
+            if(this._selDes[index]){
+                this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
+            }
+            else{
+                this._labDes[index].setIcon(this._des[this._valDes[index]]);
+            }
+            this.setPointsSelect();
+        }
     }
     
     /*
@@ -276,15 +292,6 @@ public class JeuVue extends JFrame {
         String texte = "Coups restants: ";
         texte += coups;
         this._labCoupsRestants.setText(texte);
-    }
-    
-    /*
-     * Permet l'activation/désactivation des cases à cocher
-     */
-    public final void setEnabledDes(boolean enable){
-        for(int i = 0; i < 5; i++){
-            this._selectionDes[i].setEnabled(enable);
-        }
     }
     
     /*
@@ -401,11 +408,10 @@ public class JeuVue extends JFrame {
      */
     public void initDes(){
         for(int i = 0; i < 5; i++){
-            if(this._selectionDes[i].isSelected()){
-                this._selectionDes[i].setSelected(false);
+            if(this._selDes[i]){
+                this._selDes[i] = false;
             }
         }
-        this.majSelDes();
         for(int i = 0; i < 5; i++){
             this.setValDe(i, 0);
         }
