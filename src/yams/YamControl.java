@@ -32,9 +32,34 @@ public class YamControl {
     private int _tour;
     private int _mode;
     
+    private boolean _soundPref;
+    
     public YamControl(){
         _connection = new ConnectionVue(this);
         _connection.affichage(true);
+        this.getSoundPref();
+    }
+    
+    /*
+     * Retourne la valeur de la préférence sur le son
+     */
+    public boolean isSoundPref() {
+        return _soundPref;
+    }
+    
+    /*
+     * Récupère et enregistre la valeur de préférence sur le son
+     */
+    private void getSoundPref(){
+        // TODO récupérer la valeur liée aux sons
+        this._soundPref = true;
+    }
+    
+    /*
+     * définit la valeur de préférence du son
+     */
+    public void setSoundPref(boolean soundPref) {
+        this._soundPref = soundPref;
     }
     
     /*
@@ -148,7 +173,9 @@ public class YamControl {
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();
         
-        _modele.playSoundDe();
+        if(this.isSoundPref()){
+            _modele.playSoundDe();
+        }
         
         des = _modele.lancer();
         lancesRestants = _modele.majNbLances(lancesRestants);
@@ -445,7 +472,7 @@ public class YamControl {
         Joueur[] listeJoueurs = new Joueur[_nbJoueurs];
         this._confScores.activation(false);
         
-        if(this._modele.finPartie(this._scoresValides)){
+        if(this._modele.finPartie(this._scoresValides, this._soundPref)){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;
             
@@ -683,7 +710,7 @@ public class YamControl {
         }
         this._finTour.setAffichage(false);
         this._jeu.setTotalPoints(true);
-        if(this._modele.finPartie(this._scoresValides)){
+        if(this._modele.finPartie(this._scoresValides, this._soundPref)){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;
             

@@ -99,7 +99,7 @@ public class YamModele {
     /*
      * gère la fin de partie
      */
-    public boolean finPartie(boolean[][] scores){
+    public boolean finPartie(boolean[][] scores, boolean soundPref){
         boolean result = true;
         for(int i = 0; i < this._nbJoueur; i++){
             for(int j = 0; j < 12; j++){
@@ -109,7 +109,7 @@ public class YamModele {
             }
         }
         
-        if(result){
+        if(result && soundPref){
             this.playSoundFin();
         }
         
