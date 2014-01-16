@@ -7,6 +7,7 @@ package yams;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.prefs.Preferences;
 import yams.regles.ReglesVue;
 
 /**
@@ -20,6 +21,8 @@ import yams.regles.ReglesVue;
 public class YamControl {
     private ConnectionVue _connection;
     private YamModele _modele;
+    
+    private Preferences _prefs;
     private JeuVue _jeu;
     private FinTourVue _finTour;
     private FinPartieVue _finPartie;
@@ -32,34 +35,13 @@ public class YamControl {
     private int _tour;
     private int _mode;
     
-    private boolean _soundPref;
+    private boolean _sound;
     
     public YamControl(){
         _connection = new ConnectionVue(this);
         _connection.affichage(true);
-        this.getSoundPref();
-    }
-    
-    /*
-     * Retourne la valeur de la préférence sur le son
-     */
-    public boolean isSoundPref() {
-        return _soundPref;
-    }
-    
-    /*
-     * Récupère et enregistre la valeur de préférence sur le son
-     */
-    private void getSoundPref(){
-        // TODO récupérer la valeur liée aux sons
-        this._soundPref = true;
-    }
-    
-    /*
-     * définit la valeur de préférence du son
-     */
-    public void setSoundPref(boolean soundPref) {
-        this._soundPref = soundPref;
+        _prefs = Preferences.systemRoot();
+        _sound = _prefs.getBoolean("sound", true);
     }
     
     /*
@@ -173,7 +155,7 @@ public class YamControl {
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();
         
-        if(this.isSoundPref()){
+        if(_sound){
             _modele.playSoundDe();
         }
         
@@ -472,7 +454,7 @@ public class YamControl {
         Joueur[] listeJoueurs = new Joueur[_nbJoueurs];
         this._confScores.activation(false);
         
-        if(this._modele.finPartie(this._scoresValides, this._soundPref)){
+        if(this._modele.finPartie(this._scoresValides, this._sound)){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;
             
@@ -710,7 +692,7 @@ public class YamControl {
         }
         this._finTour.setAffichage(false);
         this._jeu.setTotalPoints(true);
-        if(this._modele.finPartie(this._scoresValides, this._soundPref)){
+        if(this._modele.finPartie(this._scoresValides, this._sound)){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;
             

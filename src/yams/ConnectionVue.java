@@ -7,7 +7,9 @@ package yams;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 import javax.swing.*;
+import yams.mouseEvents.YamSoundConnectionEvent;
 
 /**
  *
@@ -24,6 +26,11 @@ public class ConnectionVue extends JFrame{
     private int MAX = 10;
     private Color COULEUR;
     private Integer _oldVal;
+    
+    private Preferences _prefs;
+    private boolean _sound;
+    private Icon[] _iSounds;
+    private JLabel _labSound;
     
     private YamControl _myControler;
     private JSpinner _spinner;
@@ -42,6 +49,11 @@ public class ConnectionVue extends JFrame{
         //initialisation des variables internes
         this._oldVal = new Integer(0);
         this._joueurs = new ArrayList<JTextField>();
+        
+        //initialisations des préférences
+        this._prefs = Preferences.systemRoot();
+        this._sound = this._prefs.getBoolean("sound", true);
+        // TODO lier le booléen aux préférences du controleur
         
         //initialisation de la couleur de fond
         COULEUR = new Color(43, 133, 53);
@@ -63,11 +75,20 @@ public class ConnectionVue extends JFrame{
         btnRegles.addActionListener(new YamEvents(_myControler));
         btnRegles.setActionCommand("aperçuRegles");
         
+        //création du bouton pour le son
+        this._iSounds = new Icon[2];
+        this._iSounds[0] = new ImageIcon(getClass().getResource("images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("images/sound/soundOn.png"));
+        this._labSound = new JLabel();
+        this._labSound.addMouseListener(new YamSoundConnectionEvent(this));
+        this.majSound(true);
+        
         //assemblage 
         JPanel panModesJeu = new JPanel(new FlowLayout());
         panModesJeu.add(labModes);
         panModesJeu.add(this._cbModeJeu);
         panModesJeu.add(btnRegles);
+        panModesJeu.add(this._labSound);
         panModesJeu.setBackground(COULEUR);
         pan.add(panModesJeu);
         
@@ -117,6 +138,22 @@ public class ConnectionVue extends JFrame{
     public void affichage(boolean enable){
         this.setVisible(enable);
     }
+    
+    /*
+     * Permet la mise à jour de l'icone du son
+     */
+    public void majSound(boolean init){
+        if(!init){
+            this._sound = ! this._sound;
+            this._prefs.putBoolean("sound", this._sound);
+        }
+        if(this._sound){
+            this._labSound.setIcon(this._iSounds[1]);
+        }else{
+            this._labSound.setIcon(this._iSounds[0]);
+        }
+    }
+    
     /*
      * Ajout d'un joueur, cette fonction permet de conserver les pseudos des joueurs précédants
      */
