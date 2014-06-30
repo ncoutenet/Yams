@@ -5,6 +5,7 @@
 package yams;
 
 import java.awt.*;
+import java.util.prefs.Preferences;
 import javax.swing.*;
 import yams.mouseEvents.*;
 import yams.table.ColorTab;
@@ -15,7 +16,7 @@ import yams.table.ModeleTableScore;
  * @author nicolas
  */
 
-// TODO ajouter des préférences pour le son, les differents coups, et la manière de sélectionner les dés à garder
+// TODO ajouter des préférences pour les differents coups, et la manière de sélectionner les dés à garder
 // TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 
 /*
@@ -33,19 +34,22 @@ public class JeuVue extends JFrame {
     private JLabel _labTotalPoints;
     private JLabel _labPointsConserves;
     private JLabel _labCoupsRestants;
+    private JLabel _labSound;
+    private Icon[] _iSounds;
     
     private int[] _valDes;
     private boolean[] _selDes;
     private String[] _nomsJoueurs;
     private int _tour;
     private int _lancesRestants;
+    private boolean _sound;
     
     private JTable _tableau;
     private ModeleTableScore _tabModel;
     private ColorTab _gestionnaire;
     private YamControl _myControler;
     
-    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode){
+    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode, boolean sound){
         //prise en compte du mode de jeu
         if(mode == 0)
         {
@@ -60,6 +64,9 @@ public class JeuVue extends JFrame {
         
         //sauvegarde du contrôleur
         _myControler = yc;
+        
+        //initialisations des préférences
+        this._sound = sound;
         
         //initialisation des images des dés et de la couleur de fond
         this._delSelect = new Icon[6];
@@ -220,6 +227,14 @@ public class JeuVue extends JFrame {
         btnQuitter.setFocusable(false);
         panBtnBar.add(btnQuitter);
         panBtnBar.setBackground(couleur);
+        //création du bouton pour le son
+        this._iSounds = new Icon[2];
+        this._iSounds[0] = new ImageIcon(getClass().getResource("images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("images/sound/soundOn.png"));
+        this._labSound = new JLabel();
+        this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
+        this.majSound(this._sound);
+        panBtnBar.add(this._labSound);
         
         //label des couts restants
         this._labCoupsRestants = new JLabel();
@@ -249,6 +264,19 @@ public class JeuVue extends JFrame {
      */
     public void affichage(boolean enable){
         this.setVisible(enable);
+    }
+    
+    /*
+     * Permet la mise à jour de l'icone du son
+     */
+    public void majSound(boolean init){
+        this._sound = init;
+            
+        if(this._sound){
+            this._labSound.setIcon(this._iSounds[1]);
+        }else{
+            this._labSound.setIcon(this._iSounds[0]);
+        }
     }
     
     /*

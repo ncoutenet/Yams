@@ -7,21 +7,22 @@ package yams.mouseEvents;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import yams.ConnectionVue;
+import yams.YamControl;
 
 /**
  *
  * @author nicolas
  */
-public class YamSoundConnectionEvent implements MouseListener{
-    private ConnectionVue _view;
+public class YamSoundEvent implements MouseListener{
+    private YamControl _myControler;
     
-    public YamSoundConnectionEvent(ConnectionVue view){
-        this._view = view;
+    public YamSoundEvent(YamControl control){
+        this._myControler = control;
     }
     
     @Override
     public void mouseClicked(MouseEvent me) {
-        this._view.majSound(false);
+        this._myControler.majSound();
     }
 
     @Override

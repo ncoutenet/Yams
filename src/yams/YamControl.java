@@ -38,10 +38,10 @@ public class YamControl {
     private boolean _sound;
     
     public YamControl(){
-        _connection = new ConnectionVue(this);
-        _connection.affichage(true);
-        _prefs = Preferences.systemRoot();
+        _prefs = Preferences.userNodeForPackage(YamControl.class);
         _sound = _prefs.getBoolean("sound", true);
+        _connection = new ConnectionVue(this, this._sound);
+        _connection.affichage(true);
     }
     
     /*
@@ -50,6 +50,14 @@ public class YamControl {
     public void setNomsJoueurs(){
         _connection.setJoueurs();
     }
+    
+    /*
+     * Retourne les préférences de son
+     */
+    public boolean isSound() {
+        return _sound;
+    }
+    
     
     /*
      * Retourne les coups restants
@@ -145,7 +153,7 @@ public class YamControl {
         _tour = _modele.getTour();
         
         //initialisation et mise à jour des vues
-        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode);
+        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode, this._sound);
         _connection.affichage(false);
         _jeu.affichage(true);
         _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
@@ -198,6 +206,16 @@ public class YamControl {
         _finPartie.affichage(false);
         _jeu.affichage(false);
         this.commencer();
+    }
+    
+    /*
+     * mise à jour de la préférenc de son
+     */
+    public void majSound(){
+        this._sound = !this._sound;
+        this._prefs.putBoolean("sond", this._sound); // FIXME la préférence du son n'est pas conservée quand on quitte
+        this._connection.majSound(this._sound);
+        this._jeu.majSound(this._sound);
     }
     
     /*

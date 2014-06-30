@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 import javax.swing.*;
-import yams.mouseEvents.YamSoundConnectionEvent;
+import yams.mouseEvents.YamSoundEvent;
 
 /**
  *
@@ -27,7 +27,6 @@ public class ConnectionVue extends JFrame{
     private Color COULEUR;
     private Integer _oldVal;
     
-    private Preferences _prefs;
     private boolean _sound;
     private Icon[] _iSounds;
     private JLabel _labSound;
@@ -38,7 +37,7 @@ public class ConnectionVue extends JFrame{
     private JPanel _panJoueurs;
     private JComboBox _cbModeJeu;
     
-    public ConnectionVue(YamControl yc){
+    public ConnectionVue(YamControl yc, boolean sound){
         super("Yam's");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         _myControler = yc;
@@ -51,9 +50,7 @@ public class ConnectionVue extends JFrame{
         this._joueurs = new ArrayList<JTextField>();
         
         //initialisations des préférences
-        this._prefs = Preferences.systemRoot();
-        this._sound = this._prefs.getBoolean("sound", true);
-        // TODO lier le booléen aux préférences du controleur
+        this._sound = sound;
         
         //initialisation de la couleur de fond
         COULEUR = new Color(43, 133, 53);
@@ -80,8 +77,8 @@ public class ConnectionVue extends JFrame{
         this._iSounds[0] = new ImageIcon(getClass().getResource("images/sound/soundOff.png"));
         this._iSounds[1] = new ImageIcon(getClass().getResource("images/sound/soundOn.png"));
         this._labSound = new JLabel();
-        this._labSound.addMouseListener(new YamSoundConnectionEvent(this));
-        this.majSound(true);
+        this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
+        this.majSound(this._sound);
         
         //assemblage 
         JPanel panModesJeu = new JPanel(new FlowLayout());
@@ -143,10 +140,8 @@ public class ConnectionVue extends JFrame{
      * Permet la mise à jour de l'icone du son
      */
     public void majSound(boolean init){
-        if(!init){
-            this._sound = ! this._sound;
-            this._prefs.putBoolean("sound", this._sound);
-        }
+        this._sound = init;
+            
         if(this._sound){
             this._labSound.setIcon(this._iSounds[1]);
         }else{
