@@ -7,6 +7,8 @@ package yams.regles;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.io.File;
+import java.net.URI;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -50,6 +52,11 @@ public class ReglesVue extends JFrame {
      * Retourne les règles suivant le mode de jeu
      */
     private StringBuffer saisieTexte(){
+        String soundOn = getClass().getResource("/yams/images/sound/soundOn.png").toString();
+        String soundOff = getClass().getResource("/yams/images/sound/soundOff.png").toString();
+        //String soundOn = new File("../images/sound/soundOn.png").getAbsolutePath();
+        //System.out.println(soundOn);
+        //String soundOff = getClass().getResource("../images/sound/soundOff.png").toString();
 	StringBuffer texte = new StringBuffer();
         
         if(this._mode == 0){
@@ -158,6 +165,9 @@ public class ReglesVue extends JFrame {
         texte.append("    </tbody>");
         texte.append("</table>");
         texte.append("<p>Remarque: Si un joueur totalise 60 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 30 points.</p>");
+        texte.append("<h2>Préférences</h2>");
+        texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
+        texte.append("Pour le éactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
         
 	return texte; 
     }

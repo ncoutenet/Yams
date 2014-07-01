@@ -7,7 +7,6 @@ package yams;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 import javax.swing.*;
 import yams.mouseEvents.YamSoundEvent;
 
