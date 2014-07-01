@@ -213,7 +213,7 @@ public class YamControl {
      */
     public void majSound(){
         this._sound = !this._sound;
-        this._prefs.putBoolean("sond", this._sound); // FIXME la préférence du son n'est pas conservée quand on quitte
+        this._prefs.putBoolean("sound", (boolean)this._sound);
         this._connection.majSound(this._sound);
         this._jeu.majSound(this._sound);
     }
