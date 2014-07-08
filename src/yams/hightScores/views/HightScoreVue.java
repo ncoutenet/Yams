@@ -44,6 +44,8 @@ public class HightScoreVue extends JFrame{
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         
+        // TODO afficher les scores par mode de jeu
+        
         JScrollPane jsp = new JScrollPane();
         jsp.setViewportView(this._tableScore);
         jsp.setRowHeaderView(this._rowHeader);
