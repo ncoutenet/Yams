@@ -30,8 +30,6 @@ public class ModeleTableHightScore extends AbstractTableModel{
     public void addScore(Score score){
         this._scores.add(score);
         
-        // TODO trier les scores
-        
         fireTableRowsInserted(this._scores.size() -1, this._scores.size() -1);
     }
 
