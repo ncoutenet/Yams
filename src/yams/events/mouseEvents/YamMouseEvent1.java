@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams.mouseEvents;
+package yams.events.mouseEvents;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import yams.JeuVue;
+import yams.views.JeuVue;
 
 /**
  *

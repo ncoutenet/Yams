@@ -4,6 +4,8 @@
  */
 package yams;
 
+import yams.control.YamControl;
+
 /**
  *
  * @author nicolas

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.model;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import yams.pojos.Joueur;
+import yams.control.YamControl;
 
 /**
  *
@@ -52,7 +54,7 @@ public class YamModele {
         if(this._myControler.isSound()){
             AudioClip clip;
 
-            clip = Applet.newAudioClip(getClass().getResource("sons/dé_roulant.wav"));
+            clip = Applet.newAudioClip(getClass().getResource("../sons/dé_roulant.wav"));
             clip.play();
         }
     }
@@ -64,7 +66,7 @@ public class YamModele {
         if(this._myControler.isSound()){
             AudioClip clip;
 
-            clip = Applet.newAudioClip(getClass().getResource("sons/applaudissements.wav"));
+            clip = Applet.newAudioClip(getClass().getResource("../sons/applaudissements.wav"));
             clip.play();
         }
     }

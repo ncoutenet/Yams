@@ -2,12 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.control;
 
+import yams.pojos.Joueur;
+import yams.model.YamModele;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.prefs.Preferences;
+import yams.views.ConfirmQuitVue;
+import yams.views.ConnectionVue;
+import yams.views.FinPartieVue;
+import yams.views.FinTourVue;
+import yams.views.InfoScoreVue;
+import yams.views.JeuVue;
+
 import yams.regles.ReglesVue;
 
 /**

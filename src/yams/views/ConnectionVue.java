@@ -2,13 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.views;
 
+import yams.control.YamControl;
+import yams.events.NbJoueursEvents;
+import yams.events.YamEvents;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import yams.mouseEvents.YamSoundEvent;
+import yams.events.mouseEvents.YamSoundEvent;
 
 /**
  *
@@ -73,8 +76,8 @@ public class ConnectionVue extends JFrame{
         
         //création du bouton pour le son
         this._iSounds = new Icon[2];
-        this._iSounds[0] = new ImageIcon(getClass().getResource("images/sound/soundOff.png"));
-        this._iSounds[1] = new ImageIcon(getClass().getResource("images/sound/soundOn.png"));
+        this._iSounds[0] = new ImageIcon(getClass().getResource("../images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("../images/sound/soundOn.png"));
         this._labSound = new JLabel();
         this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
         this.majSound(this._sound);

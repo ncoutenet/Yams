@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.events;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import yams.control.YamControl;
 
 /**
  *

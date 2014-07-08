@@ -2,11 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.views;
 
+import yams.control.YamControl;
+import yams.pojos.Joueur;
+import yams.events.YamEvents;
+import yams.events.mouseEvents.YamSoundEvent;
+import yams.events.mouseEvents.YamMouseEvent1;
+import yams.events.mouseEvents.YamMouseEvent4;
+import yams.events.mouseEvents.YamMouseEvent5;
+import yams.events.mouseEvents.YamMouseEvent3;
+import yams.events.mouseEvents.YamMouseEvent2;
 import java.awt.*;
 import javax.swing.*;
-import yams.mouseEvents.*;
 import yams.table.ColorTab;
 import yams.table.ModeleTableScore;
 
@@ -70,21 +78,21 @@ public class JeuVue extends JFrame {
         
         //initialisation des images des dés et de la couleur de fond
         this._delSelect = new Icon[6];
-        this._delSelect[0] = new ImageIcon(getClass().getResource("images/dés/1_sel.png"));
-        this._delSelect[1] = new ImageIcon(getClass().getResource("images/dés/2_sel.png"));
-        this._delSelect[2] = new ImageIcon(getClass().getResource("images/dés/3_sel.png"));
-        this._delSelect[3] = new ImageIcon(getClass().getResource("images/dés/4_sel.png"));
-        this._delSelect[4] = new ImageIcon(getClass().getResource("images/dés/5_sel.png"));
-        this._delSelect[5] = new ImageIcon(getClass().getResource("images/dés/6_sel.png"));
+        this._delSelect[0] = new ImageIcon(getClass().getResource("../images/dés/1_sel.png"));
+        this._delSelect[1] = new ImageIcon(getClass().getResource("../images/dés/2_sel.png"));
+        this._delSelect[2] = new ImageIcon(getClass().getResource("../images/dés/3_sel.png"));
+        this._delSelect[3] = new ImageIcon(getClass().getResource("../images/dés/4_sel.png"));
+        this._delSelect[4] = new ImageIcon(getClass().getResource("../images/dés/5_sel.png"));
+        this._delSelect[5] = new ImageIcon(getClass().getResource("../images/dés/6_sel.png"));
         
         this._des = new Icon[7];
-        this._des[0] = new ImageIcon(getClass().getResource("images/dés/indef.png"));
-        this._des[1] = new ImageIcon(getClass().getResource("images/dés/1.png"));
-        this._des[2] = new ImageIcon(getClass().getResource("images/dés/2.png"));
-        this._des[3] = new ImageIcon(getClass().getResource("images/dés/3.png"));
-        this._des[4] = new ImageIcon(getClass().getResource("images/dés/4.png"));
-        this._des[5] = new ImageIcon(getClass().getResource("images/dés/5.png"));
-        this._des[6] = new ImageIcon(getClass().getResource("images/dés/6.png"));
+        this._des[0] = new ImageIcon(getClass().getResource("../images/dés/indef.png"));
+        this._des[1] = new ImageIcon(getClass().getResource("../images/dés/1.png"));
+        this._des[2] = new ImageIcon(getClass().getResource("../images/dés/2.png"));
+        this._des[3] = new ImageIcon(getClass().getResource("../images/dés/3.png"));
+        this._des[4] = new ImageIcon(getClass().getResource("../images/dés/4.png"));
+        this._des[5] = new ImageIcon(getClass().getResource("../images/dés/5.png"));
+        this._des[6] = new ImageIcon(getClass().getResource("../images/dés/6.png"));
         this._labDes = new JLabel[5];
         Color couleur = new Color(43, 133, 53);
         for(int i = 0; i < 5; i++){
@@ -229,8 +237,8 @@ public class JeuVue extends JFrame {
         panBtnBar.setBackground(couleur);
         //création du bouton pour le son
         this._iSounds = new Icon[2];
-        this._iSounds[0] = new ImageIcon(getClass().getResource("images/sound/soundOff.png"));
-        this._iSounds[1] = new ImageIcon(getClass().getResource("images/sound/soundOn.png"));
+        this._iSounds[0] = new ImageIcon(getClass().getResource("../images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("../images/sound/soundOn.png"));
         this._labSound = new JLabel();
         this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
         this.majSound(this._sound);

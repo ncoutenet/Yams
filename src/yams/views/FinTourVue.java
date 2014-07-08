@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.views;
 
+import yams.control.YamControl;
+import yams.events.YamEvents;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;

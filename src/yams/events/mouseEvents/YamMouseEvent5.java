@@ -2,26 +2,26 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams.mouseEvents;
+package yams.events.mouseEvents;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import yams.JeuVue;
+import yams.views.JeuVue;
 
 /**
  *
  * @author nicolas
  */
-public class YamMouseEvent4 implements MouseListener{
+public class YamMouseEvent5 implements MouseListener{
     private JeuVue _myView;
     
-    public YamMouseEvent4(JeuVue vue){
+    public YamMouseEvent5(JeuVue vue){
         this._myView = vue;
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        this._myView.majSelDes(3);
+        this._myView.majSelDes(4);
     }
 
     @Override

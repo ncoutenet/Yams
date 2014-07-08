@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams;
+package yams.events;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import yams.control.YamControl;
 
 /**
  *
@@ -68,6 +69,12 @@ public class YamEvents implements ActionListener{
         }
         if (ae.getActionCommand().equals("aperçuRegles")){
             _myControler.apercuRegle();
+        }
+        if(ae.getActionCommand().equals("openHightScores")){
+            //_myControler.openHightScores();
+        }
+        if(ae.getActionCommand().equals("closeHightScores")){
+            //_myControler.closeHightScores();
         }
     }
     
