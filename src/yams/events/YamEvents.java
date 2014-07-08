@@ -71,10 +71,10 @@ public class YamEvents implements ActionListener{
             _myControler.apercuRegle();
         }
         if(ae.getActionCommand().equals("openHightScores")){
-            //_myControler.openHightScores();
+            _myControler.openHightScores();
         }
         if(ae.getActionCommand().equals("closeHightScores")){
-            //_myControler.closeHightScores();
+            _myControler.closeHightScores();
         }
     }
     

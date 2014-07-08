@@ -82,7 +82,6 @@ public class FinPartieVue extends JDialog{
             panLabels.add(listeJoueurs);
         }
         panLabels.add(labChoix);
-        
         btnNouveau.addActionListener(new YamEvents(_myControler));
         btnNouveau.setActionCommand("nouvellePartie");
         panBoutons.add(btnNouveau);

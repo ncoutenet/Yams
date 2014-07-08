@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.prefs.Preferences;
+import yams.hightScores.views.HightScoreVue;
 import yams.views.ConfirmQuitVue;
 import yams.views.ConnectionVue;
 import yams.views.FinPartieVue;
@@ -37,6 +38,7 @@ public class YamControl {
     private FinPartieVue _finPartie;
     private ConfirmQuitVue _confirmQuit;
     private InfoScoreVue _confScores;
+    private HightScoreVue _HightScore;
     
     private String[] _nomsJoueurs;
     private int _nbJoueurs;
@@ -786,5 +788,19 @@ public class YamControl {
     public void apercuRegle(){
         int mode = this._connection.getModeJeu();
         ReglesVue rv = new ReglesVue(mode);
+    }
+    
+    /*
+     * Ouvre la fenêtre des hight scores
+     */
+    public void openHightScores(){
+        this._HightScore = new HightScoreVue(this);
+    }
+    
+    /*
+     * ferme la fenêtre des hight scores
+     */
+    public void closeHightScores(){
+        this._HightScore.close();
     }
 }

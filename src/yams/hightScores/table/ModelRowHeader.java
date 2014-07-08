@@ -29,17 +29,22 @@ public class ModelRowHeader extends AbstractTableModel{
 
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this._data.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this._entete.length;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(columnIndex == 0){
+            return this._data.get(rowIndex).toString();
+        }
+        else{
+            return null;
+        }
     }
     
 }

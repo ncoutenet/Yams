@@ -69,6 +69,11 @@ public class ConnectionVue extends JFrame{
         JLabel labModes = new JLabel("Mode de jeu: ");
         labModes.setForeground(Color.WHITE);
         
+        //création du bouton des scores
+        JButton btnScores = new JButton("Scores");
+        btnScores.setActionCommand("openHightScores");
+        btnScores.addActionListener(new YamEvents(_myControler));
+        
         //création du bouton des règles
         JButton btnRegles = new JButton("Règles");
         btnRegles.addActionListener(new YamEvents(_myControler));
@@ -86,6 +91,7 @@ public class ConnectionVue extends JFrame{
         JPanel panModesJeu = new JPanel(new FlowLayout());
         panModesJeu.add(labModes);
         panModesJeu.add(this._cbModeJeu);
+        panModesJeu.add(btnScores);
         panModesJeu.add(btnRegles);
         panModesJeu.add(this._labSound);
         panModesJeu.setBackground(COULEUR);

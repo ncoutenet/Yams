@@ -224,6 +224,10 @@ public class JeuVue extends JFrame {
         btnNouveau.setActionCommand("confirmNouveau");
         btnNouveau.setFocusable(false);
         panBtnBar.add(btnNouveau);
+        JButton btnScores = new JButton("Scores");
+        btnScores.addActionListener(new YamEvents(_myControler));
+        btnScores.setActionCommand("openHightScores");
+        panBtnBar.add(btnScores);
         JButton btnRegles = new JButton("Règles");
         btnRegles.addActionListener(new YamEvents(_myControler));
         btnRegles.setActionCommand("regles");

@@ -53,8 +53,11 @@ public class HightScoreVue extends JFrame{
         this._btnRetour.addActionListener(new YamEvents(this._myControler));
         this._btnRetour.setActionCommand("closeHightScores");
         
+        // TODO enregistrer les parties pour les afficher plus tard
+        
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.toFront();
         this.setVisible(true);
     }
     
