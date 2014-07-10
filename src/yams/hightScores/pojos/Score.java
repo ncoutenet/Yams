@@ -11,6 +11,7 @@ package yams.hightScores.pojos;
  * @author Nicolas
  */
 public class Score {
+    private int _id;
     private String _name;
     private int _score;
 
@@ -33,5 +34,13 @@ public class Score {
 
     public void setScore(int score) {
         this._score = score;
+    }
+
+    public int getId() {
+        return _id;
+    }
+
+    public void setId(int _id) {
+        this._id = _id;
     }
 }
