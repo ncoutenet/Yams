@@ -8,8 +8,12 @@ package yams.hightScores.views;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import yams.control.YamControl;
@@ -29,6 +33,7 @@ public class HightScoreVue extends JFrame{
     private JTable _rowHeader;
     private ModelRowHeader _modelRow;
     
+    private JComboBox<Object> _cbModeJeu;
     private JButton _btnRetour;
     
     public HightScoreVue(YamControl c){
@@ -45,15 +50,31 @@ public class HightScoreVue extends JFrame{
         pan.setLayout(new BorderLayout());
         
         // TODO afficher les scores par mode de jeu
+        //initialisation du menu déroulant
+        Object[] modes = new Object[3];
+        modes[0] = new String("Aléatoire");
+        modes[1] = new String("Montant");
+        modes[2] = new String("Descendant");
+        
+        //instanciation du menu
+        this._cbModeJeu = new JComboBox(modes);
+        JLabel labModes = new JLabel("Mode de jeu: ");
+        JPanel panMod = new JPanel(new FlowLayout());
+        panMod.add(labModes);
+        panMod.add(this._cbModeJeu);
+        pan.add(panMod, BorderLayout.NORTH);
         
         JScrollPane jsp = new JScrollPane();
         jsp.setViewportView(this._tableScore);
         jsp.setRowHeaderView(this._rowHeader);
-        pan.add(jsp, BorderLayout.NORTH);
+        pan.add(jsp, BorderLayout.CENTER);
         
         this._btnRetour = new JButton("Retour");
         this._btnRetour.addActionListener(new YamEvents(this._myControler));
         this._btnRetour.setActionCommand("closeHightScores");
+        JPanel panBtn = new JPanel(new FlowLayout());
+        panBtn.add(this._btnRetour);
+        pan.add(panBtn, BorderLayout.SOUTH);
         
         // TODO enregistrer les parties pour les afficher plus tard
         
@@ -69,5 +90,24 @@ public class HightScoreVue extends JFrame{
     
     private void setScores(){
         Score score;
+    }
+    
+    /*
+     * Retourne le code du mode de jeu
+     */
+    public int getModeJeu(){
+        if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
+            if(this._cbModeJeu.getSelectedItem().equals("Aléatoire")){
+                return 0;
+            }
+            else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
+                return 1;
+            }
+            else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
+                return 2;
+            }
+        }
+        
+        return -1;
     }
 }
