@@ -52,7 +52,7 @@ public class HightScoreVue extends JFrame{
         // TODO afficher les scores par mode de jeu
         //initialisation du menu déroulant
         Object[] modes = new Object[3];
-        modes[0] = new String("Aléatoire");
+        modes[0] = new String("Libre");
         modes[1] = new String("Montant");
         modes[2] = new String("Descendant");
         
@@ -97,7 +97,7 @@ public class HightScoreVue extends JFrame{
      */
     public int getModeJeu(){
         if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
-            if(this._cbModeJeu.getSelectedItem().equals("Aléatoire")){
+            if(this._cbModeJeu.getSelectedItem().equals("Libre")){
                 return 0;
             }
             else if(this._cbModeJeu.getSelectedItem().equals("Montant")){

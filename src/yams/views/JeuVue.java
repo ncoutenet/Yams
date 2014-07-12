@@ -61,7 +61,7 @@ public class JeuVue extends JFrame {
         //prise en compte du mode de jeu
         if(mode == 0)
         {
-            this.setTitle("Jeu du Yam's Aléatoire");
+            this.setTitle("Jeu du Yam's Libre");
         }
         else if(mode == 1){
             this.setTitle("Jeu du Yam's Montant");

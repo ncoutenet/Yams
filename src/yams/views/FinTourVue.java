@@ -19,7 +19,7 @@ import javax.swing.*;
  */
 
 /*
- * Fenêtre s'affichant à la fin de chaque tour en mode aléatoire
+ * Fenêtre s'affichant à la fin de chaque tour en mode libre
  * Elle permet au joueur de sélectionner la case où il veut placer ses points
  */
 public class FinTourVue extends JDialog{

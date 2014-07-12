@@ -60,7 +60,7 @@ public class ReglesVue extends JFrame {
 	StringBuffer texte = new StringBuffer();
         
         if(this._mode == 0){
-        texte.append("<h1 align='center' color='red'>Règles du Yam's aléatoire</h1>");
+        texte.append("<h1 align='center' color='red'>Règles du Yam's libre</h1>");
         }
         else if(this._mode == 1){
         texte.append("<h1 align='center' color='red'>Règles du Yam's montant</h1>");
@@ -69,7 +69,7 @@ public class ReglesVue extends JFrame {
         texte.append("<h1 align='center' color='red'>Règles du Yam's descendant</h1>");
         }
         
-        texte.append("<p>Au Yam’s le nombre de joueur n'est pas fixé, pour des raisons techniques ce logiciel ne gère que 10 joueurs maximum.</p>");
+        texte.append("<p>Le nombre de joueur est limité à 10.</p>");
         texte.append("<p>Le but est, pour chaque joueur, de remplir une grille en totalisant un maximum de points. Pour remplir la grille il faut lancer des dés et réaliser des figures.</p>");
         texte.append("<p>Chaque joueur joue à tour de rôle. À chaque tour le joueur dispose de trois lancés de cinq dés. À l'issu des deux premiers lancés il peut:</p>");
         texte.append("<ul>");
@@ -167,7 +167,7 @@ public class ReglesVue extends JFrame {
         texte.append("<p>Remarque: Si un joueur totalise 60 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 30 points.</p>");
         texte.append("<h2>Préférences</h2>");
         texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
-        texte.append("Pour le éactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
+        texte.append("Pour le réactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
         
 	return texte; 
     }
