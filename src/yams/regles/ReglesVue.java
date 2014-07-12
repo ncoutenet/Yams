@@ -7,6 +7,8 @@ package yams.regles;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -30,12 +32,23 @@ public class ReglesVue extends JFrame {
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         
+        int width = 500;
+        //int height = 685;
+        int height = 800;
         StringBuffer nom;
         nom = saisieTexte();
         
         JEditorPane jep = new JEditorPane("text/html", new String(nom));
         jep.setEditable(false);
-        jep.setPreferredSize(new Dimension(500, 800));
+        
+        // FIXME forcer la hauteur de la fenêtre au dessus de la barre des taches
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        System.out.println(tk.getScreenInsets(getGraphicsConfiguration()).bottom);
+        if((int)(tk.getScreenSize().height - tk.getScreenInsets(getGraphicsConfiguration()).bottom) < height){
+            height = (int)(tk.getScreenSize().height - tk.getScreenInsets(getGraphicsConfiguration()).bottom); 
+        }
+        System.out.println(height);
+        jep.setPreferredSize(new Dimension(width, height));
         
         JScrollPane jsp = new JScrollPane(jep);
             
