@@ -115,7 +115,7 @@ public class YamModele {
             }
         }
         
-        if(result && soundPref){
+        if(soundPref){
             this.playSoundFin();
         }
         
