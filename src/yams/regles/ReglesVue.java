@@ -7,6 +7,7 @@ package yams.regles;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import javax.swing.JEditorPane;
@@ -43,9 +44,10 @@ public class ReglesVue extends JFrame {
         
         // FIXME forcer la hauteur de la fenêtre au dessus de la barre des taches
         Toolkit tk = Toolkit.getDefaultToolkit();
-        System.out.println(tk.getScreenInsets(getGraphicsConfiguration()).bottom);
-        if((int)(tk.getScreenSize().height - tk.getScreenInsets(getGraphicsConfiguration()).bottom) < height){
-            height = (int)(tk.getScreenSize().height - tk.getScreenInsets(getGraphicsConfiguration()).bottom); 
+        GraphicsConfiguration gconf = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        System.out.println(tk.getScreenInsets(gconf));
+        if((int)(tk.getScreenSize().getHeight() - tk.getScreenInsets(gconf).bottom - tk.getScreenInsets(gconf).top) < height){
+            height = (int)(tk.getScreenSize().height - tk.getScreenInsets(gconf).bottom - tk.getScreenInsets(gconf).top); 
         }
         System.out.println(height);
         jep.setPreferredSize(new Dimension(width, height));
