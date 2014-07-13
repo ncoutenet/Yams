@@ -479,7 +479,6 @@ public class YamControl {
     /*
      * gestion de la fin du tour en montante/descendante
      */
-    // FIXME avec plusieurs joueurs la fenêtre de fin de partie ne s'affiche pas
     public void confScores(){
         this._confScores.activation(false);
         

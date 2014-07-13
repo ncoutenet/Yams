@@ -66,9 +66,6 @@ public class ReglesVue extends JFrame {
     private StringBuffer saisieTexte(){
         String soundOn = getClass().getResource("/yams/images/sound/soundOn.png").toString();
         String soundOff = getClass().getResource("/yams/images/sound/soundOff.png").toString();
-        //String soundOn = new File("../images/sound/soundOn.png").getAbsolutePath();
-        //System.out.println(soundOn);
-        //String soundOff = getClass().getResource("../images/sound/soundOff.png").toString();
 	StringBuffer texte = new StringBuffer();
         
         if(this._mode == 0){

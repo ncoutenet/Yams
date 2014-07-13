@@ -54,7 +54,7 @@ public class YamModele {
         if(this._myControler.isSound()){
             AudioClip clip;
 
-            clip = Applet.newAudioClip(getClass().getResource("../sons/dé_roulant.wav"));
+            clip = Applet.newAudioClip(getClass().getResource("/yams/sons/dé_roulant.wav"));
             clip.play();
         }
     }
@@ -66,7 +66,7 @@ public class YamModele {
         if(this._myControler.isSound()){
             AudioClip clip;
 
-            clip = Applet.newAudioClip(getClass().getResource("../sons/applaudissements.wav"));
+            clip = Applet.newAudioClip(getClass().getResource("/yams/sons/applaudissements.wav"));
             clip.play();
         }
     }
