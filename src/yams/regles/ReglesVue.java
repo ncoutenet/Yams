@@ -42,12 +42,11 @@ public class ReglesVue extends JFrame {
         JEditorPane jep = new JEditorPane("text/html", new String(nom));
         jep.setEditable(false);
         
-        // FIXME forcer la hauteur de la fenêtre au dessus de la barre des taches
         Toolkit tk = Toolkit.getDefaultToolkit();
         GraphicsConfiguration gconf = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
         System.out.println(tk.getScreenInsets(gconf));
-        if((int)(tk.getScreenSize().getHeight() - tk.getScreenInsets(gconf).bottom - tk.getScreenInsets(gconf).top) < height){
-            height = (int)(tk.getScreenSize().height - tk.getScreenInsets(gconf).bottom - tk.getScreenInsets(gconf).top); 
+        if((tk.getScreenSize().getHeight() - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2)) < height){
+            height = (int)(tk.getScreenSize().height - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2)); 
         }
         System.out.println(height);
         jep.setPreferredSize(new Dimension(width, height));
