@@ -444,6 +444,14 @@ public class JeuVue extends JFrame {
     }
     
     /*
+     * Remet à zéro les compteurs de point des dés
+     */
+    public void initScoreTour(){
+        this.setPointsSelect();
+        this.setTotalPoints(true);
+    }
+    
+    /*
      * Permet l'initialisation des cases à cocher et l'affichage des dés au début de chaque tour
      */
     public void initDes(){

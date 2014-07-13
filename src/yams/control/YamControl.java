@@ -753,6 +753,7 @@ public class YamControl {
         this._jeu.setEnabledFinTour(false);
         this._jeu.setEnabledLancer(true);
         this._jeu.initDes();
+        this._jeu.initScoreTour();
         this._jeu.setNbLancers(3);
         this._modele.changerJoueur();
         this._tour = this._modele.getTour();

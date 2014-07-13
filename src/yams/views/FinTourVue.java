@@ -103,10 +103,10 @@ public class FinTourVue extends JDialog{
             pan.add(this._cbChoix, BorderLayout.CENTER);
         }
         
-        //deffinition de la couleur de fond de la fenêtre
+        //définition de la couleur de fond de la fenêtre
         pan.setBackground(couleur);
         
-        //deffinition du nombre de boutons utiles
+        //définition du nombre de boutons utiles
         if(!fin){
             pan.add(panel, BorderLayout.SOUTH);
         }
