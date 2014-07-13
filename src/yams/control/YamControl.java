@@ -490,7 +490,7 @@ public class YamControl {
             for(int i = 0; i < this._nbJoueurs; i++){
                 joueurs[i] = this._jeu.getJoueur(i);
             }
-            
+            System.out.println("tri joueur");
             joueurs = this._modele.sortJoueurs(joueurs);
             
             this._finPartie = new FinPartieVue(this, this._jeu, joueurs);
