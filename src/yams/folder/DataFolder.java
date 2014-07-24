@@ -25,14 +25,18 @@ public class DataFolder {
         
         if(this._OS.contains("WIN")){
             workingDirectory = System.getenv("AppData");
+            this._dirName = workingDirectory + "/yams/";
         }
         else{
             workingDirectory = System.getProperty("user.home");
             if(this._OS.contains("MAC")){
                 workingDirectory += "/Library/Application Support";
+                this._dirName = workingDirectory + "/yams/";
+            }
+            else{
+                this._dirName = workingDirectory + "/.yams/";
             }
         }
-        this._dirName = workingDirectory + "/yams/";
     }
     
     public boolean createDataFolder(){
