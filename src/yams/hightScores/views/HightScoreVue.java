@@ -9,6 +9,8 @@ package yams.hightScores.views;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -35,9 +37,11 @@ public class HightScoreVue extends JFrame{
     
     private JComboBox<Object> _cbModeJeu;
     private JButton _btnRetour;
+    private List<Score> _scores;
     
     public HightScoreVue(YamControl c){
         super("Hight Scores");
+        this._scores = new ArrayList<Score>();
         this._myControler = c;
         this._modelScore = new ModeleTableHightScore();
         this._modelRow = new ModelRowHeader();
