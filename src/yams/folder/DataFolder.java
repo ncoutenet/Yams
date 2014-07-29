@@ -15,11 +15,13 @@ import java.util.logging.Logger;
  *
  * @author Nicolas
  */
-public class DataFolder {
+public class DataFolder{
     private String _OS;
     private String _dirName;
+    private boolean _created;
     
     public DataFolder(){
+    	this._created = false;
         String workingDirectory;
         this._OS = System.getProperty("os.name").toUpperCase();
         
@@ -37,26 +39,44 @@ public class DataFolder {
                 this._dirName = workingDirectory + "/.yams/";
             }
         }
+        
+        File f = new File(this._dirName);
+        if(f.exists()){
+        	this._created = true;
+        }
     }
     
     public boolean createDataFolder(){
         boolean isCreated = false;
-        File dir = new File(this._dirName);
-        
-        isCreated = dir.mkdir();
-        
+        if(!this._created){
+	        File dir = new File(this._dirName);
+	        isCreated = dir.mkdir();
+        }
+        if(isCreated){
+        	System.out.println("folder created");
+        }
+        else{
+        	System.out.println("folder not created");
+        }
         return isCreated;
     }
     
     public boolean createNewBDDFile(){
         boolean isCreated = false;
         File file = new File(this._dirName + "scores.xml");
-        try {
-            isCreated = file.createNewFile();
-        } catch (IOException ex) {
-            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+        if(!file.exists()){
+	        try {
+	            isCreated = file.createNewFile();
+	        } catch (IOException ex) {
+	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+	        }
         }
-        
+        if(isCreated){
+        	System.out.println("file created");
+        }
+        else{
+        	System.out.println("file not created");
+        }
         return isCreated;
     }
 }

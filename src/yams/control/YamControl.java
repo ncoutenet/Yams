@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.prefs.Preferences;
+import yams.folder.DataFolder;
 import yams.hightScores.views.HightScoreVue;
 import yams.views.ConfirmQuitVue;
 import yams.views.ConnectionVue;
@@ -31,14 +32,15 @@ import yams.regles.ReglesVue;
 public class YamControl {
     private ConnectionVue _connection;
     private YamModele _modele;
-    
-    private Preferences _prefs;
     private JeuVue _jeu;
-    private FinTourVue _finTour;
     private FinPartieVue _finPartie;
     private ConfirmQuitVue _confirmQuit;
     private InfoScoreVue _confScores;
     private HightScoreVue _HightScore;
+    private DataFolder _data;
+    
+    private Preferences _prefs;
+    private FinTourVue _finTour;
     
     private String[] _nomsJoueurs;
     private int _nbJoueurs;
@@ -50,6 +52,10 @@ public class YamControl {
     
     public YamControl(){
         _prefs = Preferences.userNodeForPackage(YamControl.class);
+        _data = new DataFolder();
+        _data.createDataFolder();
+        _data.createNewBDDFile();
+        
         _sound = _prefs.getBoolean("sound", true);
         _connection = new ConnectionVue(this, this._sound);
         _connection.affichage(true);
