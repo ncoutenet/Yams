@@ -7,20 +7,31 @@
 package yams.folder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import yams.control.YamControl;
+import yams.hightScores.pojos.Score;
 
 /**
  *
  * @author Nicolas
  */
 public class DataFolder{
+    private YamControl _myControler;
+    
     private String _OS;
     private String _dirName;
     private boolean _created;
     
-    public DataFolder(){
+    public DataFolder(YamControl ctrl){
+        this._myControler = ctrl;
+        
     	this._created = false;
         String workingDirectory;
         this._OS = System.getProperty("os.name").toUpperCase();
@@ -76,5 +87,50 @@ public class DataFolder{
         else{
         	System.out.println("file not created");
         }
+    }
+    
+    public void saveScores(List<Score> scores){
+        File svg = null;
+        FileWriter writer = null;
+        
+        try{
+            svg = new File(this._dirName+"scores.xml"); //fichier de sauvegarde
+            svg.createNewFile(); //remise à zéro du fichier
+            writer = new FileWriter(svg); //écrivain
+            try{
+                writer.write("<?xml version='1.0' encoding='utf-8'?>\n"); //encodage du document
+                writer.write("<scores>\n");
+                for(int i=0; i<scores.size(); i++){
+                    writer.write("\t<joueur name=\""+scores.get(i).getName()+"\" score=\""+scores.get(i).getScore()+"\" />\n");
+                }
+                writer.write("</scores>");
+            } finally{
+                writer.close();
+            }
+        } catch(Exception e){
+            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public List<Score> loadScores(){
+        List<Score> result = new ArrayList<Score>();
+        try {
+            Scanner scan = new Scanner(new File(this._dirName+"scores.xml"));
+            for(int i=0; i<2; i++){ //on ignore les deux premières lignes
+                scan.nextLine();
+            }
+            while(scan.hasNextLine()){
+                String line = scan.nextLine();
+                if(!line.equals("</scores>")){ //on ignore la dernière ligne
+                    String[] subLine = line.split("\"");
+                    result.add(new Score(subLine[1], Integer.decode(subLine[3]).intValue()));
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return result;
     }
 }

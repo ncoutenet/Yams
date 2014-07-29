@@ -52,7 +52,7 @@ public class YamControl {
     
     public YamControl(){
         _prefs = Preferences.userNodeForPackage(YamControl.class);
-        _data = new DataFolder();
+        _data = new DataFolder(this);
         _data.createDataFolder();
         _data.createNewBDDFile();
         
