@@ -46,7 +46,7 @@ public class DataFolder{
         }
     }
     
-    public boolean createDataFolder(){
+    public void createDataFolder(){
         boolean isCreated = false;
         if(!this._created){
 	        File dir = new File(this._dirName);
@@ -58,10 +58,9 @@ public class DataFolder{
         else{
         	System.out.println("folder not created");
         }
-        return isCreated;
     }
     
-    public boolean createNewBDDFile(){
+    public void createNewBDDFile(){
         boolean isCreated = false;
         File file = new File(this._dirName + "scores.xml");
         if(!file.exists()){
@@ -77,6 +76,5 @@ public class DataFolder{
         else{
         	System.out.println("file not created");
         }
-        return isCreated;
     }
 }
