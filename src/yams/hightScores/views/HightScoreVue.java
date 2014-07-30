@@ -99,11 +99,13 @@ public class HightScoreVue extends JFrame{
     public void addAScore(Score s){
         if(this._scores.size() < 10){
             this._scores.add(s);
-            // TODO trier les scores et mettre à jour le tableau
+            this.sortScores();
+            // TODO mettre à jour le tableau
         }
         else{
             // TODO comparer les score pour voir si on peut ajouter le nouveau
-            // TODO trier les scores et mettre à jour le tableau
+            this.sortScores();
+            // TODO mettre à jour le tableau
         }
     }
     
@@ -112,7 +114,27 @@ public class HightScoreVue extends JFrame{
     }
     
     private void sortScores(){
-        throw new UnsupportedOperationException("Not implemented yet");
+        List<Score> scores = new ArrayList<Score>(this._scores.size());
+        
+        for(int i=0; i<this._scores.size(); i++){
+            Score newScore = this._scores.get(i);
+            int index = 0;
+            boolean stopped = false;
+            while((index < scores.size()) && (!stopped)){
+                Score oldScore = scores.get(index);
+                if(oldScore.getScore() > newScore.getScore()){
+                    index++;
+                }else{
+                    stopped = true;
+                }
+            }
+            if(stopped){
+                scores.add(index, newScore);
+            }else{
+                scores.add(newScore);
+            }
+        }
+        this._scores = scores;
     }
     
     /*
