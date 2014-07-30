@@ -801,6 +801,7 @@ public class YamControl {
      * Ouvre la fenêtre des hight scores
      */
     public void openHightScores(){
+        this._HightScore.toFront();
         this._HightScore.setVisible(true);
     }
     
