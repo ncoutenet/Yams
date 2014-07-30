@@ -8,6 +8,7 @@ package yams.hightScores.views;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 import yams.hightScores.pojos.Score;
@@ -49,8 +51,14 @@ public class HightScoreVue extends JFrame{
         this._modelRow = new ModelRowHeader();
         this._rowHeader = new JTable(this._modelRow);
         this._rowHeader.setFocusable(false);
+        this._rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumn colHead = this._rowHeader.getColumnModel().getColumn(0);
+        colHead.setPreferredWidth(20);
         this._tableScore = new JTable(this._modelScore);
         this._tableScore.setFocusable(false);
+        this._tableScore.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumn colScore = this._tableScore.getColumnModel().getColumn(1);
+        colScore.setPreferredWidth(50);
         
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
@@ -73,6 +81,14 @@ public class HightScoreVue extends JFrame{
         JScrollPane jsp = new JScrollPane();
         jsp.setViewportView(this._tableScore);
         jsp.setRowHeaderView(this._rowHeader);
+        Dimension d = jsp.getPreferredSize();
+        d.height = this._rowHeader.getPreferredSize().height+23;
+        jsp.setPreferredSize(d);
+        TableColumn colName = this._tableScore.getColumnModel().getColumn(0);
+        colName.setPreferredWidth(jsp.getPreferredSize().width-73);
+        Dimension dh = this._rowHeader.getPreferredScrollableViewportSize();
+        dh.width = this._rowHeader.getPreferredSize().width;
+        this._rowHeader.setPreferredScrollableViewportSize(dh);
         pan.add(jsp, BorderLayout.CENTER);
         
         this._btnRetour = new JButton("Retour");
@@ -86,8 +102,6 @@ public class HightScoreVue extends JFrame{
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.toFront();
-        this.setVisible(true);
     }
     
     public void close(){
