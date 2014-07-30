@@ -59,6 +59,7 @@ public class YamControl {
         _sound = _prefs.getBoolean("sound", true);
         _connection = new ConnectionVue(this, this._sound);
         _connection.affichage(true);
+        _HightScore = new HightScoreVue(this);
     }
     
     /*
@@ -800,13 +801,13 @@ public class YamControl {
      * Ouvre la fenêtre des hight scores
      */
     public void openHightScores(){
-        this._HightScore = new HightScoreVue(this);
+        this._HightScore.setVisible(true);
     }
     
     /*
      * ferme la fenêtre des hight scores
      */
     public void closeHightScores(){
-        this._HightScore.close();
+        this._HightScore.setVisible(false);
     }
 }

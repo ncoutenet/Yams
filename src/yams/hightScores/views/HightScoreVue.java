@@ -92,8 +92,23 @@ public class HightScoreVue extends JFrame{
         this.dispose();
     }
     
-    private void setScores(){
-        Score score;
+    private void setScores(List<Score> scores){
+        this._scores = scores;
+        // TODO trier les scores
+    }
+    
+    private void addAScore(Score s){
+        if(this._scores.size() < 10){
+            this._scores.add(s);
+        }
+        else{
+            // TODO comparer les score pour voir si on peut ajouter le nouveau
+            // TODO trier les scores
+        }
+    }
+    
+    private List<Score> getScores(){
+        return this._scores;
     }
     
     /*
