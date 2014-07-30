@@ -92,23 +92,27 @@ public class HightScoreVue extends JFrame{
         this.dispose();
     }
     
-    private void setScores(List<Score> scores){
+    public void setScores(List<Score> scores){
         this._scores = scores;
-        // TODO trier les scores
     }
     
-    private void addAScore(Score s){
+    public void addAScore(Score s){
         if(this._scores.size() < 10){
             this._scores.add(s);
+            // TODO trier les scores et mettre à jour le tableau
         }
         else{
             // TODO comparer les score pour voir si on peut ajouter le nouveau
-            // TODO trier les scores
+            // TODO trier les scores et mettre à jour le tableau
         }
     }
     
-    private List<Score> getScores(){
+    public List<Score> getScores(){
         return this._scores;
+    }
+    
+    private void sortScores(){
+        throw new UnsupportedOperationException("Not implemented yet");
     }
     
     /*
