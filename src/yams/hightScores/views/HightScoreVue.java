@@ -103,9 +103,13 @@ public class HightScoreVue extends JFrame{
             // TODO mettre à jour le tableau
         }
         else{
-            // TODO comparer les score pour voir si on peut ajouter le nouveau
-            this.sortScores();
-            // TODO mettre à jour le tableau
+            Score oldScore = this._scores.get(this._scores.size()-1);
+            if(s.getScore() > oldScore.getScore()){
+                this._scores.remove(this._scores.size()-1);
+                this._scores.add(s);
+                this.sortScores();
+                // TODO mettre à jour le tableau
+            }
         }
     }
     
