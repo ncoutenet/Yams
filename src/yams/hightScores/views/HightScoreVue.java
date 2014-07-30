@@ -37,11 +37,13 @@ public class HightScoreVue extends JFrame{
     
     private JComboBox<Object> _cbModeJeu;
     private JButton _btnRetour;
-    private List<Score> _scores;
+    private List<Score> _scoresLibres;
+    private List<Score> _scoresMontants;
+    private List<Score> _scoresDescendants;
     
     public HightScoreVue(YamControl c){
         super("Hight Scores");
-        this._scores = new ArrayList<Score>();
+        //this._scores = new ArrayList<Score>();
         this._myControler = c;
         this._modelScore = new ModeleTableHightScore();
         this._modelRow = new ModelRowHeader();
@@ -92,12 +94,12 @@ public class HightScoreVue extends JFrame{
         this.dispose();
     }
     
-    public void setScores(List<Score> scores){
-        this._scores = scores;
+    public void setScores(List<Score> scores, int mode){
+        //this._scores = scores;
     }
     
-    public void addAScore(Score s){
-        if(this._scores.size() < 10){
+    public void addAScore(Score s, int mode){
+        /*if(this._scores.size() < 10){
             this._scores.add(s);
             this.sortScores();
             // TODO mettre à jour le tableau
@@ -110,15 +112,24 @@ public class HightScoreVue extends JFrame{
                 this.sortScores();
                 // TODO mettre à jour le tableau
             }
+        }*/
+    }
+    
+    public List<Score> getScores(int mode){
+        switch(mode){
+            case 0:
+                return this._scoresLibres;
+            case 1:
+                return this._scoresMontants;
+            case 2:
+                return this._scoresDescendants;
+            default:
+                return null; //n'arrivera pas
         }
     }
     
-    public List<Score> getScores(){
-        return this._scores;
-    }
-    
     private void sortScores(){
-        List<Score> scores = new ArrayList<Score>(this._scores.size());
+       /* List<Score> scores = new ArrayList<Score>(this._scores.size());
         
         for(int i=0; i<this._scores.size(); i++){
             Score newScore = this._scores.get(i);
@@ -138,7 +149,7 @@ public class HightScoreVue extends JFrame{
                 scores.add(newScore);
             }
         }
-        this._scores = scores;
+        this._scores = scores;*/
     }
     
     /*
