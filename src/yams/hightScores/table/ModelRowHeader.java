@@ -21,9 +21,12 @@ public class ModelRowHeader extends AbstractTableModel{
     public ModelRowHeader(){
         super();
         this._data = new ArrayList<Integer>(10);
+        for(int i=0; i<10; i++){
+            this.addData();
+        }
     }
     
-    public void addData(){
+    private void addData(){
         this._data.add(this._data.size()+1);
     }
 
