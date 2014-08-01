@@ -6,11 +6,13 @@
 
 package yams.hightScores.pojos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Nicolas
  */
-public class Score {
+public class Score implements Serializable{
     private int _id;
     private String _name;
     private int _score;
