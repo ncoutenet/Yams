@@ -6,10 +6,16 @@
 
 package yams.folder;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -71,65 +77,119 @@ public class DataFolder{
         }
     }
     
-    public void createNewBDDFile(){
-        boolean isCreated = false;
-        File file = new File(this._dirName + "scores.xml");
-        if(!file.exists()){
+    public void createNewBDDFiles(){
+        boolean isCreated1 = false;
+        boolean isCreated2 = false;
+        boolean isCreated3 = false;
+        File file1 = new File(this._dirName + "scoresLibres.dat");
+        File file2 = new File(this._dirName + "scoresMontants.dat");
+        File file3 = new File(this._dirName + "scoresDescendants.dat");
+        if(!file1.exists()){
 	        try {
-	            isCreated = file.createNewFile();
+	            isCreated1 = file1.createNewFile();
 	        } catch (IOException ex) {
 	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
 	        }
         }
-        if(isCreated){
-        	System.out.println("file created");
+        if(isCreated1){
+        	System.out.println("file 1 created");
         }
         else{
-        	System.out.println("file not created");
+        	System.out.println("file 1 not created");
+        }
+        
+        if(!file2.exists()){
+	        try {
+	            isCreated2 = file2.createNewFile();
+	        } catch (IOException ex) {
+	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+        }
+        if(isCreated2){
+        	System.out.println("file 2 created");
+        }
+        else{
+        	System.out.println("file 2 not created");
+        }
+        
+        if(!file3.exists()){
+	        try {
+	            isCreated3 = file3.createNewFile();
+	        } catch (IOException ex) {
+	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+        }
+        if(isCreated3){
+        	System.out.println("file 3 created");
+        }
+        else{
+        	System.out.println("file 3 not created");
         }
     }
     
-    public void saveScores(List<Score> scores){
+    public void saveScores(List<Score> scores, int mode){
+        String f;
         File svg = null;
-        FileWriter writer = null;
+        ObjectOutputStream saver = null;
+        
+        switch(mode){
+            case 0:
+                f = new String("scoreLibre.dat");
+                break;
+            case 1:
+                f = new String("scoresMontants.dat");
+                break;
+            case 2:
+                f = new String("scoresDescendants.dat");
+                break;
+            default:
+                f = new String(); //n'arrivera pas
+        }
         
         try{
-            svg = new File(this._dirName+"scores.xml"); //fichier de sauvegarde
-            svg.createNewFile(); //remise à zéro du fichier
-            writer = new FileWriter(svg); //écrivain
             try{
-                writer.write("<?xml version='1.0' encoding='utf-8'?>\n"); //encodage du document
-                writer.write("<scores>\n");
-                for(int i=0; i<scores.size(); i++){
-                    writer.write("\t<joueur name=\""+scores.get(i).getName()+"\" score=\""+scores.get(i).getScore()+"\" />\n");
-                }
-                writer.write("</scores>");
+                svg = new File(this._dirName + f);
+                saver = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(svg)));
+                saver.writeObject(scores);
             } finally{
-                writer.close();
+                saver.close();
             }
-        } catch(Exception e){
+        } catch(IOException e){
             Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, e);
-        }
+        } 
     }
     
-    public List<Score> loadScores(){
-        List<Score> result = new ArrayList<Score>();
-        try {
-            Scanner scan = new Scanner(new File(this._dirName+"scores.xml"));
-            for(int i=0; i<2; i++){ //on ignore les deux premières lignes
-                scan.nextLine();
-            }
-            while(scan.hasNextLine()){
-                String line = scan.nextLine();
-                if(!line.equals("</scores>")){ //on ignore la dernière ligne
-                    String[] subLine = line.split("\"");
-                    result.add(new Score(subLine[1], Integer.decode(subLine[3]).intValue()));
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+    public List<Score> loadScores(int mode){
+        List<Score> result = null;
+        String f;
+        File svg = null;
+        ObjectInputStream loader = null;
+        
+        switch(mode){
+            case 0:
+                f = new String("scoreLibre.dat");
+                break;
+            case 1:
+                f = new String("scoresMontants.dat");
+                break;
+            case 2:
+                f = new String("scoresDescendants.dat");
+                break;
+            default:
+                f = new String(); //n'arrivera pas
         }
         
+        try{
+            try{
+                svg = new File(_dirName + f);
+                loader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(svg)));
+                result = (ArrayList<Score>)loader.readObject();
+            }finally{
+                loader.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
         return result;
     }

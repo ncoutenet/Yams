@@ -54,7 +54,7 @@ public class YamControl {
         _prefs = Preferences.userNodeForPackage(YamControl.class);
         _data = new DataFolder(this);
         _data.createDataFolder();
-        _data.createNewBDDFile();
+        _data.createNewBDDFiles();
         
         _sound = _prefs.getBoolean("sound", true);
         _connection = new ConnectionVue(this, this._sound);
