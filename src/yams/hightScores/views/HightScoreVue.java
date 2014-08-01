@@ -39,6 +39,8 @@ public class HightScoreVue extends JFrame{
     
     private JComboBox<Object> _cbModeJeu;
     private JButton _btnRetour;
+    
+    private int _actualMode;
     private List<Score> _scoresLibres;
     private List<Score> _scoresMontants;
     private List<Score> _scoresDescendants;
@@ -77,6 +79,7 @@ public class HightScoreVue extends JFrame{
         panMod.add(labModes);
         panMod.add(this._cbModeJeu);
         pan.add(panMod, BorderLayout.NORTH);
+        this._actualMode = 0;
         
         JScrollPane jsp = new JScrollPane();
         jsp.setViewportView(this._tableScore);
@@ -98,10 +101,36 @@ public class HightScoreVue extends JFrame{
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
+        
+        
         // TODO enregistrer les parties pour les afficher plus tard
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+    
+    public void selectMode(){
+        if(this._cbModeJeu.getSelectedItem().equals("Libre")){
+            this._actualMode = 0;
+        }else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
+            this._actualMode = 1;
+        }else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
+            this._actualMode = 2;
+        }
+        
+        switch(this._actualMode){
+            case 0:
+                // TODO ajouter l'arraylist correspondant aux scores libres
+                break;
+            case 1:
+                // TODO ajouter l'arraylist correspondant aux scores montants
+                break;
+            case 2:
+                // TODO ajouter l'arraylist correspondant aux scores descendants
+                break;
+            default:
+                break; //n'arrivera pas
+        }
     }
     
     public void close(){
