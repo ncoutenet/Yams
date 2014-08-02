@@ -9,6 +9,7 @@ import yams.pojos.Joueur;
 import yams.events.YamEvents;
 import java.awt.*;
 import javax.swing.*;
+import yams.hightScores.pojos.Score;
 /**
  *
  * @author nicolas
@@ -54,6 +55,7 @@ public class FinPartieVue extends JDialog{
                 texte += " points</span></b></center>";
                 liste.append(texte);
                 position++;
+                this._myControler.addAScore(new Score(gagnants[max].getNom(), gagnants[max].getScore(16)));
             }
         }
         
