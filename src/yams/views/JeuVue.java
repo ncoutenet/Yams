@@ -78,21 +78,21 @@ public class JeuVue extends JFrame {
         
         //initialisation des images des dés et de la couleur de fond
         this._delSelect = new Icon[6];
-        this._delSelect[0] = new ImageIcon(getClass().getResource("/yams/images/dés/1_sel.png"));
-        this._delSelect[1] = new ImageIcon(getClass().getResource("/yams/images/dés/2_sel.png"));
-        this._delSelect[2] = new ImageIcon(getClass().getResource("/yams/images/dés/3_sel.png"));
-        this._delSelect[3] = new ImageIcon(getClass().getResource("/yams/images/dés/4_sel.png"));
-        this._delSelect[4] = new ImageIcon(getClass().getResource("/yams/images/dés/5_sel.png"));
-        this._delSelect[5] = new ImageIcon(getClass().getResource("/yams/images/dés/6_sel.png"));
+        this._delSelect[0] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/1_sel.png"));
+        this._delSelect[1] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/2_sel.png"));
+        this._delSelect[2] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/3_sel.png"));
+        this._delSelect[3] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/4_sel.png"));
+        this._delSelect[4] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/5_sel.png"));
+        this._delSelect[5] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/6_sel.png"));
         
         this._des = new Icon[7];
-        this._des[0] = new ImageIcon(getClass().getResource("/yams/images/dés/indef.png"));
-        this._des[1] = new ImageIcon(getClass().getResource("/yams/images/dés/1.png"));
-        this._des[2] = new ImageIcon(getClass().getResource("/yams/images/dés/2.png"));
-        this._des[3] = new ImageIcon(getClass().getResource("/yams/images/dés/3.png"));
-        this._des[4] = new ImageIcon(getClass().getResource("/yams/images/dés/4.png"));
-        this._des[5] = new ImageIcon(getClass().getResource("/yams/images/dés/5.png"));
-        this._des[6] = new ImageIcon(getClass().getResource("/yams/images/dés/6.png"));
+        this._des[0] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/indef.png"));
+        this._des[1] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/1.png"));
+        this._des[2] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/2.png"));
+        this._des[3] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/3.png"));
+        this._des[4] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/4.png"));
+        this._des[5] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/5.png"));
+        this._des[6] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/6.png"));
         this._labDes = new JLabel[5];
         Color couleur = new Color(43, 133, 53);
         for(int i = 0; i < 5; i++){

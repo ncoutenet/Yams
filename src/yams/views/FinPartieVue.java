@@ -55,8 +55,10 @@ public class FinPartieVue extends JDialog{
                 texte += " points</span></b></center>";
                 liste.append(texte);
                 position++;
-                this._myControler.addAScore(new Score(gagnants[max].getNom(), gagnants[max].getScore(16)));
             }
+        }
+        for(int i = gagnants.length-1; i>=0; i--){
+            this._myControler.addAScore(new Score(gagnants[i].getNom(), gagnants[i].getScore(16)));
         }
         
         listeJoueurs = new JEditorPane("text/html", new String(liste));
