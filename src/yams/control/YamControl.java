@@ -4,22 +4,22 @@
  */
 package yams.control;
 
-import yams.pojos.Joueur;
-import yams.model.YamModele;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.prefs.Preferences;
 import yams.folder.DataFolder;
+import yams.hightScores.pojos.Score;
 import yams.hightScores.views.HightScoreVue;
+import yams.model.YamModele;
+import yams.pojos.Joueur;
+import yams.regles.ReglesVue;
 import yams.views.ConfirmQuitVue;
 import yams.views.ConnectionVue;
 import yams.views.FinPartieVue;
 import yams.views.FinTourVue;
 import yams.views.InfoScoreVue;
 import yams.views.JeuVue;
-
-import yams.regles.ReglesVue;
 
 /**
  *
@@ -803,6 +803,20 @@ public class YamControl {
     public void openHightScores(){
         this._HightScore.toFront();
         this._HightScore.setVisible(true);
+    }
+    
+    /*
+     * Sauve les scores
+     */
+    public void saveHightScores(List<Score> scores, int mode){
+        this._data.saveScores(scores, mode);
+    }
+    
+    /*
+     * Charge les scores
+     */
+    public List<Score> loadHigntScores(int mode){
+        return this._data.loadScores(mode);
     }
     
     /*
