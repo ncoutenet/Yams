@@ -47,7 +47,9 @@ public class HightScoreVue extends JFrame{
     
     public HightScoreVue(YamControl c){
         super("Hight Scores");
-        //this._scores = new ArrayList<Score>();
+        this._scoresLibres = new ArrayList<Score>();
+        this._scoresMontants = new ArrayList<Score>();
+        this._scoresDescendants = new ArrayList<Score>();
         this._myControler = c;
         this._modelScore = new ModeleTableHightScore();
         this._modelRow = new ModelRowHeader();
@@ -141,21 +143,55 @@ public class HightScoreVue extends JFrame{
         //this._scores = scores;
     }
     
-    public void addAScore(Score s, int mode){
-        /*if(this._scores.size() < 10){
-            this._scores.add(s);
-            this.sortScores();
-            // TODO mettre à jour le tableau
+    public void addScoreLibre(Score s){
+        if(this._scoresLibres.size() < 10){
+            this._scoresLibres.add(s);
+            this.sortScores(this._scoresLibres);
+            // TODO mettre à jour et sauver le tableau
         }
         else{
-            Score oldScore = this._scores.get(this._scores.size()-1);
+            Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
             if(s.getScore() > oldScore.getScore()){
-                this._scores.remove(this._scores.size()-1);
-                this._scores.add(s);
-                this.sortScores();
-                // TODO mettre à jour le tableau
+                this._scoresLibres.remove(this._scoresLibres.size()-1);
+                this._scoresLibres.add(s);
+                this.sortScores(this._scoresLibres);
+                // TODO mettre à jour et sauver le tableau
             }
-        }*/
+        }
+    }
+    
+    public void addScoreMontant(Score s){
+        if(this._scoresMontants.size() < 10){
+            this._scoresMontants.add(s);
+            this.sortScores(this._scoresMontants);
+            // TODO mettre à jour et sauver le tableau
+        }
+        else{
+            Score oldScore = this._scoresMontants.get(this._scoresMontants.size()-1);
+            if(s.getScore() > oldScore.getScore()){
+                this._scoresMontants.remove(this._scoresMontants.size()-1);
+                this._scoresMontants.add(s);
+                this.sortScores(this._scoresMontants);
+                // TODO mettre à jour et sauver le tableau
+            }
+        }
+    }
+    
+    public void addScoreDescendant(Score s){
+        if(this._scoresDescendants.size() < 10){
+            this._scoresDescendants.add(s);
+            this.sortScores(this._scoresDescendants);
+            // TODO mettre à jour et sauver le tableau
+        }
+        else{
+            Score oldScore = this._scoresDescendants.get(this._scoresDescendants.size()-1);
+            if(s.getScore() > oldScore.getScore()){
+                this._scoresDescendants.remove(this._scoresDescendants.size()-1);
+                this._scoresDescendants.add(s);
+                this.sortScores(this._scoresDescendants);
+                // TODO mettre à jour et sauver le tableau
+            }
+        }
     }
     
     public List<Score> getScores(int mode){
@@ -171,15 +207,15 @@ public class HightScoreVue extends JFrame{
         }
     }
     
-    private void sortScores(){
-       /* List<Score> scores = new ArrayList<Score>(this._scores.size());
+    private void sortScores(List<Score> scores){
+       List<Score> sortedScores = new ArrayList<Score>(scores.size());
         
-        for(int i=0; i<this._scores.size(); i++){
-            Score newScore = this._scores.get(i);
+        for(int i=0; i<scores.size(); i++){
+            Score newScore = scores.get(i);
             int index = 0;
             boolean stopped = false;
-            while((index < scores.size()) && (!stopped)){
-                Score oldScore = scores.get(index);
+            while((index < sortedScores.size()) && (!stopped)){
+                Score oldScore = sortedScores.get(index);
                 if(oldScore.getScore() > newScore.getScore()){
                     index++;
                 }else{
@@ -187,12 +223,12 @@ public class HightScoreVue extends JFrame{
                 }
             }
             if(stopped){
-                scores.add(index, newScore);
+                sortedScores.add(index, newScore);
             }else{
-                scores.add(newScore);
+                sortedScores.add(newScore);
             }
         }
-        this._scores = scores;*/
+        scores = sortedScores;
     }
     
     /*

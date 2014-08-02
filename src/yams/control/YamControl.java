@@ -820,6 +820,25 @@ public class YamControl {
     }
     
     /*
+     * Ajoute un score
+     */
+    public void addAScore(Score s){
+        switch(this._mode){
+            case 0:
+                this._HightScore.addScoreLibre(s);
+                break;
+            case 1:
+                this._HightScore.addScoreMontant(s);
+                break;
+            case 2:
+                this._HightScore.addScoreDescendant(s);
+                break;
+            default:
+                break; //n'arrivera pas
+        }
+    }
+    
+    /*
      * ferme la fenêtre des hight scores
      */
     public void closeHightScores(){
