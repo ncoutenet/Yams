@@ -32,6 +32,13 @@ public class ModeleTableHightScore extends AbstractTableModel{
         
         fireTableRowsInserted(this._scores.size() -1, this._scores.size() -1);
     }
+    
+    /*
+     * supprime les scores
+     */
+    public void delScores(){
+        this._scores.clear();
+    }
 
     @Override
     public int getRowCount() {

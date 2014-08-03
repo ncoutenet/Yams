@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -60,6 +61,8 @@ public class HightScoreVue extends JFrame{
         colHead.setPreferredWidth(20);
         this._tableScore = new JTable(this._modelScore);
         this._tableScore.setFocusable(false);
+        Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
+        this._tableScore.setFont(font);
         this._tableScore.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumn colScore = this._tableScore.getColumnModel().getColumn(1);
         colScore.setPreferredWidth(50);
@@ -103,12 +106,40 @@ public class HightScoreVue extends JFrame{
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
+        this._scoresLibres = this._myControler.loadHightScores(0);
+        this._scoresMontants = this._myControler.loadHightScores(1);
+        this._scoresDescendants = this._myControler.loadHightScores(2);
         
-        
-        // TODO enregistrer les parties pour les afficher plus tard
+        this.changeScores(0);
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+    
+    /*
+     * Mise à jour du tableau
+     */
+    public void changeScores(int mode){
+        this._modelScore.delScores();
+        switch(mode){
+            case 0:
+                for(int i=0; i<this._scoresLibres.size(); i++){
+                    this._modelScore.addScore(this._scoresLibres.get(i));
+                }
+                break;
+            case 1:
+                for(int i=0; i<this._scoresMontants.size(); i++){
+                    this._modelScore.addScore(this._scoresMontants.get(i));
+                }
+                break;
+            case 2:
+                for(int i=0; i<this._scoresDescendants.size(); i++){
+                    this._modelScore.addScore(this._scoresDescendants.get(i));
+                }
+                break;
+            default:
+                break; //n'arrivera pas
+        }
     }
     
     public void selectMode(){
@@ -120,19 +151,7 @@ public class HightScoreVue extends JFrame{
             this._actualMode = 2;
         }
         
-        switch(this._actualMode){
-            case 0:
-                // TODO ajouter l'arraylist correspondant aux scores libres
-                break;
-            case 1:
-                // TODO ajouter l'arraylist correspondant aux scores montants
-                break;
-            case 2:
-                // TODO ajouter l'arraylist correspondant aux scores descendants
-                break;
-            default:
-                break; //n'arrivera pas
-        }
+        this.changeScores(this._actualMode);
     }
     
     public void close(){
@@ -140,14 +159,15 @@ public class HightScoreVue extends JFrame{
     }
     
     public void setScores(List<Score> scores, int mode){
-        //this._scores = scores;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
     
     public void addScoreLibre(Score s){
         if(this._scoresLibres.size() < 10){
             this._scoresLibres.add(s);
             this.sortScores(this._scoresLibres);
-            // TODO mettre à jour et sauver le tableau
+            this._myControler.saveHightScores(this._scoresLibres, 0);
+            this.changeScores(0);
         }
         else{
             Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
@@ -155,7 +175,8 @@ public class HightScoreVue extends JFrame{
                 this._scoresLibres.remove(this._scoresLibres.size()-1);
                 this._scoresLibres.add(s);
                 this.sortScores(this._scoresLibres);
-                // TODO mettre à jour et sauver le tableau
+                this._myControler.saveHightScores(this._scoresLibres, 0);
+                this.changeScores(0);
             }
         }
     }

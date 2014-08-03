@@ -815,7 +815,7 @@ public class YamControl {
     /*
      * Charge les scores
      */
-    public List<Score> loadHigntScores(int mode){
+    public List<Score> loadHightScores(int mode){
         return this._data.loadScores(mode);
     }
     

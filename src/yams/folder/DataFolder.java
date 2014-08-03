@@ -25,6 +25,9 @@ import yams.hightScores.pojos.Score;
  *
  * @author Nicolas
  */
+
+// FIXME chargement impossible: les fichiers sont vides
+
 public class DataFolder{
     private YamControl _myControler;
     
@@ -126,7 +129,7 @@ public class DataFolder{
     
     public void saveScores(List<Score> scores, int mode){
         String f;
-        File svg = null;
+        FileOutputStream svg = null;
         ObjectOutputStream saver = null;
         
         switch(mode){
@@ -145,26 +148,29 @@ public class DataFolder{
         
         try{
             try{
-                svg = new File(this._dirName + f);
-                saver = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(svg)));
+                svg = new FileOutputStream(this._dirName + f);
+                saver = new ObjectOutputStream(svg);
                 saver.writeObject(scores);
+                saver.flush();
             } finally{
+                saver.flush();
                 saver.close();
             }
         } catch(IOException e){
             Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, e);
-        } 
+        }
     }
     
     public List<Score> loadScores(int mode){
+        System.out.println("debut chargement");
         List<Score> result = null;
         String f;
-        File svg = null;
+        FileInputStream svg = null;
         ObjectInputStream loader = null;
         
         switch(mode){
             case 0:
-                f = new String("scoreLibre.dat");
+                f = new String("scoresLibres.dat");
                 break;
             case 1:
                 f = new String("scoresMontants.dat");
@@ -174,20 +180,32 @@ public class DataFolder{
                 break;
             default:
                 f = new String(); //n'arrivera pas
+                break;
         }
         
         try{
             try{
-                svg = new File(_dirName + f);
-                loader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(svg)));
-                result = (ArrayList<Score>)loader.readObject();
+                svg = new FileInputStream(this._dirName + f);
+//                if(svg.available() > 0){
+                    loader = new ObjectInputStream(svg);
+                    result = (ArrayList<Score>)loader.readObject();
+//                }
+//                else{
+//                    System.err.println("Erreur de chargement");
+//                }
             }finally{
-                loader.close();
+                if(loader != null){
+                    loader.close();
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
         }
         
+        if(result == null){
+            result = new ArrayList<Score>();
+        }
+        System.out.println("fin chargement:"+result.size());
         return result;
     }
 }
