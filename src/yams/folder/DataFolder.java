@@ -6,6 +6,8 @@
 
 package yams.folder;
 
+import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -144,10 +146,13 @@ public class DataFolder{
         
         try{
             try{
-                svg = new FileOutputStream(this._dirName + f);
+                File file = new File(this._dirName + f);
+                file.delete();
+                svg = new FileOutputStream(file);
                 saver = new ObjectOutputStream(svg);
                 saver.writeObject(scores);
                 saver.flush();
+                saver.close();
             } finally{
                 saver.flush();
                 saver.close();
@@ -158,7 +163,6 @@ public class DataFolder{
     }
     
     public List<Score> loadScores(int mode){
-        System.out.println("debut chargement");
         List<Score> result = null;
         String f;
         FileInputStream svg = null;
@@ -181,14 +185,18 @@ public class DataFolder{
         
         try{
             try{
-                svg = new FileInputStream(this._dirName + f);
+                svg = new FileInputStream(new File(this._dirName + f));
 //                if(svg.available() > 0){
-                    loader = new ObjectInputStream(svg); // FIXME chargement impossible: les fichiers sont vides
+                    loader = new ObjectInputStream(new BufferedInputStream(svg)); // FIXME chargement impossible: les fichiers sont vides
                     result = (ArrayList<Score>)loader.readObject();
+                    System.out.println("chargement de "+result.size()+" score(s)");
 //                }
 //                else{
 //                    System.err.println("Erreur de chargement");
 //                }
+            }catch(EOFException e){
+                System.err.println(e.toString());
+                //result = new ArrayList<Score>();
             }finally{
                 if(loader != null){
                     loader.close();
@@ -201,7 +209,6 @@ public class DataFolder{
         if(result == null){
             result = new ArrayList<Score>();
         }
-        System.out.println("fin chargement:"+result.size());
         return result;
     }
 }
