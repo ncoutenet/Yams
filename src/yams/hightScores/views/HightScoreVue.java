@@ -106,8 +106,11 @@ public class HightScoreVue extends JFrame{
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
+        System.out.println("chargement 1");
         this._scoresLibres = this._myControler.loadHightScores(0);
+        System.out.println("chargement 2");
         this._scoresMontants = this._myControler.loadHightScores(1);
+        System.out.println("chargement 3");
         this._scoresDescendants = this._myControler.loadHightScores(2);
         
         this.changeScores(0);
@@ -140,6 +143,7 @@ public class HightScoreVue extends JFrame{
             default:
                 break; //n'arrivera pas
         }
+        this._tableScore.updateUI();
     }
     
     public void selectMode(){
