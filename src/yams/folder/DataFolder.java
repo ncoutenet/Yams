@@ -24,8 +24,6 @@ import yams.hightScores.pojos.Score;
  * @author Nicolas
  */
 
-// FIXME chargement impossible: les fichiers sont vides
-
 public class DataFolder{
     private YamControl _myControler;
     
@@ -185,7 +183,7 @@ public class DataFolder{
             try{
                 svg = new FileInputStream(this._dirName + f);
 //                if(svg.available() > 0){
-                    loader = new ObjectInputStream(svg);
+                    loader = new ObjectInputStream(svg); // FIXME chargement impossible: les fichiers sont vides
                     result = (ArrayList<Score>)loader.readObject();
 //                }
 //                else{
