@@ -79,7 +79,7 @@ public class ReglesVue extends JFrame {
         }
         
         texte.append("<p>Le nombre de joueur est limité à 10.</p>");
-        texte.append("<p>Le but est, pour chaque joueur, de remplir une grille en totalisant un maximum de points. Pour remplir la grille il faut lancer des dés et réaliser des figures.</p>");
+        texte.append("<p>Le but est, pour chaque joueur, de remplir une grille en totalisant un maximum de points. Pour remplir la grille il faut lancer des dés et réaliser des combinaisons.</p>");
         texte.append("<p>Chaque joueur joue à tour de rôle. À chaque tour le joueur dispose de trois lancés de cinq dés. À l'issu des deux premiers lancés il peut:</p>");
         texte.append("<ul>");
         texte.append("  <li>garder ses 5 dés et remplir une case de sa grille,</li>");
