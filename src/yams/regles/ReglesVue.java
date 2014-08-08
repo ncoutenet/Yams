@@ -173,7 +173,7 @@ public class ReglesVue extends JFrame {
         texte.append("        </tr>");
         texte.append("    </tbody>");
         texte.append("</table>");
-        texte.append("<p>Remarque: Si un joueur totalise 60 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 30 points.</p>");
+        texte.append("<p>Remarque: Si un joueur totalise 63 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 35 points.</p>");
         texte.append("<h2>Préférences</h2>");
         texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
         texte.append("Pour le réactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");

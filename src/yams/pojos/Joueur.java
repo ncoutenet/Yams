@@ -79,8 +79,8 @@ public class Joueur {
                 for(int i = 0; i < 6; i++){
                     this._score[index] += this._score[i];
                 }
-                if (_score[index] > 59){
-                    this._score[7] = 30;
+                if (_score[index] > 62){
+                    this._score[7] = 35;
                 }
                 this._score[8] = this._score[6] + this._score[7];
                 break;
