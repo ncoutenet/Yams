@@ -187,7 +187,7 @@ public class DataFolder{
             try{
                 svg = new FileInputStream(new File(this._dirName + f));
 //                if(svg.available() > 0){
-                    loader = new ObjectInputStream(new BufferedInputStream(svg)); // FIXME chargement impossible: les fichiers sont vides
+                    loader = new ObjectInputStream(new BufferedInputStream(svg)); 
                     result = (ArrayList<Score>)loader.readObject();
                     System.out.println("chargement de "+result.size()+" score(s)");
 //                }
