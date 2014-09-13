@@ -132,7 +132,7 @@ public class DataFolder{
         
         switch(mode){
             case 0:
-                f = new String("scoreLibre.dat");
+                f = new String("scoresLibres.dat");
                 break;
             case 1:
                 f = new String("scoresMontants.dat");
