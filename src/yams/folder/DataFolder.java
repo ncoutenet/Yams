@@ -199,7 +199,7 @@ public class DataFolder{
 //                }
             }catch(EOFException e){
                 System.err.println(e.toString());
-                //result = new ArrayList<Score>();
+                result = new ArrayList<Score>();
             }finally{
                 if(loader != null){
                     loader.close();

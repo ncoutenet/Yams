@@ -23,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import yams.control.YamControl;
 import yams.events.YamEvents;
+import yams.hightScores.events.ComboBoxEvents;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.table.ModelRowHeader;
 import yams.hightScores.table.ModeleTableHightScore;
@@ -41,7 +42,6 @@ public class HightScoreVue extends JFrame{
     private JComboBox<Object> _cbModeJeu;
     private JButton _btnRetour;
     
-    private int _actualMode;
     private List<Score> _scoresLibres;
     private List<Score> _scoresMontants;
     private List<Score> _scoresDescendants;
@@ -70,7 +70,6 @@ public class HightScoreVue extends JFrame{
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         
-        // TODO afficher les scores par mode de jeu
         //initialisation du menu déroulant
         Object[] modes = new Object[3];
         modes[0] = new String("Libre");
@@ -79,13 +78,12 @@ public class HightScoreVue extends JFrame{
         
         //instanciation du menu
         this._cbModeJeu = new JComboBox(modes);
-        // TODO lier la JCombobox à un écouteur
+        this._cbModeJeu.addActionListener(new ComboBoxEvents(this));
         JLabel labModes = new JLabel("Mode de jeu: ");
         JPanel panMod = new JPanel(new FlowLayout());
         panMod.add(labModes);
         panMod.add(this._cbModeJeu);
         pan.add(panMod, BorderLayout.NORTH);
-        this._actualMode = 0;
         
         JScrollPane jsp = new JScrollPane();
         jsp.setViewportView(this._tableScore);
@@ -149,14 +147,12 @@ public class HightScoreVue extends JFrame{
     
     public void selectMode(){
         if(this._cbModeJeu.getSelectedItem().equals("Libre")){
-            this._actualMode = 0;
+            this.changeScores(0);
         }else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
-            this._actualMode = 1;
+            this.changeScores(1);
         }else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
-            this._actualMode = 2;
+            this.changeScores(2);
         }
-        
-        this.changeScores(this._actualMode);
     }
     
     public void close(){
