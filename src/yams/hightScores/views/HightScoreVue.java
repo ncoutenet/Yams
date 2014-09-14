@@ -105,11 +105,8 @@ public class HightScoreVue extends JFrame{
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
-        System.out.println("chargement 1");
         this._scoresLibres = this._myControler.loadHightScores(0);
-        System.out.println("chargement 2");
         this._scoresMontants = this._myControler.loadHightScores(1);
-        System.out.println("chargement 3");
         this._scoresDescendants = this._myControler.loadHightScores(2);
         
         this.changeScores(0);
@@ -177,7 +174,6 @@ public class HightScoreVue extends JFrame{
                 this._scoresLibres.add(s);
                 this.sortScores(this._scoresLibres);
                 this._myControler.saveHightScores(this._scoresLibres, 0);
-                this.changeScores(0);
             }
         }
     }
@@ -186,7 +182,7 @@ public class HightScoreVue extends JFrame{
         if(this._scoresMontants.size() < 10){
             this._scoresMontants.add(s);
             this.sortScores(this._scoresMontants);
-            // TODO mettre à jour et sauver le tableau
+            this._myControler.saveHightScores(this._scoresMontants, 1);
         }
         else{
             Score oldScore = this._scoresMontants.get(this._scoresMontants.size()-1);
@@ -194,7 +190,7 @@ public class HightScoreVue extends JFrame{
                 this._scoresMontants.remove(this._scoresMontants.size()-1);
                 this._scoresMontants.add(s);
                 this.sortScores(this._scoresMontants);
-                // TODO mettre à jour et sauver le tableau
+                this._myControler.saveHightScores(this._scoresMontants, 1);
             }
         }
     }
@@ -203,7 +199,7 @@ public class HightScoreVue extends JFrame{
         if(this._scoresDescendants.size() < 10){
             this._scoresDescendants.add(s);
             this.sortScores(this._scoresDescendants);
-            // TODO mettre à jour et sauver le tableau
+            this._myControler.saveHightScores(this._scoresDescendants, 2);
         }
         else{
             Score oldScore = this._scoresDescendants.get(this._scoresDescendants.size()-1);
@@ -211,7 +207,7 @@ public class HightScoreVue extends JFrame{
                 this._scoresDescendants.remove(this._scoresDescendants.size()-1);
                 this._scoresDescendants.add(s);
                 this.sortScores(this._scoresDescendants);
-                // TODO mettre à jour et sauver le tableau
+                this._myControler.saveHightScores(this._scoresDescendants, 2);
             }
         }
     }
