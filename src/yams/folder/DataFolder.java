@@ -23,10 +23,13 @@ import yams.hightScores.pojos.Score;
 
 /**
  *
- * @author Nicolas
+ * @author NicolasLIBRE
  */
 
 public class DataFolder{
+    private final String LIBRE = "scoresLibres.dat";
+    private final String MONTANT = "scoresMontants.dat";
+    private final String DESCENDANT = "scoresDescendants.dat";
     private YamControl _myControler;
     
     private String _OS;
@@ -79,9 +82,9 @@ public class DataFolder{
         boolean isCreated1 = false;
         boolean isCreated2 = false;
         boolean isCreated3 = false;
-        File file1 = new File(this._dirName + "scoresLibres.dat");
-        File file2 = new File(this._dirName + "scoresMontants.dat");
-        File file3 = new File(this._dirName + "scoresDescendants.dat");
+        File file1 = new File(this._dirName + LIBRE);
+        File file2 = new File(this._dirName + MONTANT);
+        File file3 = new File(this._dirName + DESCENDANT);
         if(!file1.exists()){
 	        try {
 	            isCreated1 = file1.createNewFile();
@@ -132,13 +135,13 @@ public class DataFolder{
         
         switch(mode){
             case 0:
-                f = new String("scoresLibres.dat");
+                f = new String(LIBRE);
                 break;
             case 1:
-                f = new String("scoresMontants.dat");
+                f = new String(MONTANT);
                 break;
             case 2:
-                f = new String("scoresDescendants.dat");
+                f = new String(DESCENDANT);
                 break;
             default:
                 f = new String(); //n'arrivera pas
@@ -170,13 +173,13 @@ public class DataFolder{
         
         switch(mode){
             case 0:
-                f = new String("scoresLibres.dat");
+                f = new String(LIBRE);
                 break;
             case 1:
-                f = new String("scoresMontants.dat");
+                f = new String(MONTANT);
                 break;
             case 2:
-                f = new String("scoresDescendants.dat");
+                f = new String(DESCENDANT);
                 break;
             default:
                 f = new String(); //n'arrivera pas
