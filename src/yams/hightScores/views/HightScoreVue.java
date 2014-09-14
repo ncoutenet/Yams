@@ -79,6 +79,7 @@ public class HightScoreVue extends JFrame{
         
         //instanciation du menu
         this._cbModeJeu = new JComboBox(modes);
+        // TODO lier la JCombobox à un écouteur
         JLabel labModes = new JLabel("Mode de jeu: ");
         JPanel panMod = new JPanel(new FlowLayout());
         panMod.add(labModes);
