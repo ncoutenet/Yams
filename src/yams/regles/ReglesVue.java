@@ -34,21 +34,21 @@ public class ReglesVue extends JFrame {
         pan.setLayout(new BorderLayout());
         
         int width = 500;
-        //int height = 685;
         int height = 800;
         StringBuffer nom;
         nom = saisieTexte();
         
         JEditorPane jep = new JEditorPane("text/html", new String(nom));
         jep.setEditable(false);
+        jep.setCaretPosition(0);
         
         Toolkit tk = Toolkit.getDefaultToolkit();
         GraphicsConfiguration gconf = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-        System.out.println(tk.getScreenInsets(gconf));
+        
         if((tk.getScreenSize().getHeight() - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2)) < height){
             height = (int)(tk.getScreenSize().height - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2)); 
         }
-        System.out.println(height);
+        
         jep.setPreferredSize(new Dimension(width, height));
         
         JScrollPane jsp = new JScrollPane(jep);
@@ -64,8 +64,8 @@ public class ReglesVue extends JFrame {
      * Retourne les règles suivant le mode de jeu
      */
     private StringBuffer saisieTexte(){
-        String soundOn = getClass().getResource("/yams/images/sound/soundOn.png").toString();
-        String soundOff = getClass().getResource("/yams/images/sound/soundOff.png").toString();
+        String soundOn = getClass().getResource("/yams/resources/images/sound/soundOn.png").toString();
+        String soundOff = getClass().getResource("/yams/resources/images/sound/soundOff.png").toString();
 	StringBuffer texte = new StringBuffer();
         
         if(this._mode == 0){
