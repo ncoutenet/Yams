@@ -227,7 +227,7 @@ public class HightScoreVue extends JFrame{
     
     private void sortScores(List<Score> scores){
        List<Score> sortedScores = new ArrayList<Score>(scores.size());
-        
+        // TODO revoir le tri
         for(int i=0; i<scores.size(); i++){
             Score newScore = scores.get(i);
             int index = 0;
