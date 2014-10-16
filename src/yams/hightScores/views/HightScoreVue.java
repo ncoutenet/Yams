@@ -226,27 +226,15 @@ public class HightScoreVue extends JFrame{
     }
     
     private void sortScores(List<Score> scores){
-       List<Score> sortedScores = new ArrayList<Score>(scores.size());
-        // TODO revoir le tri
-        for(int i=0; i<scores.size(); i++){
-            Score newScore = scores.get(i);
-            int index = 0;
-            boolean stopped = false;
-            while((index < sortedScores.size()) && (!stopped)){
-                Score oldScore = sortedScores.get(index);
-                if(oldScore.getScore() > newScore.getScore()){
-                    index++;
-                }else{
-                    stopped = true;
+        for(int i=scores.size(); i>0; i--){
+            for(int j=0; j<i-1; j++){
+                if(scores.get(j).getScore() > scores.get(j+1).getScore()){
+                    Score tmp = scores.get(j);
+                    scores.set(j, scores.get(j+1));
+                    scores.set(j+1, tmp);
                 }
             }
-            if(stopped){
-                sortedScores.add(index, newScore);
-            }else{
-                sortedScores.add(newScore);
-            }
         }
-        scores = sortedScores;
     }
     
     /*
