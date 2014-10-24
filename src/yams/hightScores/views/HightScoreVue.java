@@ -39,7 +39,7 @@ public class HightScoreVue extends JFrame{
     private JTable _rowHeader;
     private ModelRowHeader _modelRow;
     
-    private JComboBox<Object> _cbModeJeu;
+    private JComboBox _cbModeJeu;
     private JButton _btnRetour;
     
     private List<Score> _scoresLibres;
@@ -228,7 +228,7 @@ public class HightScoreVue extends JFrame{
     private void sortScores(List<Score> scores){
         for(int i=scores.size(); i>0; i--){
             for(int j=0; j<i-1; j++){
-                if(scores.get(j).getScore() > scores.get(j+1).getScore()){
+                if(scores.get(j).getScore() < scores.get(j+1).getScore()){
                     Score tmp = scores.get(j);
                     scores.set(j, scores.get(j+1));
                     scores.set(j+1, tmp);
