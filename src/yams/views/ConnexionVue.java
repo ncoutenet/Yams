@@ -71,16 +71,6 @@ public class ConnexionVue extends JFrame{
         JLabel labModes = new JLabel("Mode de jeu: ");
         labModes.setForeground(Color.WHITE);
         
-        //création du bouton des scores
-        JButton btnScores = new JButton("Scores");
-        btnScores.setActionCommand("openHightScores");
-        btnScores.addActionListener(new YamEvents(_myControler));
-        
-        //création du bouton des règles
-        JButton btnRegles = new JButton("Règles");
-        btnRegles.addActionListener(new YamEvents(_myControler));
-        btnRegles.setActionCommand("aperçuRegles");
-        
         //création du bouton pour le son
         this._iSounds = new Icon[2];
         this._iSounds[0] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOff.png"));
@@ -90,12 +80,13 @@ public class ConnexionVue extends JFrame{
         this.majSound(this._sound);
         
         //assemblage 
+        JPanel panSound = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panSound.add(this._labSound);
+        panSound.setBackground(COULEUR);
+        pan.add(panSound);
         JPanel panModesJeu = new JPanel(new FlowLayout());
         panModesJeu.add(labModes);
         panModesJeu.add(this._cbModeJeu);
-        panModesJeu.add(btnScores);
-        panModesJeu.add(btnRegles);
-        panModesJeu.add(this._labSound);
         panModesJeu.setBackground(COULEUR);
         pan.add(panModesJeu);
         

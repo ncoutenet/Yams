@@ -54,7 +54,12 @@ public class MyMenuBar extends JMenuBar{
         JMenu mAide = new JMenu("Aide");
         JMenuItem miRegles = new JMenuItem("Règles");
         miRegles.addActionListener(new YamEvents(this._myControler));
-        miRegles.setActionCommand("regles");
+        if(this._myType.equals("connexion")){
+            miRegles.setActionCommand("aperçuRegles");
+        }
+        else{
+            miRegles.setActionCommand("regles");
+        }
         mAide.add(miRegles);
         this.add(mAide);
     }
