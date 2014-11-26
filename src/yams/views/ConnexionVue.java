@@ -21,7 +21,7 @@ import yams.events.mouseEvents.YamSoundEvent;
 /*
  * Fenêtrre permettant de choisir le mode de jeu, le nombre de joueurs et leur pseudo
  */
-public class ConnectionVue extends JFrame{
+public class ConnexionVue extends JFrame{
     
     private int VAL = 1;
     private int MIN = 1;
@@ -39,13 +39,15 @@ public class ConnectionVue extends JFrame{
     private JPanel _panJoueurs;
     private JComboBox _cbModeJeu;
     
-    public ConnectionVue(YamControl yc, boolean sound){
+    public ConnexionVue(YamControl yc, boolean sound){
         super("Yam's");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         _myControler = yc;
         //initialisation du conteneur principal
         Container pan = this.getContentPane();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+        
+        this.setJMenuBar(new MyMenuBar(this._myControler, "connexion"));
         
         //initialisation des variables internes
         this._oldVal = new Integer(0);

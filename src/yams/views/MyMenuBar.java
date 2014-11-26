@@ -41,7 +41,12 @@ public class MyMenuBar extends JMenuBar{
         mJeu.addSeparator();
         JMenuItem miQuitter = new JMenuItem("Quitter");
         miQuitter.addActionListener(new YamEvents(this._myControler));
-        miQuitter.setActionCommand("confirmQuit");
+        if(this._myType.equals("jeu")){
+            miQuitter.setActionCommand("confirmQuit");
+        }
+        else{
+            miQuitter.setActionCommand("quitter");
+        }
         mJeu.add(miQuitter);
         this.add(mJeu);
         

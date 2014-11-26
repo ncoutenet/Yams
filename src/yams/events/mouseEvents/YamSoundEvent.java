@@ -6,7 +6,7 @@ package yams.events.mouseEvents;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import yams.views.ConnectionVue;
+import yams.views.ConnexionVue;
 import yams.control.YamControl;
 
 /**

@@ -15,7 +15,7 @@ import yams.model.YamModele;
 import yams.pojos.Joueur;
 import yams.regles.ReglesVue;
 import yams.views.ConfirmQuitVue;
-import yams.views.ConnectionVue;
+import yams.views.ConnexionVue;
 import yams.views.FinPartieVue;
 import yams.views.FinTourVue;
 import yams.views.InfoScoreVue;
@@ -30,7 +30,7 @@ import yams.views.JeuVue;
  * Classe controleur, elle gère le bon fonctionnement du jeu
  */
 public class YamControl {
-    private ConnectionVue _connection;
+    private ConnexionVue _connection;
     private YamModele _modele;
     private JeuVue _jeu;
     private FinPartieVue _finPartie;
@@ -57,7 +57,7 @@ public class YamControl {
         _data.createNewBDDFiles();
         
         _sound = _prefs.getBoolean("sound", true);
-        _connection = new ConnectionVue(this, this._sound);
+        _connection = new ConnexionVue(this, this._sound);
         _connection.affichage(true);
         _HightScore = new HightScoreVue(this);
     }
