@@ -218,6 +218,29 @@ public class JeuVue extends JFrame {
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
         //barre des menus
+        JMenuBar barre = new JMenuBar();
+        this.setJMenuBar(barre);
+        
+        //menu jeu
+        JMenu mJeu = new JMenu("Jeu");
+        JMenu mPartie = new JMenu("Partie...");
+        JMenuItem miNouveau = new JMenuItem("Nouveau");
+        mPartie.add(miNouveau);
+        // TODO ajouter l'option "recommencer"
+        mJeu.add(mPartie);
+        JMenuItem miScores = new JMenuItem("Scores");
+        mJeu.add(miScores);
+        mJeu.addSeparator();
+        JMenuItem miQuitter = new JMenuItem("Quitter");
+        mJeu.add(miQuitter);
+        barre.add(mJeu);
+        //menu aide
+        JMenu mAide = new JMenu("Aide");
+        JMenuItem miRegles = new JMenuItem("Règles");
+        mAide.add(miRegles);
+        barre.add(mAide);
+        
+        
         JPanel panBtnBar = new JPanel(new FlowLayout());
         JButton btnNouveau = new JButton("Nouveau");
         btnNouveau.addActionListener(new YamEvents(_myControler));
@@ -239,6 +262,7 @@ public class JeuVue extends JFrame {
         btnQuitter.setFocusable(false);
         panBtnBar.add(btnQuitter);
         panBtnBar.setBackground(couleur);
+        
         //création du bouton pour le son
         this._iSounds = new Icon[2];
         this._iSounds[0] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOff.png"));
