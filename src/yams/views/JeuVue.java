@@ -248,40 +248,10 @@ public class JeuVue extends JFrame {
         miRegles.setActionCommand("regles");
         mAide.add(miRegles);
         barre.add(mAide);
+        
         //bouton du son 
-        /*barre.add(Box.createHorizontalGlue());
-        this._iSounds = new Icon[2];
-        this._iSounds[0] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOff.png"));
-        this._iSounds[1] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOn.png"));
-        this._mSound = new JMenuItem();
-        this._mSound.addMouseListener(new YamSoundEvent(this._myControler));
-        barre.add(this._mSound);
-        this.majSound(this._sound);*/
-        
-        
         JPanel panBtnBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        /*JButton btnNouveau = new JButton("Nouveau");
-        btnNouveau.addActionListener(new YamEvents(_myControler));
-        btnNouveau.setActionCommand("confirmNouveau");
-        btnNouveau.setFocusable(false);
-        panBtnBar.add(btnNouveau);
-        JButton btnScores = new JButton("Scores");
-        btnScores.addActionListener(new YamEvents(_myControler));
-        btnScores.setActionCommand("openHightScores");
-        panBtnBar.add(btnScores);
-        JButton btnRegles = new JButton("Règles");
-        btnRegles.addActionListener(new YamEvents(_myControler));
-        btnRegles.setActionCommand("regles");
-        btnRegles.setFocusable(false);
-        panBtnBar.add(btnRegles);
-        JButton btnQuitter = new JButton("Quitter");
-        btnQuitter.addActionListener(new YamEvents(_myControler));
-        btnQuitter.setActionCommand("confirmQuit");
-        btnQuitter.setFocusable(false);
-        panBtnBar.add(btnQuitter);*/
         panBtnBar.setBackground(couleur);
-        
-        //création du bouton pour le son
         this._iSounds = new Icon[2];
         this._iSounds[0] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOff.png"));
         this._iSounds[1] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOn.png"));
