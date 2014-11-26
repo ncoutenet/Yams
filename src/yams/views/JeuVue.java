@@ -219,35 +219,8 @@ public class JeuVue extends JFrame {
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
         //barre des menus
-        JMenuBar barre = new JMenuBar();
+        JMenuBar barre = new MyMenuBar(this._myControler, "jeu");
         this.setJMenuBar(barre);
-        
-        //menu jeu
-        JMenu mJeu = new JMenu("Jeu");
-        JMenu mPartie = new JMenu("Partie...");
-        JMenuItem miNouveau = new JMenuItem("Nouveau");
-        miNouveau.addActionListener(new YamEvents(this._myControler));
-        miNouveau.setActionCommand("confirmNouveau");
-        mPartie.add(miNouveau);
-        // TODO ajouter l'option "recommencer"
-        mJeu.add(mPartie);
-        JMenuItem miScores = new JMenuItem("Scores");
-        miScores.addActionListener(new YamEvents(this._myControler));
-        miScores.setActionCommand("openHightScores");
-        mJeu.add(miScores);
-        mJeu.addSeparator();
-        JMenuItem miQuitter = new JMenuItem("Quitter");
-        miQuitter.addActionListener(new YamEvents(this._myControler));
-        miQuitter.setActionCommand("confirmQuit");
-        mJeu.add(miQuitter);
-        barre.add(mJeu);
-        //menu aide
-        JMenu mAide = new JMenu("Aide");
-        JMenuItem miRegles = new JMenuItem("Règles");
-        miRegles.addActionListener(new YamEvents(this._myControler));
-        miRegles.setActionCommand("regles");
-        mAide.add(miRegles);
-        barre.add(mAide);
         
         //bouton du son 
         JPanel panBtnBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
