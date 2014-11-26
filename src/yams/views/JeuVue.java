@@ -43,6 +43,7 @@ public class JeuVue extends JFrame {
     private JLabel _labPointsConserves;
     private JLabel _labCoupsRestants;
     private JLabel _labSound;
+    private JMenuItem _mSound;
     private Icon[] _iSounds;
     
     private int[] _valDes;
@@ -247,10 +248,19 @@ public class JeuVue extends JFrame {
         miRegles.setActionCommand("regles");
         mAide.add(miRegles);
         barre.add(mAide);
+        //bouton du son 
+        /*barre.add(Box.createHorizontalGlue());
+        this._iSounds = new Icon[2];
+        this._iSounds[0] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("/yams/resources/images/sound/soundOn.png"));
+        this._mSound = new JMenuItem();
+        this._mSound.addMouseListener(new YamSoundEvent(this._myControler));
+        barre.add(this._mSound);
+        this.majSound(this._sound);*/
         
         
-        JPanel panBtnBar = new JPanel(new FlowLayout());
-        JButton btnNouveau = new JButton("Nouveau");
+        JPanel panBtnBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        /*JButton btnNouveau = new JButton("Nouveau");
         btnNouveau.addActionListener(new YamEvents(_myControler));
         btnNouveau.setActionCommand("confirmNouveau");
         btnNouveau.setFocusable(false);
@@ -268,7 +278,7 @@ public class JeuVue extends JFrame {
         btnQuitter.addActionListener(new YamEvents(_myControler));
         btnQuitter.setActionCommand("confirmQuit");
         btnQuitter.setFocusable(false);
-        panBtnBar.add(btnQuitter);
+        panBtnBar.add(btnQuitter);*/
         panBtnBar.setBackground(couleur);
         
         //création du bouton pour le son
@@ -313,7 +323,7 @@ public class JeuVue extends JFrame {
     /*
      * Permet la mise à jour de l'icone du son
      */
-    public void majSound(boolean init){
+    public final void majSound(boolean init){
         this._sound = init;
             
         if(this._sound){
@@ -321,6 +331,14 @@ public class JeuVue extends JFrame {
         }else{
             this._labSound.setIcon(this._iSounds[0]);
         }
+        /*this._sound = init;
+            
+        if(this._sound){
+            this._mSound.setIcon(this._iSounds[1]);
+        }else{
+            this._mSound.setIcon(this._iSounds[0]);
+        }
+        this._mSound.setSize(30, this._mSound.getHeight());*/
     }
     
     /*
