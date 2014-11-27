@@ -337,10 +337,10 @@ public class JeuVue extends JFrame {
      * Permet la mise à jour de la valeur d'un dé
      */
     public void setValDe(int index, int val){
-        if(!this._selDes[index]){
+        //if(!this._selDes[index]){
             this._valDes[index] = val;
             this.majDes(index);
-        }
+        //}
     }
     
     /*

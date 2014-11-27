@@ -211,8 +211,11 @@ public class YamControl {
         des = _modele.lancer();
         lancesRestants = _modele.majNbLances(lancesRestants);
         _jeu.setNbLancers(lancesRestants);
+        boolean[] selDes = this._jeu.getSelectedDes();
         for(int i = 0; i < 5; i++){
-            _jeu.setValDe(i, des[i]);
+            if(!(selDes[i] == this._listPrefs.get(YamControl.PREFSELECT))){
+                _jeu.setValDe(i, des[i]);
+            }
         }
         _jeu.setEnabledFinTour(true);
         _jeu.setTotalPoints(false);
