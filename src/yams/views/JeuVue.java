@@ -382,6 +382,13 @@ public class JeuVue extends JFrame {
         
         this._labTotalPoints.setText(texte);
         this._labTotalPoints.setForeground(Color.WHITE);
+        
+        if((!init) && (!this._myControler.getPrefs().get(YamControl.PREFSELECT))){
+            texte = "(";
+            texte += String.valueOf(somme);
+            texte += " points conservés)";
+            this._labPointsConserves.setText(texte);
+        }
     }
     
     /*
@@ -392,7 +399,7 @@ public class JeuVue extends JFrame {
         String texte;
         
         for(int i = 0; i < 5; i++){
-            if(this._selDes[i]){
+            if(this._selDes[i] == this._myControler.getPrefs().get(YamControl.PREFSELECT)){
                 score += this._valDes[i];
             }
         }
