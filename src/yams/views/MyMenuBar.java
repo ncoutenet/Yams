@@ -41,6 +41,7 @@ public class MyMenuBar extends JMenuBar{
         JMenuItem miPrefs = new JMenuItem("Préférences");
         miPrefs.addActionListener(new YamEvents(this._myControler));
         miPrefs.setActionCommand("prefs");
+        mJeu.add(miPrefs);
         mJeu.addSeparator();
         JMenuItem miQuitter = new JMenuItem("Quitter");
         miQuitter.addActionListener(new YamEvents(this._myControler));
