@@ -38,6 +38,9 @@ public class MyMenuBar extends JMenuBar{
         miScores.addActionListener(new YamEvents(this._myControler));
         miScores.setActionCommand("openHightScores");
         mJeu.add(miScores);
+        JMenuItem miPrefs = new JMenuItem("Préférences");
+        miPrefs.addActionListener(new YamEvents(this._myControler));
+        miPrefs.setActionCommand("prefs");
         mJeu.addSeparator();
         JMenuItem miQuitter = new JMenuItem("Quitter");
         miQuitter.addActionListener(new YamEvents(this._myControler));

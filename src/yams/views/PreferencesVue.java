@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import yams.control.YamControl;
 
-public class PreferencesView extends JFrame {
+public class PreferencesVue extends JFrame {
     private YamControl _myControler;
     private JCheckBox _sounds;
     private ButtonGroup _select;
@@ -21,10 +21,11 @@ public class PreferencesView extends JFrame {
 
 
 
-    public PreferencesView(){
+    public PreferencesVue(YamControl yc){
         super("Préférences");
 
         //initialisation des variables
+        this._myControler = yc;
         Container panel = this.getContentPane();
         panel.setLayout(new BorderLayout());
         JPanel panPrefs = new JPanel(new GridLayout(3, 1));

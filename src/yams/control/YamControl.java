@@ -20,6 +20,7 @@ import yams.views.FinPartieVue;
 import yams.views.FinTourVue;
 import yams.views.InfoScoreVue;
 import yams.views.JeuVue;
+import yams.views.PreferencesVue;
 
 /**
  *
@@ -37,6 +38,7 @@ public class YamControl {
     private ConfirmQuitVue _confirmQuit;
     private InfoScoreVue _confScores;
     private HightScoreVue _HightScore;
+    private PreferencesVue _Preferences;
     private DataFolder _data;
     
     private Preferences _prefs;
@@ -76,6 +78,12 @@ public class YamControl {
         return _sound;
     }
     
+    /*
+     * Affiche les préférences
+     */
+    public void showPrefs(){
+        throw new UnsupportedOperationException("Not yet supported");
+    }
     
     /*
      * Retourne les coups restants
