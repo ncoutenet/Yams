@@ -38,7 +38,7 @@ public class YamControl {
     private ConfirmQuitVue _confirmQuit;
     private InfoScoreVue _confScores;
     private HightScoreVue _HightScore;
-    private PreferencesVue _Preferences;
+    private PreferencesVue _preferences;
     private DataFolder _data;
     
     private Preferences _prefs;
@@ -51,12 +51,14 @@ public class YamControl {
     private int _mode;
     
     private boolean _sound;
+    private List<Boolean> _listPrefs;
     
     public YamControl(){
         _prefs = Preferences.userNodeForPackage(YamControl.class);
         _data = new DataFolder(this);
         _data.createDataFolder();
         _data.createNewBDDFiles();
+        _listPrefs = _data.loadPrefs();
         
         _sound = _prefs.getBoolean("sound", true);
         _connection = new ConnexionVue(this, this._sound);
