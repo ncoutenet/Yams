@@ -201,7 +201,7 @@ public class YamControl {
         _jeu.affichage(true);
         _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
     }
-    // FIXME les lancés des dés sélectionnés ne fonctionnent pas
+    // FIXME les lancés scores calculés sont faussés quand on relance les dés sélectionnées
     public void lancer(){
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();
@@ -218,7 +218,7 @@ public class YamControl {
             if(lancesRestants == 2){
                 _jeu.setValDe(i, des[i], false);
             }
-            else if(!selDes[i]/* != this._listPrefs.get(YamControl.PREFSELECT)*/){
+            else if(selDes[i] != this._listPrefs.get(YamControl.PREFSELECT)){
                 _jeu.setValDe(i, des[i], false);
             }
         }

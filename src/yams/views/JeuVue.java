@@ -351,11 +351,9 @@ public class JeuVue extends JFrame {
         }
         else{
             boolean garde = this._myControler.getPrefs().get(YamControl.PREFSELECT);
-            if(garde){
-                this.majDes(index);
-            }
-            else{
-                this.majDesSelect(index);
+            this.majDes(index);
+            if(!garde){
+                this._selDes[index] = false;
             }
         }
     }
@@ -463,14 +461,8 @@ public class JeuVue extends JFrame {
      * Permet l'initialisation des cases à cocher et l'affichage des dés au début de chaque tour
      */
     public void initDes(){
-        boolean garde = this._myControler.getPrefs().get(YamControl.PREFSELECT);
         for(int i = 0; i < 5; i++){
-            if(garde){
-                this._selDes[i] = false;
-            }
-            else{
-                this._selDes[i] = true;
-            }
+            this._selDes[i] = false;
         }
         for(int i = 0; i < 5; i++){
             this.setValDe(i, 0, true);
