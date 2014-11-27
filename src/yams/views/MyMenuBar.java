@@ -27,7 +27,12 @@ public class MyMenuBar extends JMenuBar{
         JMenu mPartie = new JMenu("Partie");
         JMenuItem miNouveau = new JMenuItem("Nouveau");
         miNouveau.addActionListener(new YamEvents(this._myControler));
-        miNouveau.setActionCommand("confirmNouveau");
+        if(this._myType.equals("jeu")){
+            miNouveau.setActionCommand("confirmNouveau");
+        }
+        else if(this._myType.equals("finPartie")){
+            miNouveau.setActionCommand("nouvellePartie");
+        }
         mPartie.add(miNouveau);
         JMenuItem miRecommencer = new JMenuItem("Recommencer");
         miRecommencer.addActionListener(new YamEvents(this._myControler));

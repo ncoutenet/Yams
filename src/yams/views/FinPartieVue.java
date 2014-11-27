@@ -26,9 +26,9 @@ public class FinPartieVue extends JDialog{
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur[] gagnants){
         super(parent, "Fin de la partie", true); //fenêtre modale
-        this.setJMenuBar(new MyMenuBar(this._myControler, "finPartie")); // FIXME null pointer exception en cliquant sur recommencer
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
         this._myControler = yc;
+        this.setJMenuBar(new MyMenuBar(this._myControler, "finPartie"));
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
         Color couleur = new Color(43, 133, 53);
         int max = gagnants.length-1;
         
@@ -69,8 +69,8 @@ public class FinPartieVue extends JDialog{
         JLabel labGagnant = new JLabel(strGagnant);
         labGagnant.setForeground(Color.WHITE);
         labGagnant.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
-        JLabel labChoix = new JLabel(strChoix);
-        labChoix.setForeground(Color.WHITE);
+        //JLabel labChoix = new JLabel(strChoix);
+        //labChoix.setForeground(Color.WHITE);
         btnNouveau = new JButton("Nouveau");
         btnQuitter = new JButton("Quitter");
         btnRecommencer = new JButton("Recommencer");
@@ -81,12 +81,12 @@ public class FinPartieVue extends JDialog{
         panLabels.setBackground(couleur);
         
         labGagnant.setHorizontalAlignment(JLabel.CENTER);
-        labChoix.setHorizontalAlignment(JLabel.CENTER);
+        //labChoix.setHorizontalAlignment(JLabel.CENTER);
         panLabels.add(labGagnant);
         if(gagnants.length > 1){
             panLabels.add(listeJoueurs);
         }
-        panLabels.add(labChoix);
+        //panLabels.add(labChoix);
         btnNouveau.addActionListener(new YamEvents(_myControler));
         btnNouveau.setActionCommand("nouvellePartie");
         panBoutons.add(btnNouveau);
@@ -105,7 +105,7 @@ public class FinPartieVue extends JDialog{
         pan.setBackground(couleur);
         
         pan.add(panLabels, BorderLayout.CENTER);
-        pan.add(panBoutons, BorderLayout.SOUTH);
+        //pan.add(panBoutons, BorderLayout.SOUTH);
         
         if(gagnants.length == 1){
             this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*2);

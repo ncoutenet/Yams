@@ -236,6 +236,7 @@ public class YamControl {
      */
     public void nouvellePartie(){
         _finPartie.affichage(false);
+        _finPartie.dispose();
         _jeu.affichage(false);
         _connexion.affichage(true);
     }
