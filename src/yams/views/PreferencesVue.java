@@ -15,10 +15,14 @@ import yams.events.YamEvents;
 public class PreferencesVue extends JFrame {
     private YamControl _myControler;
     private JCheckBox _sounds;
-    private ButtonGroup _select;
-    private ButtonGroup _combinations;
     private List<Boolean> _prefs;
-
+    
+    private ButtonGroup _select;
+    private JRadioButton _rbGarde;
+    private JRadioButton _rbRelance;
+    private ButtonGroup _combinations;
+    private JRadioButton _rbComb1;
+    private JRadioButton _rbComb2;
 
 
     public PreferencesVue(YamControl yc, List<Boolean> prefs){
@@ -46,30 +50,31 @@ public class PreferencesVue extends JFrame {
 
         JPanel panSelect = new JPanel(new GridLayout(2, 1));
         panSelect.setBorder(BorderFactory.createTitledBorder("Sélection des dés"));
-        JRadioButton rbGarde = new JRadioButton();
-        rbGarde.setText("Garder les dés sélectionnés");
-        rbGarde.setSelected(this._prefs.get(YamControl.PREFSELECT));
-        JRadioButton rbRelance = new JRadioButton();
-        rbRelance.setText("Relancer les dés sélectionnés");
-        rbRelance.setSelected(!this._prefs.get(YamControl.PREFSELECT));
-        this._select.add(rbGarde);
-        this._select.add(rbRelance);
-        panSelect.add(rbGarde);
-        panSelect.add(rbRelance);
+        _rbGarde = new JRadioButton();
+        _rbGarde.setText("Garder les dés sélectionnés");
+        _rbGarde.setSelected(this._prefs.get(YamControl.PREFSELECT));
+        
+        _rbRelance = new JRadioButton();
+        _rbRelance.setText("Relancer les dés sélectionnés");
+        _rbRelance.setSelected(!this._prefs.get(YamControl.PREFSELECT));
+        this._select.add(_rbGarde);
+        this._select.add(_rbRelance);
+        panSelect.add(_rbGarde);
+        panSelect.add(_rbRelance);
         panPrefs.add(panSelect, BorderLayout.CENTER);
 
         JPanel panCombinations = new JPanel(new GridLayout(2, 1));
         panCombinations.setBorder(BorderFactory.createTitledBorder("Combinaisons"));
-        JRadioButton rbComb1 = new JRadioButton();
-        rbComb1.setText("soustraction des scores + et -");
-        rbComb1.setSelected(this._prefs.get(YamControl.PREFRULES));
-        JRadioButton rbComb2 = new JRadioButton();
-        rbComb2.setText("Brelan, petite suite, grande suite, chance");
-        rbComb2.setSelected(!this._prefs.get(YamControl.PREFRULES));
-        this._combinations.add(rbComb1);
-        this._combinations.add(rbComb2);
-        panCombinations.add(rbComb1);
-        panCombinations.add(rbComb2);
+        _rbComb1 = new JRadioButton();
+        _rbComb1.setText("soustraction des scores + et -");
+        _rbComb1.setSelected(this._prefs.get(YamControl.PREFRULES));
+        _rbComb2 = new JRadioButton();
+        _rbComb2.setText("Brelan, petite suite, grande suite, chance");
+        _rbComb2.setSelected(!this._prefs.get(YamControl.PREFRULES));
+        this._combinations.add(_rbComb1);
+        this._combinations.add(_rbComb2);
+        panCombinations.add(_rbComb1);
+        panCombinations.add(_rbComb2);
         panPrefs.add(panCombinations, BorderLayout.SOUTH);
 
         JPanel panValidate = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -91,5 +96,13 @@ public class PreferencesVue extends JFrame {
     public List<Boolean> getPrefs(){
         return this._prefs;
     }
-	
+    
+    /*
+     * Sauvegarde les préférences dans le tableau que récupère le controleur
+     */
+    public void setPrefs(){
+        this._prefs.set(YamControl.PREFSOUND, this._sounds.isSelected());
+        this._prefs.set(YamControl.PREFSELECT, this._rbGarde.isSelected());
+        this._prefs.set(YamControl.PREFRULES, this._rbComb1.isSelected());
+    }
 }
