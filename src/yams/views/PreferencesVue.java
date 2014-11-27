@@ -1,8 +1,6 @@
 package yams.views;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.GridLayout;
+import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -28,14 +26,14 @@ public class PreferencesVue extends JFrame {
         this._myControler = yc;
         Container panel = this.getContentPane();
         panel.setLayout(new BorderLayout());
-        JPanel panPrefs = new JPanel(new GridLayout(3, 1));
+        JPanel panPrefs = new JPanel(new BorderLayout());
 
         //construction des éléments
         this._sounds = new JCheckBox("Sons");
         this._sounds.setSelected(true);
         this._select = new ButtonGroup();
         this._combinations = new ButtonGroup();
-        panPrefs.add(this._sounds);
+        panPrefs.add(this._sounds, BorderLayout.NORTH);
 
         JPanel panSelect = new JPanel(new GridLayout(2, 1));
         panSelect.setBorder(BorderFactory.createTitledBorder("Sélection des dés"));
@@ -48,7 +46,7 @@ public class PreferencesVue extends JFrame {
         this._select.add(rbRelance);
         panSelect.add(rbGarde);
         panSelect.add(rbRelance);
-        panPrefs.add(panSelect);
+        panPrefs.add(panSelect, BorderLayout.CENTER);
 
         JPanel panCombinations = new JPanel(new GridLayout(2, 1));
         panCombinations.setBorder(BorderFactory.createTitledBorder("Combinaisons"));
@@ -61,15 +59,20 @@ public class PreferencesVue extends JFrame {
         this._combinations.add(rbComb2);
         panCombinations.add(rbComb1);
         panCombinations.add(rbComb2);
-        panPrefs.add(panCombinations);
+        panPrefs.add(panCombinations, BorderLayout.SOUTH);
 
+        JPanel panValidate = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnValidate = new JButton("Ok");
+        panValidate.add(btnValidate);
 
         panel.add(panPrefs, BorderLayout.CENTER);
-        panel.add(btnValidate, BorderLayout.SOUTH);
+        panel.add(panValidate, BorderLayout.SOUTH);
 
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setSize(400, 225);
+        this.setResizable(false);
+        this.setLocationRelativeTo(this.getParent());
+        this.setVisible(true);
     }
 
     public boolean isSounds() {
