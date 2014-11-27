@@ -23,8 +23,6 @@ import yams.table.ModeleTableScore;
  * @author nicolas
  */
 
-// TODO enregistrer les préférence dans un fichier .xml sur le appdata de l'utilisateur
-// TODO ajouter des préférences pour les differents coups, et la manière de sélectionner les dés à garder
 // TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 
 /*

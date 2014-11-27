@@ -1,15 +1,13 @@
 package yams.views;
 
-import java.awt.*;
-
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import javax.swing.*;
 import yams.control.YamControl;
+
+// TODO prendre en comptes les préférences
 
 public class PreferencesVue extends JFrame {
     private YamControl _myControler;
@@ -71,7 +69,7 @@ public class PreferencesVue extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(400, 225);
         this.setResizable(false);
-        this.setLocationRelativeTo(this.getParent());
+        this.setLocationRelativeTo(this.getParent()); //centrage de la fenêtre
         this.setVisible(true);
     }
 

@@ -27,6 +27,8 @@ import yams.views.PreferencesVue;
  * @author nicolas
  */
 
+// TODO enregistrer les préférence dans un fichier .dat sur le appdata de l'utilisateur
+
 /*
  * Classe controleur, elle gère le bon fonctionnement du jeu
  */
