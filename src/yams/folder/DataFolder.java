@@ -274,6 +274,9 @@ public class DataFolder{
         
         if(result == null){
             result = new ArrayList<Boolean>();
+            for(int i=0; i<3; i++){
+                result.add(true);
+            }
         }
         return result;
     }
