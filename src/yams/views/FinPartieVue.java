@@ -20,12 +20,9 @@ import yams.pojos.Joueur;
  */
 public class FinPartieVue extends JDialog{
     private YamControl _myControler;
-    private JButton btnNouveau;
-    private JButton btnQuitter;
-    private JButton btnRecommencer;
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur[] gagnants){
-        super(parent, "Fin de la partie", true); //fenêtre modale
+        super(parent, "Fin de la partie", false); //fenêtre non modale pour pouvoir afficher les scores et modifier les préférences
         this._myControler = yc;
         this.setJMenuBar(new MyMenuBar(this._myControler, "finPartie"));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
@@ -69,43 +66,21 @@ public class FinPartieVue extends JDialog{
         JLabel labGagnant = new JLabel(strGagnant);
         labGagnant.setForeground(Color.WHITE);
         labGagnant.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
-        //JLabel labChoix = new JLabel(strChoix);
-        //labChoix.setForeground(Color.WHITE);
-        btnNouveau = new JButton("Nouveau");
-        btnQuitter = new JButton("Quitter");
-        btnRecommencer = new JButton("Recommencer");
         
-        JPanel panBoutons = new JPanel(new FlowLayout());
-        panBoutons.setBackground(couleur);
         JPanel panLabels = new JPanel(new GridLayout(3, 1, 0, 5));
         panLabels.setBackground(couleur);
         
         labGagnant.setHorizontalAlignment(JLabel.CENTER);
-        //labChoix.setHorizontalAlignment(JLabel.CENTER);
         panLabels.add(labGagnant);
         if(gagnants.length > 1){
             panLabels.add(listeJoueurs);
         }
-        //panLabels.add(labChoix);
-        btnNouveau.addActionListener(new YamEvents(_myControler));
-        btnNouveau.setActionCommand("nouvellePartie");
-        panBoutons.add(btnNouveau);
-        
-        btnRecommencer.addActionListener(new YamEvents(_myControler));
-        btnRecommencer.setActionCommand("recommencer");
-        panBoutons.add(btnRecommencer);
-        
-        btnQuitter.addActionListener(new YamEvents(_myControler));
-        btnQuitter.setActionCommand("quitter");
-        panBoutons.add(btnQuitter);
-        panBoutons.setBackground(couleur);
         
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         pan.setBackground(couleur);
         
         pan.add(panLabels, BorderLayout.CENTER);
-        //pan.add(panBoutons, BorderLayout.SOUTH);
         
         if(gagnants.length == 1){
             this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*2);
