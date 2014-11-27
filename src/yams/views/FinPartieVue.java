@@ -4,12 +4,12 @@
  */
 package yams.views;
 
-import yams.control.YamControl;
-import yams.pojos.Joueur;
-import yams.events.YamEvents;
 import java.awt.*;
 import javax.swing.*;
+import yams.control.YamControl;
+import yams.events.YamEvents;
 import yams.hightScores.pojos.Score;
+import yams.pojos.Joueur;
 /**
  *
  * @author nicolas
@@ -26,6 +26,7 @@ public class FinPartieVue extends JDialog{
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur[] gagnants){
         super(parent, "Fin de la partie", true); //fenêtre modale
+        this.setJMenuBar(new MyMenuBar(this._myControler, "finPartie")); // FIXME null pointer exception en cliquant sur recommencer
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
         this._myControler = yc;
         Color couleur = new Color(43, 133, 53);

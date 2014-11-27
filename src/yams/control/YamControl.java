@@ -244,7 +244,9 @@ public class YamControl {
      * Nouvelle partie avec les mêmes joueurs que précédement
      */
     public void recommencer(){
-        _finPartie.affichage(false);
+        if(this._finPartie != null){
+            this._finPartie.affichage(false);
+        }
         _jeu.affichage(false);
         this.commencer();
     }

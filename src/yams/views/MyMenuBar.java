@@ -16,7 +16,7 @@ import yams.events.YamEvents;
  */
 public class MyMenuBar extends JMenuBar{
     private YamControl _myControler;
-    private String _myType; //"jeu" pour une partie en cours, "connexion" pour la page d'initialisation
+    private String _myType; //"jeu" pour une partie en cours, "connexion" pour la page d'initialisation, "finPartie" pour la fenêtre de fin de partie
     
     public MyMenuBar(YamControl yc, String type){
         this._myControler = yc;
@@ -29,7 +29,10 @@ public class MyMenuBar extends JMenuBar{
         miNouveau.addActionListener(new YamEvents(this._myControler));
         miNouveau.setActionCommand("confirmNouveau");
         mPartie.add(miNouveau);
-        // TODO ajouter l'option "recommencer"
+        JMenuItem miRecommencer = new JMenuItem("Recommencer");
+        miRecommencer.addActionListener(new YamEvents(this._myControler));
+        miRecommencer.setActionCommand("recommencer");
+        mPartie.add(miRecommencer);
         mJeu.add(mPartie);
         if(this._myType.equals("connexion")){
             mPartie.setEnabled(false);
