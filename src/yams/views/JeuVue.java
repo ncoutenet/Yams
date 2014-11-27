@@ -326,7 +326,7 @@ public class JeuVue extends JFrame {
     }
     
     /*
-     * Permet la mise à jour des affichages des dés
+     * Permet la mise à jour des affichages des dés lorsque les dés sélectionnés sont conservés
      */
     private void majDes(int index){
         this._labDes[index].setIcon(this._des[this._valDes[index]]);
@@ -334,13 +334,30 @@ public class JeuVue extends JFrame {
     }
     
     /*
+     * Permet la mise à jour des affichages des dés lorsque les dés sélectionnés sont relancés
+     */
+    private void majDesSelect(int index){
+        this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
+        this.getContentPane().repaint();
+    }
+    
+    /*
      * Permet la mise à jour de la valeur d'un dé
      */
-    public void setValDe(int index, int val){
-        //if(!this._selDes[index]){
-            this._valDes[index] = val;
+    public void setValDe(int index, int val, boolean init){
+        this._valDes[index] = val;
+        if(init){
             this.majDes(index);
-        //}
+        }
+        else{
+            boolean garde = this._myControler.getPrefs().get(YamControl.PREFSELECT);
+            if(garde){
+                this.majDes(index);
+            }
+            else{
+                this.majDesSelect(index);
+            }
+        }
     }
     
     /*
@@ -446,13 +463,17 @@ public class JeuVue extends JFrame {
      * Permet l'initialisation des cases à cocher et l'affichage des dés au début de chaque tour
      */
     public void initDes(){
+        boolean garde = this._myControler.getPrefs().get(YamControl.PREFSELECT);
         for(int i = 0; i < 5; i++){
-            if(this._selDes[i]){
+            if(garde){
                 this._selDes[i] = false;
+            }
+            else{
+                this._selDes[i] = true;
             }
         }
         for(int i = 0; i < 5; i++){
-            this.setValDe(i, 0);
+            this.setValDe(i, 0, true);
         }
     }
     /*

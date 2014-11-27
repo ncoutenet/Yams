@@ -95,6 +95,7 @@ public class YamControl {
      * Récupère les préférences modifiées
      */
     public void changePrefs(){
+        this._preferences.setPrefs();
         this._listPrefs = this._preferences.getPrefs();
         this._preferences.dispose();
         this.majSound();
@@ -195,11 +196,12 @@ public class YamControl {
         
         //initialisation et mise à jour des vues
         _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode, this._listPrefs.get(YamControl.PREFSOUND));
+        _jeu.initDes();
         _connexion.affichage(false);
         _jeu.affichage(true);
         _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
     }
-    
+    // FIXME les lancés des dés sélectionnés ne fonctionnent pas
     public void lancer(){
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();
@@ -213,8 +215,11 @@ public class YamControl {
         _jeu.setNbLancers(lancesRestants);
         boolean[] selDes = this._jeu.getSelectedDes();
         for(int i = 0; i < 5; i++){
-            if(!(selDes[i] == this._listPrefs.get(YamControl.PREFSELECT))){
-                _jeu.setValDe(i, des[i]);
+            if(lancesRestants == 2){
+                _jeu.setValDe(i, des[i], false);
+            }
+            else if(!selDes[i]/* != this._listPrefs.get(YamControl.PREFSELECT)*/){
+                _jeu.setValDe(i, des[i], false);
             }
         }
         _jeu.setEnabledFinTour(true);
@@ -259,7 +264,7 @@ public class YamControl {
      * mise à jour de la préférenc de son
      */
     public void majSound(){
-        this._listPrefs.set(YamControl.PREFSOUND, !this._listPrefs.get(YamControl.PREFSOUND));
+        //this._listPrefs.set(YamControl.PREFSOUND, !this._listPrefs.get(YamControl.PREFSOUND));
         this._connexion.majSound(this._listPrefs.get(YamControl.PREFSOUND));
         if(this._jeu != null){
             this._jeu.majSound(this._listPrefs.get(YamControl.PREFSOUND));
@@ -537,6 +542,13 @@ public class YamControl {
             this.tourSuivant();
             this._jeu.setTotalPoints(true);
         }
+    }
+    
+    /*
+     * Retourne le tableau des préférences
+     */
+    public List<Boolean> getPrefs(){
+        return this._listPrefs;
     }
     
     /*
