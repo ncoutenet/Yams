@@ -226,4 +226,55 @@ public class DataFolder{
         }
         return result;
     }
+    
+    public void savePrefs(List<Boolean> prefs){
+        FileOutputStream svg = null;
+        ObjectOutputStream saver = null;
+        
+        try{
+            try{
+                File file = new File(this._dirName + PREFERENCES);
+                file.delete();
+                svg = new FileOutputStream(file);
+                saver = new ObjectOutputStream(svg);
+                saver.writeObject(prefs);
+                saver.flush();
+                saver.close();
+            } finally{
+                saver.flush();
+                saver.close();
+            }
+        } catch(IOException e){
+            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public List<Boolean> loadPrefs(){
+        List<Boolean> result = null;
+        FileInputStream svg = null;
+        ObjectInputStream loader = null;
+        
+        try{
+            try{
+                svg = new FileInputStream(new File(this._dirName + PREFERENCES));
+                    loader = new ObjectInputStream(new BufferedInputStream(svg)); 
+                    result = (ArrayList<Boolean>)loader.readObject();
+                    System.out.println("chargement de "+result.size()+" score(s)");
+            }catch(EOFException e){
+                System.err.println(e.toString());
+                result = new ArrayList<Boolean>();
+            }finally{
+                if(loader != null){
+                    loader.close();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        if(result == null){
+            result = new ArrayList<Boolean>();
+        }
+        return result;
+    }
 }
