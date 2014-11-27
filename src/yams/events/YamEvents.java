@@ -79,6 +79,9 @@ public class YamEvents implements ActionListener{
         if(ae.getActionCommand().equals("prefs")){
             _myControler.showPrefs();
         }
+        if(ae.getActionCommand().equals("changePrefs")){
+            _myControler.changePrefs();
+        }
     }
     
 }

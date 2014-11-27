@@ -94,8 +94,10 @@ public class YamControl {
     /*
      * Récupère les préférences modifiées
      */
-    public void readNewPrefs(){
-        throw new UnsupportedOperationException("Unsupported yet");
+    public void changePrefs(){
+        this._listPrefs = this._preferences.getPrefs();
+        this._preferences.dispose();
+        this.majSound();
     }
     
     /*

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import yams.control.YamControl;
+import yams.events.YamEvents;
 
 // TODO prendre en comptes les préférences
 
@@ -73,6 +74,8 @@ public class PreferencesVue extends JFrame {
 
         JPanel panValidate = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnValidate = new JButton("Ok");
+        btnValidate.addActionListener(new YamEvents(this._myControler));
+        btnValidate.setActionCommand("changePrefs");
         panValidate.add(btnValidate);
 
         panel.add(panPrefs, BorderLayout.CENTER);
@@ -85,28 +88,8 @@ public class PreferencesVue extends JFrame {
         this.setVisible(true);
     }
 
-    public boolean isSounds() {
-        return _sounds.isSelected();
-    }
-
-    public void setSounds(boolean sounds) {
-        this._sounds.setSelected(sounds);
-    }
-
-    public boolean isSelect() {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
-
-    public void setSelect(boolean select) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
-
-    public boolean isCombinations() {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
-
-    public void setCombinations(boolean combinations) {
-        throw new UnsupportedOperationException("Not yet supported");
+    public List<Boolean> getPrefs(){
+        return this._prefs;
     }
 	
 }
