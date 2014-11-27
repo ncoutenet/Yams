@@ -30,6 +30,7 @@ public class DataFolder{
     private final String LIBRE = "scoresLibres.dat";
     private final String MONTANT = "scoresMontants.dat";
     private final String DESCENDANT = "scoresDescendants.dat";
+    private final String PREFERENCES = "preferences.dat";
     private YamControl _myControler;
     
     private String _OS;
@@ -82,9 +83,11 @@ public class DataFolder{
         boolean isCreated1 = false;
         boolean isCreated2 = false;
         boolean isCreated3 = false;
+        boolean isCreated4 = false;
         File file1 = new File(this._dirName + LIBRE);
         File file2 = new File(this._dirName + MONTANT);
         File file3 = new File(this._dirName + DESCENDANT);
+        File file4 = new File(this._dirName + PREFERENCES);
         if(!file1.exists()){
 	        try {
 	            isCreated1 = file1.createNewFile();
@@ -125,6 +128,20 @@ public class DataFolder{
         }
         else{
         	System.out.println("file 3 not created");
+        }
+        
+        if(!file4.exists()){
+	        try {
+	            isCreated4 = file4.createNewFile();
+	        } catch (IOException ex) {
+	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+        }
+        if(isCreated4){
+        	System.out.println("file 4 created");
+        }
+        else{
+        	System.out.println("file 4 not created");
         }
     }
     
