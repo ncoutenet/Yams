@@ -261,7 +261,15 @@ public class YamControl {
     }
     
     /*
-     * mise à jour de la préférenc de son
+     * Prend en compte le clic sur l'image du son
+     */
+    public void majSoundOnClic(){
+        this._listPrefs.set(YamControl.PREFSOUND, !this._listPrefs.get(YamControl.PREFSOUND));
+        this.majSound();
+    }
+    
+    /*
+     * mise à jour de la préférence de son
      */
     public void majSound(){
         //this._listPrefs.set(YamControl.PREFSOUND, !this._listPrefs.get(YamControl.PREFSOUND));

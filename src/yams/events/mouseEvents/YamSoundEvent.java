@@ -22,7 +22,7 @@ public class YamSoundEvent implements MouseListener{
     
     @Override
     public void mouseClicked(MouseEvent me) {
-        this._myControler.majSound();
+        this._myControler.majSoundOnClic();
     }
 
     @Override

@@ -278,6 +278,11 @@ public class DataFolder{
                 result.add(true);
             }
         }
+        else if(result.isEmpty()){
+            for(int i=0; i<3; i++){
+                result.add(true);
+            }
+        }
         return result;
     }
 }
