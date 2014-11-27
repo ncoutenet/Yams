@@ -260,7 +260,6 @@ public class DataFolder{
                     loader = new ObjectInputStream(new BufferedInputStream(svg)); 
                     result = (ArrayList<Boolean>)loader.readObject();
                     System.out.println("chargement de " + result.size() + " préférences");
-                    System.out.println(result.get(0).toString());
             }catch(EOFException e){
                 System.err.println(e.toString());
                 result = new ArrayList<Boolean>();
