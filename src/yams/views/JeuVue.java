@@ -32,6 +32,7 @@ import yams.table.ModeleTableScore;
 public class JeuVue extends JFrame {
     private Icon[] _des;
     private Icon[]  _delSelect;
+    private Icon[] _desUnSelect;
     private JLabel _aQui;
     private JLabel[] _labDes;
     private JLabel _nbLancers;
@@ -83,6 +84,14 @@ public class JeuVue extends JFrame {
         this._delSelect[3] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/4_sel.png"));
         this._delSelect[4] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/5_sel.png"));
         this._delSelect[5] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/6_sel.png"));
+        
+        this._desUnSelect = new Icon[6];
+        this._desUnSelect[0] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/1_unsel.png"));
+        this._desUnSelect[1] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/2_unsel.png"));
+        this._desUnSelect[2] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/3_unsel.png"));
+        this._desUnSelect[3] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/4_unsel.png"));
+        this._desUnSelect[4] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/5_unsel.png"));
+        this._desUnSelect[5] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/6_unsel.png"));
         
         this._des = new Icon[7];
         this._des[0] = new ImageIcon(getClass().getResource("/yams/resources/images/dés/indef.png"));
@@ -307,7 +316,12 @@ public class JeuVue extends JFrame {
         else {
             this._selDes[index] = !_selDes[index];
             if(this._selDes[index]){
-                this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
+                if(this._myControler.getPrefs().get(YamControl.PREFSELECT)){
+                    this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
+                }
+                else{
+                    this._labDes[index].setIcon(this._desUnSelect[this._valDes[index]-1]);
+                }
             }
             else{
                 this._labDes[index].setIcon(this._des[this._valDes[index]]);
