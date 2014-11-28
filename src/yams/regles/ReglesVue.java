@@ -177,6 +177,13 @@ public class ReglesVue extends JFrame {
         texte.append("<h2>Préférences</h2>");
         texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
         texte.append("Pour le réactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
+        texte.append("<h4>Menu Préférences</h4>");
+        texte.append("<p>Dans ce menu il est possible de régler le son et la manière de lancer les dés.</p>");
+        texte.append("<p>Si la case \"son\" est cochée, l'application jouera les sons</p>");
+        texte.append("<p>l'option \"Garder les dés sélectionnés\" permet de <strong>conserver</strong> les dés sélectionnés.<br/>"
+                + "l'option\"Relancer les dés sélectionnés\" permet de <strong>relancer</strong> les dés sélectionnés.</p>");
+        texte.append("<p>Les dés sélectionné pour être gardés sont coloriés en <span style=\"color:green;\">vert</span>.<br/>"
+                + "Les dés sélectionnés pour être relancé seront coloriés en <span style=\"color:red;\">rouge</span>.</p>");
         
 	return texte; 
     }
