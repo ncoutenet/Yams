@@ -200,20 +200,22 @@ public class YamControl {
     // FIXME les dés ne sont pas vérifiés lors du changement de la préférence de sélection en cours de partie
     public void checkDes(){
         boolean[] select = this._jeu.getSelectedDes();
-        if(this._listPrefs.get(YamControl.PREFSELECT)){
-            if(select[0] && select[1] && select[2] && select[3] && select[4]){
-                this._jeu.setEnabledLancer(false);
+        if(this._jeu.getLancesRestants() < 3){
+            if(this._listPrefs.get(YamControl.PREFSELECT)){
+                if(select[0] && select[1] && select[2] && select[3] && select[4]){
+                    this._jeu.setEnabledLancer(false);
+                }
+                else{
+                    this._jeu.setEnabledLancer(true);
+                }
             }
             else{
-                this._jeu.setEnabledLancer(true);
-            }
-        }
-        else{
-            if(!select[0] && !select[1] && !select[2] && !select[3] && !select[4]){
-                this._jeu.setEnabledLancer(false);
-            }
-            else{
-                this._jeu.setEnabledLancer(true);
+                if(!select[0] && !select[1] && !select[2] && !select[3] && !select[4]){
+                    this._jeu.setEnabledLancer(false);
+                }
+                else{
+                    this._jeu.setEnabledLancer(true);
+                }
             }
         }
     }
@@ -246,6 +248,9 @@ public class YamControl {
         if(lancesRestants == 0){
             _jeu.setEnabledLancer(false);
             this.finTour(true);
+        }
+        if(!this.getPrefs().get(YamControl.PREFSELECT)){
+            this.checkDes();
         }
     }
     
