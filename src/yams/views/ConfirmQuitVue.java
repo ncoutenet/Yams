@@ -4,8 +4,6 @@
  */
 package yams.views;
 
-import yams.control.YamControl;
-import yams.events.YamEvents;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -14,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import yams.control.YamControl;
+import yams.events.YamEvents;
 
 /**
  *
@@ -25,12 +25,14 @@ import javax.swing.JPanel;
  * Elle s'affiche lors d'un clic sur les boutons "nouveau" et "quitter" pendant une partie
  */
 public class ConfirmQuitVue extends JDialog{
+    private YamControl _myControler;
     private JButton btnValider;
     private JButton btnAnnuler;
     
     public ConfirmQuitVue(boolean quit, JeuVue parent, YamControl yc){
         super(parent, true); //mise enplace de la modalité
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this._myControler = yc;
         
         //préparation de la couleur de fond
         Color couleur = new Color(43, 133, 53);
@@ -51,7 +53,7 @@ public class ConfirmQuitVue extends JDialog{
         JLabel label = new JLabel("Êtes-vous sûr de vouloir abandonner cette partie?"); 
         label.setForeground(Color.WHITE); //label écrit en blanc
         btnValider = new JButton("Oui");
-        btnValider.addActionListener(new YamEvents(yc));
+        btnValider.addActionListener(new YamEvents(this._myControler));
         
         //mise en place de la commande à executer lors de la validation
         if(!quit){
@@ -63,7 +65,7 @@ public class ConfirmQuitVue extends JDialog{
         
         //suite de l'initialisation des composants
         btnAnnuler = new JButton("Non");
-        btnAnnuler.addActionListener(new YamEvents(yc));
+        btnAnnuler.addActionListener(new YamEvents(this._myControler));
         btnAnnuler.setActionCommand("annuler");
         
         //initialisation des sous-conteneurs de la fenêtre

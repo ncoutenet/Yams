@@ -4,14 +4,14 @@
  */
 package yams.views;
 
-import yams.control.YamControl;
-import yams.events.YamEvents;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import javax.swing.*;
+import yams.control.YamControl;
+import yams.events.YamEvents;
 
 /**
  *

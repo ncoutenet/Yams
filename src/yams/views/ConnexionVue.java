@@ -4,13 +4,13 @@
  */
 package yams.views;
 
-import yams.control.YamControl;
-import yams.events.NbJoueursEvents;
-import yams.events.YamEvents;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import yams.control.YamControl;
+import yams.events.NbJoueursEvents;
+import yams.events.YamEvents;
 import yams.events.mouseEvents.YamSoundEvent;
 
 /**
@@ -134,6 +134,9 @@ public class ConnexionVue extends JFrame{
      * Permet l'affichage/masquage de la fenêtre
      */
     public void affichage(boolean enable){
+        if(enable){
+            this._myControler.setActualWindow("Connexion");
+        }
         this.setVisible(enable);
     }
     

@@ -30,7 +30,6 @@ public class PreferencesVue extends JFrame {
         this._myControler = yc;
         this._prefs = prefs;
         if(this._prefs.isEmpty()){
-            //this._prefs = new ArrayList<Boolean>();
             for(int i=0; i<3; i++){
                 this._prefs.add(true);
             }
@@ -102,5 +101,23 @@ public class PreferencesVue extends JFrame {
         this._prefs.set(YamControl.PREFSOUND, this._sounds.isSelected());
         this._prefs.set(YamControl.PREFSELECT, this._rbGarde.isSelected());
         this._prefs.set(YamControl.PREFRULES, this._rbComb1.isSelected());
+    }
+    
+    public void enableGroup(int group, boolean enable){
+        switch(group){
+            case 0:
+                this._sounds.setEnabled(enable);
+                break;
+            case 1:
+                this._rbGarde.setEnabled(enable);
+                this._rbRelance.setEnabled(enable);
+                break;
+            case 2:
+                this._rbComb1.setEnabled(enable);
+                this._rbComb2.setEnabled(enable);
+                break;
+            default:
+                break; //n'arrivera pas
+        }
     }
 }

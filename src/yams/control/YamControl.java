@@ -34,10 +34,10 @@ public class YamControl {
     private HightScoreVue _HightScore;
     private PreferencesVue _preferences;
     private DataFolder _data;
-    
-    private Preferences _prefs;
+    //private Preferences _prefs;
     private FinTourVue _finTour;
     
+    private String _actualWindow;
     private String[] _nomsJoueurs;
     private int _nbJoueurs;
     private boolean[][] _scoresValides;
@@ -51,7 +51,7 @@ public class YamControl {
     public static final int PREFRULES = 2;
     
     public YamControl(){
-        _prefs = Preferences.userNodeForPackage(YamControl.class);
+        //_prefs = Preferences.userNodeForPackage(YamControl.class);
         _data = new DataFolder(this);
         _data.createDataFolder();
         _data.createNewBDDFiles();
@@ -70,6 +70,13 @@ public class YamControl {
     }
     
     /*
+     * Sauvegarde la derniere fenêtre ouverte
+     */
+    public void setActualWindow(String actualWindow) {
+        this._actualWindow = actualWindow;
+    }
+    
+    /*
      * Retourne les préférences de son
      */
     public boolean isSound() {
@@ -81,6 +88,10 @@ public class YamControl {
      */
     public void showPrefs(){
         this._preferences = new PreferencesVue(this, _listPrefs);
+        if(this._actualWindow.equals("Jeu")){
+            this._preferences.enableGroup(YamControl.PREFSELECT, false);
+            this._preferences.enableGroup(YamControl.PREFRULES, false);
+        }
     }
     
     /*
@@ -197,7 +208,6 @@ public class YamControl {
     /*
      * fonction permettant de verifier si le joueur peux relancer des dés
      */
-    // FIXME les dés ne sont pas vérifiés lors du changement de la préférence de sélection en cours de partie
     public void checkDes(){
         boolean[] select = this._jeu.getSelectedDes();
         if(this._jeu.getLancesRestants() < 3){

@@ -4,17 +4,12 @@
  */
 package yams.views;
 
-import yams.control.YamControl;
-import yams.pojos.Joueur;
-import yams.events.YamEvents;
-import yams.events.mouseEvents.YamSoundEvent;
-import yams.events.mouseEvents.YamMouseEvent1;
-import yams.events.mouseEvents.YamMouseEvent4;
-import yams.events.mouseEvents.YamMouseEvent5;
-import yams.events.mouseEvents.YamMouseEvent3;
-import yams.events.mouseEvents.YamMouseEvent2;
 import java.awt.*;
 import javax.swing.*;
+import yams.control.YamControl;
+import yams.events.YamEvents;
+import yams.events.mouseEvents.*;
+import yams.pojos.Joueur;
 import yams.table.ColorTab;
 import yams.table.ModeleTableScore;
 
@@ -267,6 +262,9 @@ public class JeuVue extends JFrame {
      * Affichage de la fenêtre
      */
     public void affichage(boolean enable){
+        if(enable){
+            this._myControler.setActualWindow("Jeu");
+        }
         this.setVisible(enable);
     }
     

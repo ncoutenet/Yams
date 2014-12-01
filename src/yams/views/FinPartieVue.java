@@ -5,9 +5,11 @@
 package yams.views;
 
 import java.awt.*;
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JEditorPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import yams.control.YamControl;
-import yams.events.YamEvents;
 import yams.hightScores.pojos.Score;
 import yams.pojos.Joueur;
 /**
@@ -98,6 +100,9 @@ public class FinPartieVue extends JDialog{
      * Gère l'affichage
      */
     public void affichage(boolean enable){
+        if(enable){
+            this._myControler.setActualWindow("FinPartie");
+        }
         this.setVisible(enable);
     }
 }
