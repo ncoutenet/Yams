@@ -4,13 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 
-// TODO prendre en comptes les préférences
 
 public class PreferencesVue extends JFrame {
     private YamControl _myControler;

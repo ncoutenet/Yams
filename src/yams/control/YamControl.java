@@ -14,20 +14,12 @@ import yams.hightScores.views.HightScoreVue;
 import yams.model.YamModele;
 import yams.pojos.Joueur;
 import yams.regles.ReglesVue;
-import yams.views.ConfirmQuitVue;
-import yams.views.ConnexionVue;
-import yams.views.FinPartieVue;
-import yams.views.FinTourVue;
-import yams.views.InfoScoreVue;
-import yams.views.JeuVue;
-import yams.views.PreferencesVue;
+import yams.views.*;
 
 /**
  *
  * @author nicolas
  */
-
-// TODO enregistrer les préférence dans un fichier .dat sur le appdata de l'utilisateur
 
 /*
  * Classe controleur, elle gère le bon fonctionnement du jeu
@@ -201,7 +193,34 @@ public class YamControl {
         _jeu.affichage(true);
         _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
     }
-    // FIXME les lancés scores calculés sont faussés quand on relance les dés sélectionnées
+    
+    /*
+     * fonction permettant de verifier si le joueur peux relancer des dés
+     */
+    // FIXME les dés ne sont pas vérifiés lors du changement de la préférence de sélection en cours de partie
+    public void checkDes(){
+        boolean[] select = this._jeu.getSelectedDes();
+        if(this._listPrefs.get(YamControl.PREFSELECT)){
+            if(select[0] && select[1] && select[2] && select[3] && select[4]){
+                this._jeu.setEnabledLancer(false);
+            }
+            else{
+                this._jeu.setEnabledLancer(true);
+            }
+        }
+        else{
+            if(!select[0] && !select[1] && !select[2] && !select[3] && !select[4]){
+                this._jeu.setEnabledLancer(false);
+            }
+            else{
+                this._jeu.setEnabledLancer(true);
+            }
+        }
+    }
+    
+    /*
+     * fonction de lancement des dés
+     */
     public void lancer(){
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();

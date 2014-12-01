@@ -281,14 +281,6 @@ public class JeuVue extends JFrame {
         }else{
             this._labSound.setIcon(this._iSounds[0]);
         }
-        /*this._sound = init;
-            
-        if(this._sound){
-            this._mSound.setIcon(this._iSounds[1]);
-        }else{
-            this._mSound.setIcon(this._iSounds[0]);
-        }
-        this._mSound.setSize(30, this._mSound.getHeight());*/
     }
     
     /*
@@ -303,7 +295,6 @@ public class JeuVue extends JFrame {
      */
     public void majColorTab(int joueur, int index, int type){
         this._gestionnaire.setCouleurs(joueur, index, type);
-//        this._tableau.updateUI();
     }
     
     /*
@@ -321,12 +312,14 @@ public class JeuVue extends JFrame {
                 }
                 else{
                     this._labDes[index].setIcon(this._desUnSelect[this._valDes[index]-1]);
+                    
                 }
             }
             else{
                 this._labDes[index].setIcon(this._des[this._valDes[index]]);
             }
             this.setPointsSelect();
+            this._myControler.checkDes();
         }
     }
     
