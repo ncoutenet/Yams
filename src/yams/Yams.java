@@ -11,6 +11,9 @@ import yams.control.YamControl;
  * @author nicolas
  */
 
+// TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
+// TODO permettre l'export des scores
+
 /*
  * Classe principale permettant le lancement du programme
  */

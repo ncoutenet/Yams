@@ -18,7 +18,6 @@ import yams.table.ModeleTableScore;
  * @author nicolas
  */
 
-// TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 
 /*
  * Fenêtre principale du jeu.
