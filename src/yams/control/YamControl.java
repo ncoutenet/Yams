@@ -7,7 +7,6 @@ package yams.control;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.prefs.Preferences;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.views.HightScoreVue;
@@ -19,6 +18,25 @@ import yams.views.*;
 /**
  *
  * @author nicolas
+ */
+
+/*
+ * Fonctionnement
+ * 
+ * Lorsque le joueur choisis le nombre de joueur la fonction setNomJoueur est appelée pour prendre en compte les nouveaux joueurs.
+ * Quand l'utilisateur valide le lancement de la partie en cliquant sur "Commencer" la fonction commencer est appelée.
+ * La fonction commencer masque la fenêtre de paramétrage de la partie et affiche celle de jeu.
+ * Quand un joueur lance les dés, la fonction lancer est appelée
+ * cette fonction calcule la nouvelle valeur de chaque dés et demande la mise à jour des dés effectivement relancés.
+ * Quand un joueur sélectionne un dé les fonctions majSelDes(i) et checkDes sont appelées
+ * majSelDes(i) met à jour le dé i (elle appartien à la fenêtre de jeu)
+ * checkDes verifie si des dés peuvent être lancés et bloque ou non le bouton de lancer.
+ * A la fin du tour la fonction finTour(b) est appelée
+ * si b est vrai, on ne peut pas annuler la fin du tour et on doit choisir quel est le score à modifier.
+ * La validation de ce choix appelle la fonction validationScore qui va calculer si un score peut être inscrit dans la case choisie
+ * Si oui, la case est coloriée en vert est le score est mis à jour; si non la case est coloriée en rouge et ne peut plus être choisie (cela correspond à rayer un score).
+ * Lorsque la partie est terminée la fonction validationScore affiche la fenêtre de fin de partie.
+ * Cette fenête permet de voir les scores, modifier les préférences, quitter le jeu, relancer la partie précédente, ou en commencer une nouvelle.
  */
 
 /*
