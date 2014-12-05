@@ -141,7 +141,9 @@ public class HightScoreVue extends JFrame{
         }
         this._tableScore.updateUI();
     }
-    
+    /*
+     * Permet d'afficher les score du mode de jeu choisis par l'utilisateur
+     */
     public void selectMode(){
         if(this._cbModeJeu.getSelectedItem().equals("Libre")){
             this.changeScores(0);
@@ -152,6 +154,9 @@ public class HightScoreVue extends JFrame{
         }
     }
     
+    /*
+     * ferme la fenêtre
+     */
     public void close(){
         this.dispose();
     }
@@ -160,12 +165,14 @@ public class HightScoreVue extends JFrame{
         throw new UnsupportedOperationException("Not implemented yet");
     }
     
+    /*
+     * Ajoute un score au mode libre
+     */
     public void addScoreLibre(Score s){
         if(this._scoresLibres.size() < 10){
             this._scoresLibres.add(s);
             this.sortScores(this._scoresLibres);
             this._myControler.saveHightScores(this._scoresLibres, 0);
-            this.changeScores(0);
         }
         else{
             Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
@@ -176,8 +183,12 @@ public class HightScoreVue extends JFrame{
                 this._myControler.saveHightScores(this._scoresLibres, 0);
             }
         }
+        this.changeScores(0);
     }
     
+    /*
+     * Ajoute un score au mode montant
+     */
     public void addScoreMontant(Score s){
         if(this._scoresMontants.size() < 10){
             this._scoresMontants.add(s);
@@ -193,8 +204,12 @@ public class HightScoreVue extends JFrame{
                 this._myControler.saveHightScores(this._scoresMontants, 1);
             }
         }
+        this.changeScores(1);
     }
     
+    /*
+     * Ajoute un score au mode descendant
+     */
     public void addScoreDescendant(Score s){
         if(this._scoresDescendants.size() < 10){
             this._scoresDescendants.add(s);
@@ -210,8 +225,12 @@ public class HightScoreVue extends JFrame{
                 this._myControler.saveHightScores(this._scoresDescendants, 2);
             }
         }
+        this.changeScores(2);
     }
     
+    /*
+     * retourne la liste des scores du mode de jeu choisis
+     */
     public List<Score> getScores(int mode){
         switch(mode){
             case 0:
@@ -225,6 +244,9 @@ public class HightScoreVue extends JFrame{
         }
     }
     
+    /*
+     * Trie les scores
+     */
     private void sortScores(List<Score> scores){
         for(int i=scores.size(); i>0; i--){
             for(int j=0; j<i-1; j++){
