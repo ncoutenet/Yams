@@ -139,7 +139,7 @@ public class JeuVue extends JFrame {
                 if(this._myControler.getPrefs().get(YamControl.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
                     colorTab[i][j] = 2;
                 }
-                else if(((j == 0) || (j == 7) || (j == 8) || (j == 9)/* || (j == 12)*/ || (j == 17))){
+                else if(((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 17))){
                     colorTab[i][j] = 2;
                 }
                 else{

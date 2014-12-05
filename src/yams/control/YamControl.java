@@ -52,7 +52,6 @@ public class YamControl {
     private HightScoreVue _HightScore;
     private PreferencesVue _preferences;
     private DataFolder _data;
-    //private Preferences _prefs;
     private FinTourVue _finTour;
     
     private String _actualWindow;
@@ -69,7 +68,6 @@ public class YamControl {
     public static final int PREFRULES = 2;
     
     public YamControl(){
-        //_prefs = Preferences.userNodeForPackage(YamControl.class);
         _data = new DataFolder(this);
         _data.createDataFolder();
         _data.createNewBDDFiles();
@@ -852,7 +850,6 @@ public class YamControl {
      */
     public void annulerFinTour(){
         this._finTour.setAffichage(false);
-//        this._finTour.dispose();
     }
     
     /*
