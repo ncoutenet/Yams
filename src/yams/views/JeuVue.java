@@ -122,7 +122,7 @@ public class JeuVue extends JFrame {
         }
         
         //initialisation du tableau des scores
-        this._tabModel = new ModeleTableScore(nbJoueurs);
+        this._tabModel = new ModeleTableScore(nbJoueurs, this._myControler.getPrefs().get(YamControl.PREFRULES));
         this.setJoueurs(noms);
         this._tableau = new JTable(_tabModel);
         this._tableau.setName("Tableau des scores");
@@ -136,10 +136,15 @@ public class JeuVue extends JFrame {
         int[][] colorTab = new int[nbJoueurs][18];
         for(int i = 0; i < nbJoueurs; i++){
             for(int j = 0; j < 18; j++){
-                if((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17)){
+                if(this._myControler.getPrefs().get(YamControl.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
                     colorTab[i][j] = 2;
                 }
-                else colorTab[i][j] = 0;
+                else if(((j == 0) || (j == 7) || (j == 8) || (j == 9)/* || (j == 12)*/ || (j == 17))){
+                    colorTab[i][j] = 2;
+                }
+                else{
+                    colorTab[i][j] = 0;
+                }
             }
         }
         

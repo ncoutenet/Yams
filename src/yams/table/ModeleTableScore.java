@@ -20,12 +20,14 @@ import yams.pojos.Joueur;
 public class ModeleTableScore extends AbstractTableModel{
     private List<Joueur> _joueurs;
     private int _cptJoueurs;
-    private final String[] _entetes = {"Joueur", "1", "2", "3", "4","5", "6", "Total", "Bonus", "Total", "+", "-", "Total", "suite", "full", "carré", "yam's", "TOTAL"};
+    private boolean _rules;
+    private final String[][] _entetes = {{"Joueur", "1", "2", "3", "4","5", "6", "Total", "Bonus", "Total", "+", "-", "Total", "suite", "full", "carré", "yam's", "TOTAL"},{"Joueur", "1", "2", "3", "4","5", "6", "Total", "Bonus", "Total", "brelan", "petite suite", "grande suite", "full", "carré", "yam's", "chance", "TOTAL"}};
     
-    public ModeleTableScore(int nbJoueurs){
+    public ModeleTableScore(int nbJoueurs, boolean rule){
         super();
         this._joueurs = new ArrayList<Joueur>();
         this._cptJoueurs = 0;
+        this._rules = rule;
     }
 
     /*
@@ -60,7 +62,12 @@ public class ModeleTableScore extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return this._entetes.length;
+        if(this._rules){
+            return this._entetes[0].length;
+        }
+        else{
+            return this._entetes[1].length;
+        }
     }
 
     @Override
@@ -76,6 +83,11 @@ public class ModeleTableScore extends AbstractTableModel{
     
     @Override
     public String getColumnName(int columnIndex){
-        return this._entetes[columnIndex];
+        if(this._rules){
+            return this._entetes[0][columnIndex];
+        }
+        else{
+            return this._entetes[1][columnIndex];
+        }
     }
 }
