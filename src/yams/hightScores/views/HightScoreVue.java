@@ -80,10 +80,10 @@ public class HightScoreVue extends JFrame{
         jsp.setViewportView(this._tableScore);
         jsp.setRowHeaderView(this._rowHeader);
         Dimension d = jsp.getPreferredSize();
-        d.height = this._rowHeader.getPreferredSize().height+23;
+        d.height = this._rowHeader.getPreferredSize().height+20;
         jsp.setPreferredSize(d);
         TableColumn colName = this._tableScore.getColumnModel().getColumn(0);
-        colName.setPreferredWidth(jsp.getPreferredSize().width-73);
+        colName.setPreferredWidth(jsp.getPreferredSize().width-74);
         Dimension dh = this._rowHeader.getPreferredScrollableViewportSize();
         dh.width = this._rowHeader.getPreferredSize().width;
         this._rowHeader.setPreferredScrollableViewportSize(dh);
@@ -92,7 +92,7 @@ public class HightScoreVue extends JFrame{
         this._btnRetour = new JButton("Retour");
         this._btnRetour.addActionListener(new YamEvents(this._myControler));
         this._btnRetour.setActionCommand("closeHightScores");
-        JPanel panBtn = new JPanel(new FlowLayout());
+        JPanel panBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
@@ -100,7 +100,7 @@ public class HightScoreVue extends JFrame{
         this._scoresMontants = this._myControler.loadHightScores(1);
         this._scoresDescendants = this._myControler.loadHightScores(2);
         
-        this.changeScores(0);
+        this.changeScores(Yams.MODELIBRE);
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
