@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import yams.pojos.Joueur;
 import yams.control.YamControl;
+import yams.pojos.Joueur;
 
 /**
  *

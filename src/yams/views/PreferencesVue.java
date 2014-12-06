@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.List;
 import javax.swing.*;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 
@@ -40,7 +41,7 @@ public class PreferencesVue extends JFrame {
 
         //construction des éléments
         this._sounds = new JCheckBox("Sons");
-        this._sounds.setSelected(this._prefs.get(YamControl.PREFSOUND));
+        this._sounds.setSelected(this._prefs.get(Yams.PREFSOUND));
         this._select = new ButtonGroup();
         this._combinations = new ButtonGroup();
         panPrefs.add(this._sounds, BorderLayout.NORTH);
@@ -49,11 +50,11 @@ public class PreferencesVue extends JFrame {
         panSelect.setBorder(BorderFactory.createTitledBorder("Sélection des dés"));
         _rbGarde = new JRadioButton();
         _rbGarde.setText("Garder les dés sélectionnés");
-        _rbGarde.setSelected(this._prefs.get(YamControl.PREFSELECT));
+        _rbGarde.setSelected(this._prefs.get(Yams.PREFSELECT));
         
         _rbRelance = new JRadioButton();
         _rbRelance.setText("Relancer les dés sélectionnés");
-        _rbRelance.setSelected(!this._prefs.get(YamControl.PREFSELECT));
+        _rbRelance.setSelected(!this._prefs.get(Yams.PREFSELECT));
         this._select.add(_rbGarde);
         this._select.add(_rbRelance);
         panSelect.add(_rbGarde);
@@ -64,10 +65,10 @@ public class PreferencesVue extends JFrame {
         panCombinations.setBorder(BorderFactory.createTitledBorder("Combinaisons"));
         _rbComb1 = new JRadioButton();
         _rbComb1.setText("soustraction des scores + et -");
-        _rbComb1.setSelected(this._prefs.get(YamControl.PREFRULES));
+        _rbComb1.setSelected(this._prefs.get(Yams.PREFRULES));
         _rbComb2 = new JRadioButton();
         _rbComb2.setText("Brelan, petite suite, grande suite, chance");
-        _rbComb2.setSelected(!this._prefs.get(YamControl.PREFRULES));
+        _rbComb2.setSelected(!this._prefs.get(Yams.PREFRULES));
         this._combinations.add(_rbComb1);
         this._combinations.add(_rbComb2);
         panCombinations.add(_rbComb1);
@@ -98,9 +99,9 @@ public class PreferencesVue extends JFrame {
      * Sauvegarde les préférences dans le tableau que récupère le controleur
      */
     public void setPrefs(){
-        this._prefs.set(YamControl.PREFSOUND, this._sounds.isSelected());
-        this._prefs.set(YamControl.PREFSELECT, this._rbGarde.isSelected());
-        this._prefs.set(YamControl.PREFRULES, this._rbComb1.isSelected());
+        this._prefs.set(Yams.PREFSOUND, this._sounds.isSelected());
+        this._prefs.set(Yams.PREFSELECT, this._rbGarde.isSelected());
+        this._prefs.set(Yams.PREFRULES, this._rbComb1.isSelected());
     }
     
     public void enableGroup(int group, boolean enable){

@@ -6,21 +6,12 @@
 
 package yams.hightScores.views;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableColumn;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 import yams.hightScores.events.ComboBoxEvents;
@@ -72,9 +63,9 @@ public class HightScoreVue extends JFrame{
         
         //initialisation du menu déroulant
         Object[] modes = new Object[3];
-        modes[0] = new String("Libre");
-        modes[1] = new String("Montant");
-        modes[2] = new String("Descendant");
+        modes[Yams.MODELIBRE] = new String("Libre");
+        modes[Yams.MODEMONTANT] = new String("Montant");
+        modes[Yams.MODEDESCENDANT] = new String("Descendant");
         
         //instanciation du menu
         this._cbModeJeu = new JComboBox(modes);
@@ -121,17 +112,17 @@ public class HightScoreVue extends JFrame{
     public void changeScores(int mode){
         this._modelScore.delScores();
         switch(mode){
-            case 0:
+            case Yams.MODELIBRE:
                 for(int i=0; i<this._scoresLibres.size(); i++){
                     this._modelScore.addScore(this._scoresLibres.get(i));
                 }
                 break;
-            case 1:
+            case Yams.MODEMONTANT:
                 for(int i=0; i<this._scoresMontants.size(); i++){
                     this._modelScore.addScore(this._scoresMontants.get(i));
                 }
                 break;
-            case 2:
+            case Yams.MODEDESCENDANT:
                 for(int i=0; i<this._scoresDescendants.size(); i++){
                     this._modelScore.addScore(this._scoresDescendants.get(i));
                 }
@@ -146,11 +137,11 @@ public class HightScoreVue extends JFrame{
      */
     public void selectMode(){
         if(this._cbModeJeu.getSelectedItem().equals("Libre")){
-            this.changeScores(0);
+            this.changeScores(Yams.MODELIBRE);
         }else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
-            this.changeScores(1);
+            this.changeScores(Yams.MODEMONTANT);
         }else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
-            this.changeScores(2);
+            this.changeScores(Yams.MODEDESCENDANT);
         }
     }
     
@@ -172,7 +163,7 @@ public class HightScoreVue extends JFrame{
         if(this._scoresLibres.size() < 10){
             this._scoresLibres.add(s);
             this.sortScores(this._scoresLibres);
-            this._myControler.saveHightScores(this._scoresLibres, 0);
+            this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
         }
         else{
             Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
@@ -180,7 +171,7 @@ public class HightScoreVue extends JFrame{
                 this._scoresLibres.remove(this._scoresLibres.size()-1);
                 this._scoresLibres.add(s);
                 this.sortScores(this._scoresLibres);
-                this._myControler.saveHightScores(this._scoresLibres, 0);
+                this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
             }
         }
         this.changeScores(0);
@@ -193,7 +184,7 @@ public class HightScoreVue extends JFrame{
         if(this._scoresMontants.size() < 10){
             this._scoresMontants.add(s);
             this.sortScores(this._scoresMontants);
-            this._myControler.saveHightScores(this._scoresMontants, 1);
+            this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
         }
         else{
             Score oldScore = this._scoresMontants.get(this._scoresMontants.size()-1);
@@ -201,10 +192,10 @@ public class HightScoreVue extends JFrame{
                 this._scoresMontants.remove(this._scoresMontants.size()-1);
                 this._scoresMontants.add(s);
                 this.sortScores(this._scoresMontants);
-                this._myControler.saveHightScores(this._scoresMontants, 1);
+                this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
             }
         }
-        this.changeScores(1);
+        this.changeScores(Yams.MODEMONTANT);
     }
     
     /*
@@ -214,7 +205,7 @@ public class HightScoreVue extends JFrame{
         if(this._scoresDescendants.size() < 10){
             this._scoresDescendants.add(s);
             this.sortScores(this._scoresDescendants);
-            this._myControler.saveHightScores(this._scoresDescendants, 2);
+            this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
         }
         else{
             Score oldScore = this._scoresDescendants.get(this._scoresDescendants.size()-1);
@@ -222,10 +213,10 @@ public class HightScoreVue extends JFrame{
                 this._scoresDescendants.remove(this._scoresDescendants.size()-1);
                 this._scoresDescendants.add(s);
                 this.sortScores(this._scoresDescendants);
-                this._myControler.saveHightScores(this._scoresDescendants, 2);
+                this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
             }
         }
-        this.changeScores(2);
+        this.changeScores(Yams.MODEDESCENDANT);
     }
     
     /*
@@ -233,11 +224,11 @@ public class HightScoreVue extends JFrame{
      */
     public List<Score> getScores(int mode){
         switch(mode){
-            case 0:
+            case Yams.MODELIBRE:
                 return this._scoresLibres;
-            case 1:
+            case Yams.MODEMONTANT:
                 return this._scoresMontants;
-            case 2:
+            case Yams.MODEDESCENDANT:
                 return this._scoresDescendants;
             default:
                 return null; //n'arrivera pas
@@ -265,13 +256,13 @@ public class HightScoreVue extends JFrame{
     public int getModeJeu(){
         if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
             if(this._cbModeJeu.getSelectedItem().equals("Libre")){
-                return 0;
+                return Yams.MODELIBRE;
             }
             else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
-                return 1;
+                return Yams.MODEMONTANT;
             }
             else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
-                return 2;
+                return Yams.MODEDESCENDANT;
             }
         }
         

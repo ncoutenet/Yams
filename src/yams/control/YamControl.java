@@ -7,6 +7,7 @@ package yams.control;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import yams.Yams;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.views.HightScoreVue;
@@ -60,12 +61,7 @@ public class YamControl {
     private boolean[][] _scoresValides;
     private int _tour;
     private int _mode;
-    
     private List<Boolean> _listPrefs;
-    
-    public static final int PREFSOUND = 0;
-    public static final int PREFSELECT = 1;
-    public static final int PREFRULES = 2;
     
     public YamControl(){
         _data = new DataFolder(this);
@@ -73,7 +69,7 @@ public class YamControl {
         _data.createNewBDDFiles();
         _listPrefs = _data.loadPrefs();
         
-        _connexion = new ConnexionVue(this, this._listPrefs.get(YamControl.PREFSOUND));
+        _connexion = new ConnexionVue(this, this._listPrefs.get(Yams.PREFSOUND));
         _connexion.affichage(true);
         _HightScore = new HightScoreVue(this);
     }
@@ -96,7 +92,7 @@ public class YamControl {
      * Retourne les préférences de son
      */
     public boolean isSound() {
-        return this._listPrefs.get(YamControl.PREFSOUND);
+        return this._listPrefs.get(Yams.PREFSOUND);
     }
     
     /*
@@ -105,8 +101,8 @@ public class YamControl {
     public void showPrefs(){
         this._preferences = new PreferencesVue(this, _listPrefs);
         if(this._actualWindow.equals("Jeu")){
-            this._preferences.enableGroup(YamControl.PREFSELECT, false);
-            this._preferences.enableGroup(YamControl.PREFRULES, false);
+            this._preferences.enableGroup(Yams.PREFSELECT, false);
+            this._preferences.enableGroup(Yams.PREFRULES, false);
         }
     }
     
@@ -214,7 +210,7 @@ public class YamControl {
         _tour = _modele.getTour();
         
         //initialisation et mise à jour des vues
-        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode, this._listPrefs.get(YamControl.PREFSOUND));
+        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode, this._listPrefs.get(Yams.PREFSOUND));
         _jeu.initDes();
         _connexion.affichage(false);
         _jeu.affichage(true);
@@ -227,7 +223,7 @@ public class YamControl {
     public void checkDes(){
         boolean[] select = this._jeu.getSelectedDes();
         if(this._jeu.getLancesRestants() < 3){
-            if(this._listPrefs.get(YamControl.PREFSELECT)){
+            if(this._listPrefs.get(Yams.PREFSELECT)){
                 if(select[0] && select[1] && select[2] && select[3] && select[4]){
                     this._jeu.setEnabledLancer(false);
                 }
@@ -253,7 +249,7 @@ public class YamControl {
         int[]des;
         int lancesRestants = _jeu.getLancesRestants();
         
-        if(this._listPrefs.get(YamControl.PREFSOUND)){
+        if(this._listPrefs.get(Yams.PREFSOUND)){
             _modele.playSoundDe();
         }
         
@@ -265,7 +261,7 @@ public class YamControl {
             if(lancesRestants == 2){
                 _jeu.setValDe(i, des[i], false);
             }
-            else if(selDes[i] != this._listPrefs.get(YamControl.PREFSELECT)){
+            else if(selDes[i] != this._listPrefs.get(Yams.PREFSELECT)){
                 _jeu.setValDe(i, des[i], false);
             }
         }
@@ -275,7 +271,7 @@ public class YamControl {
             _jeu.setEnabledLancer(false);
             this.finTour(true);
         }
-        if(!this.getPrefs().get(YamControl.PREFSELECT)){
+        if(!this.getPrefs().get(Yams.PREFSELECT)){
             this.checkDes();
         }
     }
@@ -314,7 +310,7 @@ public class YamControl {
      * Prend en compte le clic sur l'image du son
      */
     public void majSoundOnClic(){
-        this._listPrefs.set(YamControl.PREFSOUND, !this._listPrefs.get(YamControl.PREFSOUND));
+        this._listPrefs.set(Yams.PREFSOUND, !this._listPrefs.get(Yams.PREFSOUND));
         this.majSound();
     }
     
@@ -322,10 +318,9 @@ public class YamControl {
      * mise à jour de la préférence de son
      */
     public void majSound(){
-        //this._listPrefs.set(YamControl.PREFSOUND, !this._listPrefs.get(YamControl.PREFSOUND));
-        this._connexion.majSound(this._listPrefs.get(YamControl.PREFSOUND));
+        this._connexion.majSound(this._listPrefs.get(Yams.PREFSOUND));
         if(this._jeu != null){
-            this._jeu.majSound(this._listPrefs.get(YamControl.PREFSOUND));
+            this._jeu.majSound(this._listPrefs.get(Yams.PREFSOUND));
         }
     }
     
@@ -583,7 +578,7 @@ public class YamControl {
     public void confScores(){
         this._confScores.activation(false);
         
-        if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(YamControl.PREFSOUND))){
+        if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(Yams.PREFSOUND))){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;
             
@@ -828,7 +823,7 @@ public class YamControl {
         }
         this._finTour.setAffichage(false);
         this._jeu.setTotalPoints(true);
-        if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(YamControl.PREFSOUND))){
+        if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(Yams.PREFSOUND))){
             Joueur[] joueurs = new Joueur[this._nbJoueurs];
             int max = 0;
             

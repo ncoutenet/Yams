@@ -4,15 +4,11 @@
  */
 package yams.regles;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
+import java.awt.*;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import yams.Yams;
 
 /**
  *
@@ -68,13 +64,13 @@ public class ReglesVue extends JFrame {
         String soundOff = getClass().getResource("/yams/resources/images/sound/soundOff.png").toString();
 	StringBuffer texte = new StringBuffer();
         
-        if(this._mode == 0){
+        if(this._mode == Yams.MODELIBRE){
         texte.append("<h1 align='center' color='red'>Règles du Yam's libre</h1>");
         }
-        else if(this._mode == 1){
+        else if(this._mode == Yams.MODEMONTANT){
         texte.append("<h1 align='center' color='red'>Règles du Yam's montant</h1>");
         }
-        else if(this._mode == 2){
+        else if(this._mode == Yams.MODEDESCENDANT){
         texte.append("<h1 align='center' color='red'>Règles du Yam's descendant</h1>");
         }
         
@@ -86,18 +82,18 @@ public class ReglesVue extends JFrame {
         texte.append("    <li>écarter une partie des dés et relancer les autre.</li>");
         texte.append("</ul>");
         texte.append("<p>Pour garder les 5 dés il suffit de cliquer sur le bouton 'fin du tour'.<br/>Pour écarter un dé, il suffit de cliquer sur la case à cocher se trouvant à sa gauche</p>");
-        if(this._mode == 0){
+        if(this._mode == Yams.MODELIBRE){
         texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
                 + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
                 + "plus tard, elle est retirée des figures à obtenir.</p>");
         texte.append("<p>Il y a 12 figures à réaliser dans le désordre:</p>");
         }
-        else if(this._mode == 1){
+        else if(this._mode == Yams.MODEMONTANT){
         texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
                 + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
         texte.append("<p>Il y a 12 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
         }
-        else if(this._mode == 2){
+        else if(this._mode == Yams.MODEDESCENDANT){
         texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
                 + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
         texte.append("<p>Il y a 12 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");

@@ -18,10 +18,16 @@ import yams.control.YamControl;
  * Classe principale permettant le lancement du programme
  */
 public class Yams {
+    //constantes de sélection des préférences
+    public static final int PREFSOUND = 0;
+    public static final int PREFSELECT = 1;
+    public static final int PREFRULES = 2;
+    
+    //constantes de sélection du mode de jeu
+    public static final int MODELIBRE = 0;
+    public static final int MODEMONTANT = 1;
+    public static final int MODEDESCENDANT = 2;
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         YamControl contoleur = new YamControl();
     }

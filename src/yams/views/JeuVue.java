@@ -6,6 +6,7 @@ package yams.views;
 
 import java.awt.*;
 import javax.swing.*;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 import yams.events.mouseEvents.*;
@@ -122,7 +123,7 @@ public class JeuVue extends JFrame {
         }
         
         //initialisation du tableau des scores
-        this._tabModel = new ModeleTableScore(nbJoueurs, this._myControler.getPrefs().get(YamControl.PREFRULES));
+        this._tabModel = new ModeleTableScore(nbJoueurs, this._myControler.getPrefs().get(Yams.PREFRULES));
         this.setJoueurs(noms);
         this._tableau = new JTable(_tabModel);
         this._tableau.setName("Tableau des scores");
@@ -136,7 +137,7 @@ public class JeuVue extends JFrame {
         int[][] colorTab = new int[nbJoueurs][18];
         for(int i = 0; i < nbJoueurs; i++){
             for(int j = 0; j < 18; j++){
-                if(this._myControler.getPrefs().get(YamControl.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
+                if(this._myControler.getPrefs().get(Yams.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
                     colorTab[i][j] = 2;
                 }
                 else if(((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 17))){
@@ -309,7 +310,7 @@ public class JeuVue extends JFrame {
         else {
             this._selDes[index] = !_selDes[index];
             if(this._selDes[index]){
-                if(this._myControler.getPrefs().get(YamControl.PREFSELECT)){
+                if(this._myControler.getPrefs().get(Yams.PREFSELECT)){
                     this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
                 }
                 else{
@@ -359,7 +360,7 @@ public class JeuVue extends JFrame {
             this.majDes(index);
         }
         else{
-            boolean garde = this._myControler.getPrefs().get(YamControl.PREFSELECT);
+            boolean garde = this._myControler.getPrefs().get(Yams.PREFSELECT);
             this.majDes(index);
             if(!garde){
                 this._selDes[index] = false;
@@ -392,7 +393,7 @@ public class JeuVue extends JFrame {
         this._labTotalPoints.setText(texte);
         this._labTotalPoints.setForeground(Color.WHITE);
         
-        if((!init) && (!this._myControler.getPrefs().get(YamControl.PREFSELECT))){
+        if((!init) && (!this._myControler.getPrefs().get(Yams.PREFSELECT))){
             texte = "(";
             texte += String.valueOf(somme);
             texte += " points conservés)";
@@ -408,7 +409,7 @@ public class JeuVue extends JFrame {
         String texte;
         
         for(int i = 0; i < 5; i++){
-            if(this._selDes[i] == this._myControler.getPrefs().get(YamControl.PREFSELECT)){
+            if(this._selDes[i] == this._myControler.getPrefs().get(Yams.PREFSELECT)){
                 score += this._valDes[i];
             }
         }

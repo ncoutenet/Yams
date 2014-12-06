@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.hightScores.pojos.Score;
 
@@ -151,13 +152,13 @@ public class DataFolder{
         ObjectOutputStream saver = null;
         
         switch(mode){
-            case 0:
+            case Yams.MODELIBRE:
                 f = new String(LIBRE);
                 break;
-            case 1:
+            case Yams.MODEMONTANT:
                 f = new String(MONTANT);
                 break;
-            case 2:
+            case Yams.MODEDESCENDANT:
                 f = new String(DESCENDANT);
                 break;
             default:
@@ -189,13 +190,13 @@ public class DataFolder{
         ObjectInputStream loader = null;
         
         switch(mode){
-            case 0:
+            case Yams.MODELIBRE:
                 f = new String(LIBRE);
                 break;
-            case 1:
+            case Yams.MODEMONTANT:
                 f = new String(MONTANT);
                 break;
-            case 2:
+            case Yams.MODEDESCENDANT:
                 f = new String(DESCENDANT);
                 break;
             default:

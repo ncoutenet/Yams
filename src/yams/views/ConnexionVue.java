@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.events.NbJoueursEvents;
 import yams.events.YamEvents;
@@ -62,9 +63,9 @@ public class ConnexionVue extends JFrame{
         
         //initialisation du menu déroulant
         Object[] modes = new Object[3];
-        modes[0] = new String("Libre");
-        modes[1] = new String("Montant");
-        modes[2] = new String("Descendant");
+        modes[Yams.MODELIBRE] = new String("Libre");
+        modes[Yams.MODEMONTANT] = new String("Montant");
+        modes[Yams.MODEDESCENDANT] = new String("Descendant");
         
         //instanciation du menu
         this._cbModeJeu = new JComboBox(modes);
@@ -232,13 +233,13 @@ public class ConnexionVue extends JFrame{
     public int getModeJeu(){
         if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
             if(this._cbModeJeu.getSelectedItem().equals("Libre")){
-                return 0;
+                return Yams.MODELIBRE;
             }
             else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
-                return 1;
+                return Yams.MODEMONTANT;
             }
             else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
-                return 2;
+                return Yams.MODEDESCENDANT;
             }
         }
         

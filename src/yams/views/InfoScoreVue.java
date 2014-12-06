@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  */
 
 /*
- * Fenêtre s'affichant à la fin de chaque tour en mode montant et descandant
+ * Fenêtre s'affichant à la fin de chaque tour en mode montant et descandant et au dernier coup du mode libre
  */
 public class InfoScoreVue extends JDialog{
     private YamControl _myControler;
