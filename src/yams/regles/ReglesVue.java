@@ -60,8 +60,8 @@ public class ReglesVue extends JFrame {
      * Retourne les règles suivant le mode de jeu
      */
     private StringBuffer saisieTexte(){
-        String soundOn = getClass().getResource("/yams/resources/images/sound/soundOn.png").toString();
-        String soundOff = getClass().getResource("/yams/resources/images/sound/soundOff.png").toString();
+        String soundOn = getClass().getResource("/resources/images/sound/soundOn.png").toString();
+        String soundOff = getClass().getResource("/resources/images/sound/soundOff.png").toString();
 	StringBuffer texte = new StringBuffer();
         
         if(this._mode == Yams.MODELIBRE){
