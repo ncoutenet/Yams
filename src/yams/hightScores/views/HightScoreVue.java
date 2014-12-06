@@ -157,66 +157,64 @@ public class HightScoreVue extends JFrame{
     }
     
     /*
-     * Ajoute un score au mode libre
+     * Ajoute un score
      */
-    public void addScoreLibre(Score s){
-        if(this._scoresLibres.size() < 10){
-            this._scoresLibres.add(s);
-            this.sortScores(this._scoresLibres);
-            this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
+    public void addScore(Score s, int mode){
+        switch(mode){
+            case Yams.MODELIBRE:
+                if(this._scoresLibres.size() < 10){
+                    this._scoresLibres.add(s);
+                    this.sortScores(this._scoresLibres);
+                    this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
+                }
+                else{
+                    Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
+                    if(s.getScore() > oldScore.getScore()){
+                        this._scoresLibres.remove(this._scoresLibres.size()-1);
+                        this._scoresLibres.add(s);
+                        this.sortScores(this._scoresLibres);
+                        this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
+                    }
+                }
+                this.changeScores(Yams.MODELIBRE);
+                break;
+            case Yams.MODEMONTANT:
+                if(this._scoresMontants.size() < 10){
+                    this._scoresMontants.add(s);
+                    this.sortScores(this._scoresMontants);
+                    this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
+                }
+                else{
+                    Score oldScore = this._scoresMontants.get(this._scoresMontants.size()-1);
+                    if(s.getScore() > oldScore.getScore()){
+                        this._scoresMontants.remove(this._scoresMontants.size()-1);
+                        this._scoresMontants.add(s);
+                        this.sortScores(this._scoresMontants);
+                        this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
+                    }
+                }
+                this.changeScores(Yams.MODEMONTANT);
+                break;
+            case Yams.MODEDESCENDANT:
+                if(this._scoresDescendants.size() < 10){
+                    this._scoresDescendants.add(s);
+                    this.sortScores(this._scoresDescendants);
+                    this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
+                }
+                else{
+                    Score oldScore = this._scoresDescendants.get(this._scoresDescendants.size()-1);
+                    if(s.getScore() > oldScore.getScore()){
+                        this._scoresDescendants.remove(this._scoresDescendants.size()-1);
+                        this._scoresDescendants.add(s);
+                        this.sortScores(this._scoresDescendants);
+                        this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
+                    }
+                }
+                this.changeScores(Yams.MODEDESCENDANT);
+                break;
+            default:
+                break; //n'arrivera pas
         }
-        else{
-            Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
-            if(s.getScore() > oldScore.getScore()){
-                this._scoresLibres.remove(this._scoresLibres.size()-1);
-                this._scoresLibres.add(s);
-                this.sortScores(this._scoresLibres);
-                this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
-            }
-        }
-        this.changeScores(0);
-    }
-    
-    /*
-     * Ajoute un score au mode montant
-     */
-    public void addScoreMontant(Score s){
-        if(this._scoresMontants.size() < 10){
-            this._scoresMontants.add(s);
-            this.sortScores(this._scoresMontants);
-            this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
-        }
-        else{
-            Score oldScore = this._scoresMontants.get(this._scoresMontants.size()-1);
-            if(s.getScore() > oldScore.getScore()){
-                this._scoresMontants.remove(this._scoresMontants.size()-1);
-                this._scoresMontants.add(s);
-                this.sortScores(this._scoresMontants);
-                this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
-            }
-        }
-        this.changeScores(Yams.MODEMONTANT);
-    }
-    
-    /*
-     * Ajoute un score au mode descendant
-     */
-    public void addScoreDescendant(Score s){
-        if(this._scoresDescendants.size() < 10){
-            this._scoresDescendants.add(s);
-            this.sortScores(this._scoresDescendants);
-            this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
-        }
-        else{
-            Score oldScore = this._scoresDescendants.get(this._scoresDescendants.size()-1);
-            if(s.getScore() > oldScore.getScore()){
-                this._scoresDescendants.remove(this._scoresDescendants.size()-1);
-                this._scoresDescendants.add(s);
-                this.sortScores(this._scoresDescendants);
-                this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
-            }
-        }
-        this.changeScores(Yams.MODEDESCENDANT);
     }
     
     /*
