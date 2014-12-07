@@ -13,6 +13,7 @@ import yams.control.YamControl;
 import yams.events.NbJoueursEvents;
 import yams.events.YamEvents;
 import yams.events.mouseEvents.YamSoundEvent;
+import yams.pojos.LimitedTextField;
 
 /**
  *
@@ -161,17 +162,19 @@ public class ConnexionVue extends JFrame{
         String string;
         JPanel panel;
         JLabel label;
-        JTextField textField;
+        LimitedTextField textField;
         
         for(Integer i = this._oldVal; i < (Integer)this._spinner.getValue(); i++){
             string = "Joueur ";
             string += String.valueOf(i+1);
-            textField = new JTextField(10);
+            textField = new LimitedTextField(9);
+            textField.setColumns(5);
             panel = new JPanel(new FlowLayout());
             panel.setBackground(COULEUR);
             label = new JLabel();
             
             textField.setText(string);
+            
             this._joueurs.add(textField);
             
             string += ":";

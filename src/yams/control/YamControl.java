@@ -82,6 +82,13 @@ public class YamControl {
     }
     
     /*
+     * Verification de la longueur du pseudo
+     */
+    public boolean checkNomJoueur(String name){
+        return (name.length() < 9);
+    }
+    
+    /*
      * Sauvegarde la derniere fenêtre ouverte
      */
     public void setActualWindow(String actualWindow) {
