@@ -9,6 +9,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import yams.Yams;
+import yams.control.YamControl;
 
 /**
  *
@@ -19,12 +20,14 @@ import yams.Yams;
  * Fenêtre d'affichage des règles
  */
 public class ReglesVue extends JFrame {
+    private YamControl _myControler;
     private int _mode;
 
-    public ReglesVue(int mode) {
+    public ReglesVue(int mode, YamControl yc) {
         super("Règles du Jeu");
         
         this._mode = mode;
+        this._myControler = yc;
         
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
@@ -81,7 +84,13 @@ public class ReglesVue extends JFrame {
         texte.append("  <li>garder ses 5 dés et remplir une case de sa grille,</li>");
         texte.append("    <li>écarter une partie des dés et relancer les autre.</li>");
         texte.append("</ul>");
-        texte.append("<p>Pour garder les 5 dés il suffit de cliquer sur le bouton 'fin du tour'.<br/>Pour écarter un dé, il suffit de cliquer sur la case à cocher se trouvant à sa gauche</p>");
+        texte.append("<p>Pour garder les 5 dés il suffit de cliquer sur le bouton 'fin du tour'.<br/>");
+        if(this._myControler.getPrefs().get(Yams.PREFSELECT)){
+            texte.append("Pour garder un dé, il suffit de cliquer dessus</p>");
+        }
+        else{
+            texte.append("Pour relancer les dés il faut cliquer sur ceux que l'on souhaite relancer puis valider en cliquant sur le bouton \"lancer\"");
+        }
         if(this._mode == Yams.MODELIBRE){
         texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
                 + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "

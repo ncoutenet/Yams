@@ -863,10 +863,10 @@ public class YamControl {
     }
     
     /*
-     * gestion de l'affichage des règles
+     * affichage des règles
      */
     public void affichageRegles() {
-            ReglesVue rav = new ReglesVue(_mode);
+            ReglesVue rav = new ReglesVue(_mode, this);
     }
     
     /*
@@ -885,11 +885,11 @@ public class YamControl {
     }
     
     /*
-     * gestion des règles lors du choix du mode
+     * affichage des règles lors du choix du mode
      */
     public void apercuRegle(){
         int mode = this._connexion.getModeJeu();
-        ReglesVue rv = new ReglesVue(mode);
+        ReglesVue rv = new ReglesVue(mode, this);
     }
     
     /*
