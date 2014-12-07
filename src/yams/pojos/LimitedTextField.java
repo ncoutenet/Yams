@@ -5,7 +5,6 @@
 package yams.pojos;
 
 import java.awt.Toolkit;
- 
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -16,7 +15,13 @@ import javax.swing.text.DocumentFilter;
  *
  * @author nicolas
  */
+/*
+ * Classe permettant de limiter le nombre de caractères d'un JTextField
+ */
 public class LimitedTextField extends JTextField {
+    /*
+     * Classe déterminant si la chaine de caactère peut être agrandie ou non
+     */
     private class TextLimiter extends DocumentFilter {
         private int max;
 
@@ -35,7 +40,7 @@ public class LimitedTextField extends JTextField {
                 fb.replace(offset, length, str, attrs);
             } 
             else{
-                Toolkit.getDefaultToolkit().beep();
+                Toolkit.getDefaultToolkit().beep(); //joue un son quand la chaine est trop longue
             }
         }
     }
