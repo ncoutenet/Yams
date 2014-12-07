@@ -13,6 +13,7 @@ import yams.control.YamControl;
 
 // TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 // TODO permettre l'export des scores
+// TODO permettre d'annuler une fin de tour en montante/descendante
 
 /*
  * Classe principale permettant le lancement du programme
