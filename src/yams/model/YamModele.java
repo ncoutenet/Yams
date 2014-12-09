@@ -243,6 +243,35 @@ public class YamModele {
     }
     
     /*
+     * Calcule le score du brelan
+     */
+    public int calcBrelan(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean brelan = false;
+        List<Integer> listDes = new ArrayList<Integer>(5);
+        
+        for(int i=0; i<5; i++){
+            Integer val = new Integer(des[i]);
+            listDes.add(val);
+        }
+        Collections.sort(listDes);
+        if((listDes.get(0).equals(listDes.get(1)) && listDes.get(1).equals(listDes.get(2))) || (listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3))) || (listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4)))){
+            brelan = true;
+        }
+        if(brelan){
+            score = 10;
+            jeu.majColorTab(tour, 10, 1);
+        }
+        else{
+            jeu.majColorTab(tour, 10, -1);
+        }
+        scores[tour][6] = false;
+        jeu.setScore(tour, 9, score);
+        
+        return score;
+    }
+    
+    /*
      * Calcule le score des -
      */
     public int calcMinus(int[]des, boolean[][] scores, int tour, JeuVue jeu){
