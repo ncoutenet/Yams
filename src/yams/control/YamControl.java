@@ -5,7 +5,6 @@
 package yams.control;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import yams.Yams;
 import yams.folder.DataFolder;
@@ -130,8 +129,16 @@ public class YamControl {
         List<String> coups = new ArrayList<String>();
         String result = new String();
         int cpt = 0;
+        int nbCoups;
         
-        for(int i = 0; i < 12; i++){
+        if(this.getPrefs().get(Yams.PREFRULES)){
+            nbCoups = 12;
+        }
+        else{
+            nbCoups = 13;
+        }
+        
+        for(int i = 0; i < nbCoups; i++){
             String coup = new String();
             switch(i){
                 case 0:
@@ -153,13 +160,28 @@ public class YamControl {
                     coup = "6";
                     break;
                 case 6:
-                    coup = "+";
+                    if(this.getPrefs().get(Yams.PREFRULES)){
+                        coup = "+";
+                    }
+                    else{
+                        coup = "brelan";
+                    }
                     break;
                 case 7:
-                    coup = "-";
+                    if(this.getPrefs().get(Yams.PREFRULES)){
+                        coup = "-";
+                    }
+                    else{
+                        coup = "petite suite";
+                    }
                     break;
                 case 8:
-                    coup = "suite";
+                    if(this.getPrefs().get(Yams.PREFRULES)){
+                        coup = "suite";
+                    }
+                    else{
+                        coup = "grande suite";
+                    }
                     break;
                 case 9:
                     coup = "full";
@@ -169,6 +191,11 @@ public class YamControl {
                     break;
                 case 11:
                     coup = "yam's";
+                    break;
+                case 12:
+                    if(!this.getPrefs().get(Yams.PREFRULES)){
+                        coup = "chance";
+                    }
                     break;
                 default:
                     break;
@@ -193,9 +220,15 @@ public class YamControl {
      * Retourne les scores validés du joueur en train de jouer sous forme de tableau de booléens
      */
     public boolean[] getScoresValides(){
-        boolean[] scores = new boolean[12];
-        
-        System.arraycopy(_scoresValides[_tour], 0, scores, 0, 12);
+        boolean[] scores;
+        if(this.getPrefs().get(Yams.PREFRULES)){
+            scores = new boolean[12];
+            System.arraycopy(_scoresValides[_tour], 0, scores, 0, 12);
+        }
+        else{
+            scores = new boolean[13];
+            System.arraycopy(_scoresValides[_tour], 0, scores, 0, 13);
+        }
         
         return scores;
     }
@@ -208,12 +241,23 @@ public class YamControl {
         _nomsJoueurs = _connexion.getNomsJoueurs();
         _nbJoueurs = _connexion.getNbJoueurs();
         _modele = new YamModele(_nbJoueurs, this);
-        _scoresValides = new boolean[_nbJoueurs][12];
-        for(int i = 0; i < _nbJoueurs; i++){
-            for(int j = 0; j < 12; j++){
-                _scoresValides[i][j] = true;
+        if(this.getPrefs().get(Yams.PREFRULES)){
+            this._scoresValides = new boolean[_nbJoueurs][12];
+            for(int i = 0; i < _nbJoueurs; i++){
+                for(int j = 0; j < 12; j++){
+                    _scoresValides[i][j] = true;
+                }
             }
         }
+        else{
+            this._scoresValides = new boolean[_nbJoueurs][13];
+            for(int i = 0; i < _nbJoueurs; i++){
+                for(int j = 0; j < 13; j++){
+                    _scoresValides[i][j] = true;
+                }
+            }
+        }
+        
         _tour = _modele.getTour();
         
         //initialisation et mise à jour des vues
@@ -356,7 +400,13 @@ public class YamControl {
             finTourMontantDescendant(_tour, i);
         }
         else if(_mode == 2){
-            int i = 11;
+            int i;
+            if(this.getPrefs().get(Yams.PREFRULES)){
+                i = 11;
+            }
+            else{
+                i = 12;
+            }
             while(!_scoresValides[_tour][i]){
                 i--;
             }
@@ -399,16 +449,34 @@ public class YamControl {
                 strScore = "6";
                 break;
             case 6:
-                score = this._modele.calcPlus(des, this._scoresValides, this._tour, this._jeu);
-                strScore = "+";
+                if(this.getPrefs().get(Yams.PREFRULES)){
+                    score = this._modele.calcPlus(des, this._scoresValides, this._tour, this._jeu);
+                    strScore = "+";
+                }
+                else{
+                    score = this._modele.calcBrelan(des, this._scoresValides, this._tour, this._jeu);
+                    strScore = "brelan";
+                }
                 break;
             case 7:
-                score = this._modele.calcMinus(des, this._scoresValides, this._tour, this._jeu);
-                strScore = "-";
+                if(this.getPrefs().get(Yams.PREFRULES)){
+                    score = this._modele.calcMinus(des, this._scoresValides, this._tour, this._jeu);
+                    strScore = "-";
+                }
+                else{
+                    score = this._modele.calcLittleSuite(des, this._scoresValides, this._tour, this._jeu);
+                    strScore = "petite suite";
+                }
                 break;
             case 8:
-                score = this._modele.calcSuite(des, this._scoresValides, this._tour, this._jeu);
-                strScore = "suite";
+                if(this.getPrefs().get(Yams.PREFRULES)){
+                    score = this._modele.calcSuite(des, this._scoresValides, this._tour, this._jeu);
+                    strScore = "suite";
+                }
+                else{
+                    score = this._modele.calcBigSuite(des, this._scoresValides, this._tour, this._jeu);
+                    strScore = "grande suite";
+                }
                 break;
             case 9:
                 score = this._modele.calcFull(des, this._scoresValides, this._tour, this._jeu);
@@ -421,6 +489,10 @@ public class YamControl {
             case 11:
                 score = this._modele.calcYam(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "yam's";
+                break;
+            case 12:
+                score = this._modele.calcChance(des, this._scoresValides, this._tour, this._jeu);
+                strScore = "chance";
                 break;
             default: //n'arrive jamais
                 break;

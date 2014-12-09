@@ -16,9 +16,11 @@ public class Joueur {
     private String _nom;
     private int[] _score;
     private boolean[] _util;
+    private boolean _maxiMini;
 
-    public Joueur(String nom) {
+    public Joueur(String nom, boolean maxiMini) {
         this._nom = nom;
+        this._maxiMini = maxiMini;
         this._score = new int[17];
         this._util = new boolean[17];
         for (int i = 0; i < this._score.length; i++){
@@ -59,9 +61,11 @@ public class Joueur {
                 this.setTotal(6);
                 this.setTotal(16);
             }
-            else if( index < 11){
-                this.setTotal(11);
-                this.setTotal(16);
+            else if(this._maxiMini){
+                if( index < 11){
+                    this.setTotal(11);
+                    this.setTotal(16);
+                }
             }
             else if( index < 16){
                 this.setTotal(16);
@@ -88,7 +92,12 @@ public class Joueur {
                 this._score[index] = this._score[9] - this._score[10];
                 break;
             case 16:
-                this._score[index] = this._score[12] + this._score[13] + this._score[14] + this._score[15] + this._score[8] + this._score[11];
+                if(this._maxiMini){
+                    this._score[index] = this._score[12] + this._score[13] + this._score[14] + this._score[15] + this._score[8] + this._score[11];
+                }
+                else{
+                    this._score[index] = this._score[9] + this._score[10] + this._score[12] + this._score[13] + this._score[14] + this._score[15] + this._score[8] + this._score[11];
+                }
                 break;
             default:
                 break; //n'arrivera jamais

@@ -475,7 +475,7 @@ public class JeuVue extends JFrame {
     }
     
     /*
-     * Permet l'initialisation des cases à cocher et l'affichage des dés au début de chaque tour
+     * Permet l'initialisation et l'affichage des dés au début de chaque tour
      */
     public void initDes(){
         for(int i = 0; i < 5; i++){
@@ -509,7 +509,7 @@ public class JeuVue extends JFrame {
     public final void setJoueurs(String[] joueurs){
         this._nomsJoueurs = new String[joueurs.length];
         for(int i = 0; i < joueurs.length; i++){
-            Joueur j = new Joueur(joueurs[i]);
+            Joueur j = new Joueur(joueurs[i], this._myControler.getPrefs().get(Yams.PREFRULES));
             this._tabModel.addJoueur(j);
             this._nomsJoueurs[i] = joueurs[i];
         }

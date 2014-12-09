@@ -7,6 +7,7 @@ package yams.model;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.util.*;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.pojos.Joueur;
 import yams.table.ColorTab;
@@ -323,7 +324,7 @@ public class YamModele {
             jeu.majColorTab(tour, 11, ColorTab.ROUGE);
         }
         scores[tour][7] = false;
-        jeu.setScore(tour, 11, score);
+        jeu.setScore(tour, 10, score);
         
         return score;
     }
@@ -355,13 +356,13 @@ public class YamModele {
         }
         if(bigSuite){
             score = 25;
-            jeu.majColorTab(tour, 13, ColorTab.VERT);
+            jeu.majColorTab(tour, 12, ColorTab.VERT);
         }
         else {
-            jeu.majColorTab(tour, 13, ColorTab.ROUGE);
+            jeu.majColorTab(tour, 12, ColorTab.ROUGE);
         }
         scores[tour][8] = false;
-        jeu.setScore(tour, 12, score);
+        jeu.setScore(tour, 11, score);
         
         return score;
     }
@@ -420,13 +421,13 @@ public class YamModele {
         }
         if(full){
             score = 30;
-            jeu.majColorTab(tour, 14, ColorTab.VERT);
+            jeu.majColorTab(tour, 13, ColorTab.VERT);
         }
         else {
-            jeu.majColorTab(tour, 14, ColorTab.ROUGE);
+            jeu.majColorTab(tour, 13, ColorTab.ROUGE);
         }
         scores[tour][9] = false;
-        jeu.setScore(tour, 13, score);
+        jeu.setScore(tour, 12, score);
         
         return score;
     }
@@ -451,13 +452,13 @@ public class YamModele {
 
         if(carre){
             score = 40;
-            jeu.majColorTab(tour, 15, ColorTab.VERT);
+            jeu.majColorTab(tour, 14, ColorTab.VERT);
         }
         else{
-            jeu.majColorTab(tour, 15, ColorTab.ROUGE);
+            jeu.majColorTab(tour, 14, ColorTab.ROUGE);
         }
         scores[tour][10] = false;
-        jeu.setScore(tour, 14, score);
+        jeu.setScore(tour, 13, score);
         
         return score;
     }
@@ -478,13 +479,13 @@ public class YamModele {
         }
         if(yam){
             score = 50;
-            jeu.majColorTab(tour, 16, ColorTab.VERT);
+            jeu.majColorTab(tour, 15, ColorTab.VERT);
         }
         else{
-            jeu.majColorTab(tour, 16, ColorTab.ROUGE);
+            jeu.majColorTab(tour, 15, ColorTab.ROUGE);
         }
         scores[tour][11] = false;
-        jeu.setScore(tour, 15, score);
+        jeu.setScore(tour, 14, score);
         
         return score;
     }
@@ -497,9 +498,9 @@ public class YamModele {
         for(int i=0; i<5; i++){
             score += des[i];
         }
-        jeu.majColorTab(tour, 17, ColorTab.VERT);
+        jeu.majColorTab(tour, 16, ColorTab.VERT);
         scores[tour][12] = false;
-        jeu.setScore(tour, 16, score);
+        jeu.setScore(tour, 15, score);
         
         return score;
     }
@@ -509,8 +510,15 @@ public class YamModele {
      */
     public boolean finPartie(boolean[][] scores, boolean soundPref){
         boolean result = true;
+        int nbCoups;
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            nbCoups = 12;
+        }
+        else{
+            nbCoups = 13;
+        }
         for(int i = 0; i < this._nbJoueur; i++){
-            for(int j = 0; j < 12; j++){
+            for(int j = 0; j < nbCoups; j++){
                 if(scores[i][j]){
                     return false;
                 }
