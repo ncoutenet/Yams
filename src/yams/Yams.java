@@ -12,7 +12,7 @@ import yams.control.YamControl;
  */
 
 // TODO permettre l'export des scores
-// TODO mettre à jour le menu déroulant des meilleurs scores
+// TODO colorier les lignes des meilleurs scores avec 2 couleurs pour bien les distinguer
 
 /*
  * Classe principale permettant le lancement du programme

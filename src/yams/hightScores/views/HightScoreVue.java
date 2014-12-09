@@ -146,6 +146,26 @@ public class HightScoreVue extends JFrame{
     }
     
     /*
+     * Met le menu déroulant à jour
+     */
+    public void setMode(int mode){
+        switch(mode){
+            case Yams.MODELIBRE:
+                this._cbModeJeu.setSelectedIndex(Yams.MODELIBRE);
+                break;
+            case Yams.MODEMONTANT:
+                this._cbModeJeu.setSelectedIndex(Yams.MODEMONTANT);
+                break;
+            case Yams.MODEDESCENDANT:
+                this._cbModeJeu.setSelectedIndex(Yams.MODEDESCENDANT);
+                break;
+                default:
+                    System.err.println("Mauvais mode de jeu");
+                    break; //n'arrivera pas
+        }
+    }
+    
+    /*
      * ferme la fenêtre
      */
     public void close(){

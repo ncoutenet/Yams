@@ -699,6 +699,7 @@ public class YamControl {
      */
     public void openHightScores(){
         this._HightScore.toFront();
+        this._HightScore.setMode(this._mode);
         this._HightScore.setVisible(true);
     }
     
