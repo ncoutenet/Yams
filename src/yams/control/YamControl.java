@@ -6,6 +6,7 @@ package yams.control;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import yams.Yams;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
@@ -545,14 +546,22 @@ public class YamControl {
     /*
      * gestion de la fin de partie
      */
-    private void finTour(boolean fin){
+    public void finTour(boolean fin){
         _jeu.setTour(_tour);
         if(_mode == 0){
             _finTour = new FinTourVue(_scoresValides, _tour, this, fin, this._jeu);
             _finTour.setAffichage(true);
         }
         else{
-            this.finTour();
+            if(!fin){
+                int rep = JOptionPane.showConfirmDialog(null,"Voulez-vous vraiment finir ce tour?","FIN DU TOUR",JOptionPane.YES_NO_OPTION);	
+                if(rep == 0){
+                    this.finTour();
+                }
+            }
+            else{
+                this.finTour();
+            }
         }
     }
     
