@@ -10,6 +10,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import javax.swing.*;
+import yams.Yams;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 
@@ -130,9 +131,16 @@ public class FinTourVue extends JDialog{
      * Permet la mise à jour des choix possibles
      */
     private void setChoix(){
+        int nbCoups;
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            nbCoups = 12;
+        }
+        else{
+            nbCoups = 13;
+        }
         Object[] types;
         java.util.List<String> coups = new ArrayList<String>();
-        for(int i = 0; i < 12; i++){
+        for(int i = 0; i < nbCoups; i++){
             String type = new String();
             switch(i){
                 case 0:
@@ -154,13 +162,28 @@ public class FinTourVue extends JDialog{
                     type = "6";
                     break;
                 case 6:
-                    type = "+";
+                    if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "+";
+                    }
+                    else{
+                        type = "brelan";
+                    }
                     break;
                 case 7:
-                    type = "-";
+                    if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "-";
+                    }
+                    else{
+                        type = "petite suite";
+                    }
                     break;
                 case 8:
-                    type = "suite";
+                    if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "suite";
+                    }
+                    else{
+                        type = "grande suite";
+                    }
                     break;
                 case 9:
                     type = "full";
@@ -170,6 +193,11 @@ public class FinTourVue extends JDialog{
                     break;
                 case 11:
                     type = "yam's";
+                    break;
+                case 12:
+                    if(!this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "chance";
+                    }
                     break;
                 default:
                     break;

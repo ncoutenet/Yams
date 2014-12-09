@@ -601,6 +601,18 @@ public class YamControl {
         else if(choix.equals("yam's")){
             this._modele.calcYam(des, this._scoresValides, this._tour, this._jeu);
         }
+        else if(choix.equals("brelan")){
+            this._modele.calcBrelan(des, this._scoresValides, this._tour, this._jeu);
+        }
+        else if(choix.equals("petite suite")){
+            this._modele.calcLittleSuite(des, this._scoresValides, this._tour, this._jeu);
+        }
+        else if(choix.equals("grande suite")){
+            this._modele.calcBigSuite(des, this._scoresValides, this._tour, this._jeu);
+        }
+        else if(choix.equals("chance")){
+            this._modele.calcChance(des, this._scoresValides, this._tour, this._jeu);
+        }
         
         this._finTour.setAffichage(false);
         this._jeu.setTotalPoints(true);
