@@ -496,6 +496,9 @@ public class YamModele {
         for(int i=0; i<5; i++){
             score += des[i];
         }
+        jeu.majColorTab(tour, 17, 1);
+        scores[tour][12] = false;
+        jeu.setScore(tour, 16, score);
         
         return score;
     }
