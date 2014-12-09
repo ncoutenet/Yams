@@ -11,7 +11,6 @@ import yams.control.YamControl;
  * @author nicolas
  */
 
-// TODO ajouter la petite suite(15pts), le brelan(10pts), la chance(total des dés)
 // TODO permettre l'export des scores
 // TODO permettre d'annuler une fin de tour en montante/descendante
 

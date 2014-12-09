@@ -17,7 +17,6 @@ import yams.views.JeuVue;
  *
  * @author nicolas
  */
-// TODO ajuster les index des scores des brelan, petite suite, grande suite et chance
 
 /*
  * Classe gérant le jeu

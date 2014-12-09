@@ -73,7 +73,7 @@ public class PreferencesVue extends JFrame {
         this._combinations.add(_rbComb2);
         panCombinations.add(_rbComb1);
         panCombinations.add(_rbComb2);
-        panPrefs.add(panCombinations, BorderLayout.SOUTH); // TODO A décommenter quand les coups seront modifiables
+        panPrefs.add(panCombinations, BorderLayout.SOUTH);
 
         JPanel panValidate = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnValidate = new JButton("Ok");
