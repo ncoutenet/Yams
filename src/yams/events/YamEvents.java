@@ -38,7 +38,7 @@ public class YamEvents implements ActionListener{
             _myControler.quitter();
         }
         if(ae.getActionCommand().equals("finTour")){
-            _myControler.finTour();
+            _myControler.finTour(false);
         }
         if(ae.getActionCommand().equals("validerFinTour")){
             _myControler.validationScore();
@@ -81,6 +81,12 @@ public class YamEvents implements ActionListener{
         }
         if(ae.getActionCommand().equals("changePrefs")){
             _myControler.changePrefs();
+        }
+        if(ae.getActionCommand().equals("confirmFinTour")){
+            this._myControler.finTour();
+        }
+        if(ae.getActionCommand().equals("cancelFinTour")){
+            this._myControler.closeConfirmWindow();
         }
     }
     

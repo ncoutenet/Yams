@@ -54,6 +54,7 @@ public class YamControl {
     private PreferencesVue _preferences;
     private DataFolder _data;
     private FinTourVue _finTour;
+    private ConfirmScoreVue _confirmFinTour;
     
     private String _actualWindow;
     private String[] _nomsJoueurs;
@@ -64,14 +65,15 @@ public class YamControl {
     private List<Boolean> _listPrefs;
     
     public YamControl(){
-        _data = new DataFolder(this);
-        _data.createDataFolder();
-        _data.createNewBDDFiles();
-        _listPrefs = _data.loadPrefs();
+        this._data = new DataFolder(this);
+        this._data.createDataFolder();
+        this._data.createNewBDDFiles();
+        this._listPrefs = _data.loadPrefs();
         
-        _connexion = new ConnexionVue(this, this._listPrefs.get(Yams.PREFSOUND));
-        _connexion.affichage(true);
-        _HightScore = new HightScoreVue(this);
+        this._connexion = new ConnexionVue(this, this._listPrefs.get(Yams.PREFSOUND));
+        this._connexion.affichage(true);
+        this._HightScore = new HightScoreVue(this);
+        this._confirmFinTour = new ConfirmScoreVue(this, this._jeu);
     }
     
     /*
@@ -389,6 +391,7 @@ public class YamControl {
      */
     public void finTour(){
         _jeu.setTour(_tour);
+        this._confirmFinTour.setVisible(false); //ferme l'éventuelle fenêtre de confirmation ouverte
         if(_mode == 0){
             _finTour = new FinTourVue(_scoresValides, _tour, this, false, this._jeu);
             _finTour.setAffichage(true);
@@ -554,10 +557,7 @@ public class YamControl {
         }
         else{
             if(!fin){
-                int rep = JOptionPane.showConfirmDialog(null,"Voulez-vous vraiment finir ce tour?","FIN DU TOUR",JOptionPane.YES_NO_OPTION);	
-                if(rep == 0){
-                    this.finTour();
-                }
+                this._confirmFinTour.setVisible(true);
             }
             else{
                 this.finTour();
@@ -728,5 +728,12 @@ public class YamControl {
      */
     public void closeHightScores(){
         this._HightScore.setVisible(false);
+    }
+    
+    /*
+     * ferme la fenêtre de confirmation de fin du tour en montante/descendante
+     */
+    public void closeConfirmWindow(){
+        this._confirmFinTour.setVisible(false);
     }
 }

@@ -12,7 +12,7 @@ import yams.control.YamControl;
  */
 
 // TODO permettre l'export des scores
-// TODO permettre d'annuler une fin de tour en montante/descendante
+// TODO mettre à jour le menu déroulant des meilleurs scores
 
 /*
  * Classe principale permettant le lancement du programme
