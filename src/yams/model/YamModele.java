@@ -15,6 +15,7 @@ import yams.views.JeuVue;
  *
  * @author nicolas
  */
+// TODO ajuster les index des scores des brelan, petite suite, grande suite et chance
 
 /*
  * Classe gérant le jeu
@@ -283,6 +284,83 @@ public class YamModele {
         scores[tour][7] = false;
         jeu.setScore(tour, 10, score);
         jeu.majColorTab(tour, 11, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcul le score de la petite suite
+     */
+    public int calcLittleSuite(int[]des, boolean[][]scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean littleSuite = true;
+        List<Integer> listDes = new ArrayList<Integer>(5);
+        
+        for(int i=0; i<5; i++){
+            Integer val = new Integer(des[i]);
+            listDes.add(val);
+        }
+        Collections.sort(listDes);
+        if(listDes.get(0).equals(new Integer(1))){
+            for(int i=0; i<4; i++){
+                int de1 = listDes.get(i);
+                int de2 = listDes.get(i+1) - 1;
+                if(de1 != de2){
+                    littleSuite = false;
+                }
+            }
+        }
+        else{
+            littleSuite = false;
+        }
+        
+        if(littleSuite){
+            score = 15;
+            jeu.majColorTab(tour, 11, 1);
+        }
+        else{
+            jeu.majColorTab(tour, 11, -1);
+        }
+        scores[tour][7] = false;
+        jeu.setScore(tour, 11, score);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score de la grande suite
+     */
+    public int calcBigSuite(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean bigSuite = true;
+        List<Integer> listDes = new ArrayList(5);
+        
+        for(int i = 0; i < 5; i++){
+            Integer val = new Integer(des[i]);
+            listDes.add(val);
+        }
+        Collections.sort(listDes);
+        if(listDes.get(0).equals(new Integer(2))){
+            for(int i = 0; i < 4; i++){
+                int de1 = listDes.get(i);
+                int de2 = listDes.get(i+1) - 1;
+                if(de1 != de2){
+                    bigSuite = false;
+                }
+            }
+        }
+        else{
+            bigSuite = false;
+        }
+        if(bigSuite){
+            score = 25;
+            jeu.majColorTab(tour, 13, 1);
+        }
+        else {
+            jeu.majColorTab(tour, 13, -1);
+        }
+        scores[tour][8] = false;
+        jeu.setScore(tour, 12, score);
         
         return score;
     }
