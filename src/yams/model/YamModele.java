@@ -489,6 +489,18 @@ public class YamModele {
     }
     
     /*
+     * Calcule la chance
+     */
+    public int calcChance(int[] des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        for(int i=0; i<5; i++){
+            score += des[i];
+        }
+        
+        return score;
+    }
+    
+    /*
      * gère la fin de partie
      */
     public boolean finPartie(boolean[][] scores, boolean soundPref){
