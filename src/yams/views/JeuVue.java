@@ -54,14 +54,14 @@ public class JeuVue extends JFrame {
     
     public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode, boolean sound){
         //prise en compte du mode de jeu
-        if(mode == 0)
+        if(mode == Yams.MODELIBRE)
         {
             this.setTitle("Jeu du Yam's Libre");
         }
-        else if(mode == 1){
+        else if(mode == Yams.MODEMONTANT){
             this.setTitle("Jeu du Yam's Montant");
         }
-        else if(mode == 2){
+        else if(mode == Yams.MODEDESCENDANT){
             this.setTitle("Jeu du Yam's Descendant");
         }
         
@@ -138,13 +138,13 @@ public class JeuVue extends JFrame {
         for(int i = 0; i < nbJoueurs; i++){
             for(int j = 0; j < 18; j++){
                 if(this._myControler.getPrefs().get(Yams.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
-                    colorTab[i][j] = 2;
+                    colorTab[i][j] = ColorTab.GRIS;
                 }
                 else if(((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 17))){
-                    colorTab[i][j] = 2;
+                    colorTab[i][j] = ColorTab.GRIS;
                 }
                 else{
-                    colorTab[i][j] = 0;
+                    colorTab[i][j] = ColorTab.BLANC;
                 }
             }
         }

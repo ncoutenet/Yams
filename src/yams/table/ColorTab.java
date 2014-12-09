@@ -19,6 +19,11 @@ import javax.swing.table.DefaultTableCellRenderer;
  * Classe permettant de colorier les cellules du tableau des scores suivant ce que fait le joueur
  */
 public class ColorTab extends DefaultTableCellRenderer{
+    public static final int VERT = 1;
+    public static final int ROUGE = -1;
+    public static final int GRIS = 2;
+    public static final int BLANC = 0;
+    
     private Color rate;
     private Color valide;
     private Color titre;
@@ -40,15 +45,15 @@ public class ColorTab extends DefaultTableCellRenderer{
     @Override
     public Component getTableCellRendererComponent (JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column){
           super.getTableCellRendererComponent (table,value,isSelected,hasFocus,row,column); 
-          if (this._colorTable[row][column] == -1) { 
+          if (this._colorTable[row][column] == ColorTab.ROUGE) { 
               this.setBackground(rate);
           }
           else {
-              if (this._colorTable[row][column] == 1) { 
+              if (this._colorTable[row][column] == ColorTab.VERT) { 
                    this.setBackground(valide);
               }
               else {
-                  if (this._colorTable[row][column] == 2){
+                  if (this._colorTable[row][column] == ColorTab.GRIS){
                       this.setBackground(titre);
                   }
                   else {

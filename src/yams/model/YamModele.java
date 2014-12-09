@@ -9,6 +9,7 @@ import java.applet.AudioClip;
 import java.util.*;
 import yams.control.YamControl;
 import yams.pojos.Joueur;
+import yams.table.ColorTab;
 import yams.views.JeuVue;
 
 /**
@@ -115,9 +116,9 @@ public class YamModele {
         scores[tour][0] = false;
         jeu.setScore(tour, 0, score);
         if(score == 0){
-            jeu.majColorTab(tour, 1, -1);
+            jeu.majColorTab(tour, 1, ColorTab.ROUGE);
         }
-        else jeu.majColorTab(tour, 1, 1);
+        else jeu.majColorTab(tour, 1, ColorTab.VERT);
         
         return score;
     }
@@ -136,9 +137,9 @@ public class YamModele {
         scores[tour][1] = false;
         jeu.setScore(tour, 1, score);
         if(score == 0){
-            jeu.majColorTab(tour, 2, -1);
+            jeu.majColorTab(tour, 2, ColorTab.ROUGE);
         }
-        else jeu.majColorTab(tour, 2, 1);
+        else jeu.majColorTab(tour, 2, ColorTab.VERT);
         
         return score;
     }
@@ -157,9 +158,9 @@ public class YamModele {
         scores[tour][2] = false;
         jeu.setScore(tour, 2, score);
         if(score == 0){
-            jeu.majColorTab(tour, 3, -1);
+            jeu.majColorTab(tour, 3, ColorTab.ROUGE);
         }
-        else jeu.majColorTab(tour, 3, 1);
+        else jeu.majColorTab(tour, 3, ColorTab.VERT);
         
         return score;
     }
@@ -178,9 +179,9 @@ public class YamModele {
         scores[tour][3] = false;
         jeu.setScore(tour, 3, score);
         if(score == 0){
-            jeu.majColorTab(tour, 4, -1);
+            jeu.majColorTab(tour, 4, ColorTab.ROUGE);
         }
-        else jeu.majColorTab(tour, 4, 1);
+        else jeu.majColorTab(tour, 4, ColorTab.VERT);
         
         return score;
     }
@@ -199,9 +200,9 @@ public class YamModele {
         scores[tour][4] = false;
         jeu.setScore(tour, 4, score);
         if(score == 0){
-            jeu.majColorTab(tour, 5, -1);
+            jeu.majColorTab(tour, 5, ColorTab.ROUGE);
         }
-        else jeu.majColorTab(tour, 5, 1);
+        else jeu.majColorTab(tour, 5, ColorTab.VERT);
         
         return score;
     }
@@ -220,9 +221,9 @@ public class YamModele {
         scores[tour][5] = false;
         jeu.setScore(tour, 5, score);
         if(score == 0){
-            jeu.majColorTab(tour, 6, -1);
+            jeu.majColorTab(tour, 6, ColorTab.ROUGE);
         }
-        else jeu.majColorTab(tour, 6, 1);
+        else jeu.majColorTab(tour, 6, ColorTab.VERT);
         
         return score;
     }
@@ -238,7 +239,7 @@ public class YamModele {
         }
         scores[tour][6] = false;
         jeu.setScore(tour, 9, score);
-        jeu.majColorTab(tour, 10, 1);
+        jeu.majColorTab(tour, 10, ColorTab.VERT);
         
         return score;
     }
@@ -261,10 +262,10 @@ public class YamModele {
         }
         if(brelan){
             score = 10;
-            jeu.majColorTab(tour, 10, 1);
+            jeu.majColorTab(tour, 10, ColorTab.VERT);
         }
         else{
-            jeu.majColorTab(tour, 10, -1);
+            jeu.majColorTab(tour, 10, ColorTab.ROUGE);
         }
         scores[tour][6] = false;
         jeu.setScore(tour, 9, score);
@@ -283,7 +284,7 @@ public class YamModele {
         }
         scores[tour][7] = false;
         jeu.setScore(tour, 10, score);
-        jeu.majColorTab(tour, 11, 1);
+        jeu.majColorTab(tour, 11, ColorTab.VERT);
         
         return score;
     }
@@ -316,10 +317,10 @@ public class YamModele {
         
         if(littleSuite){
             score = 15;
-            jeu.majColorTab(tour, 11, 1);
+            jeu.majColorTab(tour, 11, ColorTab.VERT);
         }
         else{
-            jeu.majColorTab(tour, 11, -1);
+            jeu.majColorTab(tour, 11, ColorTab.ROUGE);
         }
         scores[tour][7] = false;
         jeu.setScore(tour, 11, score);
@@ -354,10 +355,10 @@ public class YamModele {
         }
         if(bigSuite){
             score = 25;
-            jeu.majColorTab(tour, 13, 1);
+            jeu.majColorTab(tour, 13, ColorTab.VERT);
         }
         else {
-            jeu.majColorTab(tour, 13, -1);
+            jeu.majColorTab(tour, 13, ColorTab.ROUGE);
         }
         scores[tour][8] = false;
         jeu.setScore(tour, 12, score);
@@ -387,10 +388,10 @@ public class YamModele {
         }
         if(suite){
             score = 20;
-            jeu.majColorTab(tour, 13, 1);
+            jeu.majColorTab(tour, 13, ColorTab.VERT);
         }
         else {
-            jeu.majColorTab(tour, 13, -1);
+            jeu.majColorTab(tour, 13, ColorTab.ROUGE);
         }
         scores[tour][8] = false;
         jeu.setScore(tour, 12, score);
@@ -419,10 +420,10 @@ public class YamModele {
         }
         if(full){
             score = 30;
-            jeu.majColorTab(tour, 14, 1);
+            jeu.majColorTab(tour, 14, ColorTab.VERT);
         }
         else {
-            jeu.majColorTab(tour, 14, -1);
+            jeu.majColorTab(tour, 14, ColorTab.ROUGE);
         }
         scores[tour][9] = false;
         jeu.setScore(tour, 13, score);
@@ -450,10 +451,10 @@ public class YamModele {
 
         if(carre){
             score = 40;
-            jeu.majColorTab(tour, 15, 1);
+            jeu.majColorTab(tour, 15, ColorTab.VERT);
         }
         else{
-            jeu.majColorTab(tour, 15, -1);
+            jeu.majColorTab(tour, 15, ColorTab.ROUGE);
         }
         scores[tour][10] = false;
         jeu.setScore(tour, 14, score);
@@ -477,10 +478,10 @@ public class YamModele {
         }
         if(yam){
             score = 50;
-            jeu.majColorTab(tour, 16, 1);
+            jeu.majColorTab(tour, 16, ColorTab.VERT);
         }
         else{
-            jeu.majColorTab(tour, 16, -1);
+            jeu.majColorTab(tour, 16, ColorTab.ROUGE);
         }
         scores[tour][11] = false;
         jeu.setScore(tour, 15, score);
@@ -496,7 +497,7 @@ public class YamModele {
         for(int i=0; i<5; i++){
             score += des[i];
         }
-        jeu.majColorTab(tour, 17, 1);
+        jeu.majColorTab(tour, 17, ColorTab.VERT);
         scores[tour][12] = false;
         jeu.setScore(tour, 16, score);
         
