@@ -6,12 +6,10 @@ package yams.model;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import yams.control.YamControl;
 import yams.pojos.Joueur;
+import yams.views.JeuVue;
 
 /**
  *
@@ -100,6 +98,287 @@ public class YamModele {
         }
         
         return listeTriee;
+    }
+    
+    /*
+     * Calcule le score des 1
+     */
+    public int calc1(int[] des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            if(des[i] == 1){
+                score += des[i];
+            }
+        }
+        scores[tour][0] = false;
+        jeu.setScore(tour, 0, score);
+        if(score == 0){
+            jeu.majColorTab(tour, 1, -1);
+        }
+        else jeu.majColorTab(tour, 1, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des 2
+     */
+    public int calc2(int[] des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            if(des[i] == 2){
+                score += des[i];
+            }
+        }
+        scores[tour][1] = false;
+        jeu.setScore(tour, 1, score);
+        if(score == 0){
+            jeu.majColorTab(tour, 2, -1);
+        }
+        else jeu.majColorTab(tour, 2, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des 3
+     */
+    public int calc3(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            if(des[i] == 3){
+                score += des[i];
+            }
+        }
+        scores[tour][2] = false;
+        jeu.setScore(tour, 2, score);
+        if(score == 0){
+            jeu.majColorTab(tour, 3, -1);
+        }
+        else jeu.majColorTab(tour, 3, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des 4
+     */
+    public int calc4(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            if(des[i] == 4){
+                score += des[i];
+            }
+        }
+        scores[tour][3] = false;
+        jeu.setScore(tour, 3, score);
+        if(score == 0){
+            jeu.majColorTab(tour, 4, -1);
+        }
+        else jeu.majColorTab(tour, 4, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des 5
+     */
+    public int calc5(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            if(des[i] == 5){
+                score += des[i];
+            }
+        }
+        scores[tour][4] = false;
+        jeu.setScore(tour, 4, score);
+        if(score == 0){
+            jeu.majColorTab(tour, 5, -1);
+        }
+        else jeu.majColorTab(tour, 5, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des 6
+     */
+    public int calc6(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            if(des[i] == 6){
+                score += des[i];
+            }
+        }
+        scores[tour][5] = false;
+        jeu.setScore(tour, 5, score);
+        if(score == 0){
+            jeu.majColorTab(tour, 6, -1);
+        }
+        else jeu.majColorTab(tour, 6, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des +
+     */
+    public int calcPlus(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            score += des[i];
+        }
+        scores[tour][6] = false;
+        jeu.setScore(tour, 9, score);
+        jeu.majColorTab(tour, 10, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score des -
+     */
+    public int calcMinus(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        
+        for(int i = 0; i < 5; i++){
+            score += des[i];
+        }
+        scores[tour][7] = false;
+        jeu.setScore(tour, 10, score);
+        jeu.majColorTab(tour, 11, 1);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score de la suite
+     */
+    public int calcSuite(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean suite = true;
+        List<Integer> listDes = new ArrayList(5);
+        
+        for(int i = 0; i < 5; i++){
+            Integer val = new Integer(des[i]);
+            listDes.add(val);
+        }
+        Collections.sort(listDes);
+        for(int i = 0; i < 4; i++){
+            int de1 = listDes.get(i);
+            int de2 = listDes.get(i+1) - 1;
+            if(de1 != de2){
+                suite = false;
+            }
+        }
+        if(suite){
+            score = 20;
+            jeu.majColorTab(tour, 13, 1);
+        }
+        else {
+            jeu.majColorTab(tour, 13, -1);
+        }
+        scores[tour][8] = false;
+        jeu.setScore(tour, 12, score);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score du full
+     */
+    public int calcFull(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean full = false;
+        List<Integer> listDes = new ArrayList(5);
+        
+        for(int i = 0; i < 5; i++){
+            Integer val = new Integer(des[i]);
+            listDes.add(val);
+        }
+        Collections.sort(listDes);
+        if(listDes.get(0).equals(listDes.get(1)) && listDes.get(0).equals(listDes.get(2)) && (listDes.get(0) != listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
+            full = true;
+        }
+        else if(listDes.get(0).equals(listDes.get(1)) && (listDes.get(0) != listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
+            full = true;
+        }
+        if(full){
+            score = 30;
+            jeu.majColorTab(tour, 14, 1);
+        }
+        else {
+            jeu.majColorTab(tour, 14, -1);
+        }
+        scores[tour][9] = false;
+        jeu.setScore(tour, 13, score);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score du carré
+     */
+    public int calcCarre(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean carre = false;
+        List<Integer> listDes = new ArrayList<Integer>(5);
+        
+        for(int i = 0; i < 5; i++){
+            Integer val = new Integer(des[i]);
+            listDes.add(val);
+        }
+        Collections.sort(listDes);
+
+        if((listDes.get(0).equals(listDes.get(1)) && listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3))) || (listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4)))){
+            carre = true;
+        }
+
+        if(carre){
+            score = 40;
+            jeu.majColorTab(tour, 15, 1);
+        }
+        else{
+            jeu.majColorTab(tour, 15, -1);
+        }
+        scores[tour][10] = false;
+        jeu.setScore(tour, 14, score);
+        
+        return score;
+    }
+    
+    /*
+     * Calcule le score du yam's
+     */
+    public int calcYam(int[]des, boolean[][] scores, int tour, JeuVue jeu){
+        int score = 0;
+        boolean yam = true;
+        int i = 0;
+        
+        while((i < 4) && (yam)){
+            if(des[i] != des[i+1]){
+                yam = false;
+            }
+            i++;
+        }
+        if(yam){
+            score = 50;
+            jeu.majColorTab(tour, 16, 1);
+        }
+        else{
+            jeu.majColorTab(tour, 16, -1);
+        }
+        scores[tour][11] = false;
+        jeu.setScore(tour, 15, score);
+        
+        return score;
     }
     
     /*

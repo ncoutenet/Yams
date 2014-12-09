@@ -372,203 +372,54 @@ public class YamControl {
         String strScore = new String();
         int[] des = this._jeu.getDes();
         int score = 0;
-        List<Integer> listDes;
+        
         switch(index){
             case 0:
-                for(int i = 0; i < 5; i++){
-                    if(des[i] == 1){
-                        score += des[i];
-                    }
-                }
-                this._scoresValides[this._tour][0] = false;
-                this._jeu.setScore(this._tour, 0, score);
-                if(score == 0){
-                    this._jeu.majColorTab(this._tour, 1, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 1, 1);
+                score = this._modele.calc1(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "1";
                 break;
             case 1:
-                for(int i = 0; i < 5; i++){
-                    if(des[i] == 2){
-                        score += des[i];
-                    }
-                }
-                this._scoresValides[this._tour][1] = false;
-                this._jeu.setScore(this._tour, 1, score);
-                if(score == 0){
-                    this._jeu.majColorTab(this._tour, 2, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 2, 1);
+                score = this._modele.calc2(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "2";
                 break;
             case 2:
-                for(int i = 0; i < 5; i++){
-                    if(des[i] == 3){
-                        score += des[i];
-                    }
-                }
-                this._scoresValides[this._tour][2] = false;
-                this._jeu.setScore(this._tour, 2, score);
-                if(score == 0){
-                    this._jeu.majColorTab(this._tour, 3, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 3, 1);
+                score = this._modele.calc3(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "3";
                 break;
             case 3:
-                for(int i = 0; i < 5; i++){
-                    if(des[i] == 4){
-                        score += des[i];
-                    }
-                }
-                this._scoresValides[this._tour][3] = false;
-                this._jeu.setScore(this._tour, 3, score);
-                if(score == 0){
-                    this._jeu.majColorTab(this._tour, 4, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 4, 1);
+                score = this._modele.calc4(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "4";
                 break;
             case 4:
-                for(int i = 0; i < 5; i++){
-                    if(des[i] == 5){
-                        score += des[i];
-                    }
-                }
-                this._scoresValides[this._tour][4] = false;
-                this._jeu.setScore(this._tour, 4, score);
-                if(score == 0){
-                    this._jeu.majColorTab(this._tour, 5, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 5, 1);
+                score = this._modele.calc5(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "5";
                 break;
             case 5:
-                for(int i = 0; i < 5; i++){
-                    if(des[i] == 6){
-                        score += des[i];
-                    }
-                }
-                this._scoresValides[this._tour][5] = false;
-                this._jeu.setScore(this._tour, 5, score);
-                if(score == 0){
-                    this._jeu.majColorTab(this._tour, 6, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 6, 1);
+                score = this._modele.calc6(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "6";
                 break;
             case 6:
-                for(int i = 0; i < 5; i++){
-                    score += des[i];
-                }
-                this._scoresValides[this._tour][6] = false;
-                this._jeu.setScore(this._tour, 9, score);
-                this._jeu.majColorTab(this._tour, 10, 1);
+                score = this._modele.calcPlus(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "+";
                 break;
             case 7:
-                for(int i = 0; i < 5; i++){
-                   score += des[i];
-                }
-                this._scoresValides[this._tour][7] = false;
-                this._jeu.setScore(this._tour, 10, score);
-                this._jeu.majColorTab(this._tour, 11, 1);
+                score = this._modele.calcMinus(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "-";
                 break;
             case 8:
-                boolean suite = true;
-                listDes = new ArrayList(5);
-                for(int i = 0; i < 5; i++){
-                    Integer val = new Integer(des[i]);
-                    listDes.add(val);
-                }
-                Collections.sort(listDes);
-                for(int i = 0; i < 4; i++){
-                    int de1 = listDes.get(i);
-                    int de2 = listDes.get(i+1) - 1;
-                    if(de1 != de2){
-                        suite = false;
-                    }
-                }
-                if(suite){
-                    score = 20;
-                    this._jeu.majColorTab(this._tour, 13, 1);
-                }
-                else {
-                    this._jeu.majColorTab(this._tour, 13, -1);
-                }
-                this._scoresValides[this._tour][8] = false;
-                this._jeu.setScore(this._tour, 12, score);
+                score = this._modele.calcSuite(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "suite";
                 break;
             case 9:
-                boolean full = false;
-                listDes = new ArrayList(5);
-                for(int i = 0; i < 5; i++){
-                    Integer val = new Integer(des[i]);
-                    listDes.add(val);
-                }
-                Collections.sort(listDes);
-                if(listDes.get(0).equals(listDes.get(1)) && listDes.get(0).equals(listDes.get(2)) && (listDes.get(0) != listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
-                    full = true;
-                }
-                else if(listDes.get(0).equals(listDes.get(1)) && (listDes.get(0) != listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
-                    full = true;
-                }
-                if(full){
-                    score = 30;
-                    this._jeu.majColorTab(this._tour, 14, 1);
-                }
-                else {
-                    this._jeu.majColorTab(this._tour, 14, -1);
-                }
-                this._scoresValides[this._tour][9] = false;
-                this._jeu.setScore(this._tour, 13, score);
+                score = this._modele.calcFull(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "full";
                 break;
             case 10:
-                boolean carre = false;
-                listDes = new ArrayList<Integer>(5);
-                for(int i = 0; i < 5; i++){
-                    Integer val = new Integer(des[i]);
-                    listDes.add(val);
-                }
-                Collections.sort(listDes);
-
-                if((listDes.get(0).equals(listDes.get(1)) && listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3))) || (listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4)))){
-                    carre = true;
-                }
-
-                if(carre){
-                    score = 40;
-                    this._jeu.majColorTab(this._tour, 15, 1);
-                }
-                else{
-                    this._jeu.majColorTab(this._tour, 15, -1);
-                }
-                this._scoresValides[this._tour][10] = false;
-                this._jeu.setScore(this._tour, 14, score);
+                score = this._modele.calcCarre(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "carré";
                 break;
             case 11:
-                boolean yam = true;
-                int i = 0;
-                while((i < 4) && (yam)){
-                    if(des[i] != des[i+1]){
-                        yam = false;
-                    }
-                    i++;
-                }
-                if(yam){
-                    score = 50;
-                    this._jeu.majColorTab(this._tour, 16, 1);
-                }
-                else{
-                    this._jeu.majColorTab(this._tour, 16, -1);
-                }
-                this._scoresValides[this._tour][11] = false;
-                this._jeu.setScore(this._tour, 15, score);
+                score = this._modele.calcYam(des, this._scoresValides, this._tour, this._jeu);
                 strScore = "yam's";
                 break;
             default: //n'arrive jamais
@@ -579,6 +430,7 @@ public class YamControl {
         this._confScores = new InfoScoreVue(score, strScore, _jeu, this);
         this._confScores.activation(true);
     }
+    
     /*
      * gestion de la fin du tour en montante/descendante
      */
@@ -640,194 +492,44 @@ public class YamControl {
         choix = this._finTour.getChoix();
         
         int[] des = this._jeu.getDes();
-        int score = 0;
         
         if(choix.equals("1")){
-           for(int i = 0; i < 5; i++){
-               if(des[i] == 1){
-                   score += des[i];
-               }
-           }
-           this._scoresValides[this._tour][0] = false;
-           this._jeu.setScore(this._tour, 0, score);
-           if(score == 0){
-                    this._jeu.majColorTab(this._tour, 1, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 1, 1);
+            this._modele.calc1(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("2")){
-           for(int i = 0; i < 5; i++){
-               if(des[i] == 2){
-                   score += des[i];
-               }
-           }
-           this._scoresValides[this._tour][1] = false;
-           this._jeu.setScore(this._tour, 1, score);
-           if(score == 0){
-                    this._jeu.majColorTab(this._tour, 2, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 2, 1);
+           this._modele.calc2(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("3")){
-            for(int i = 0; i < 5; i++){
-               if(des[i] == 3){
-                   score += des[i];
-               }
-           }
-           this._scoresValides[this._tour][2] = false;
-           this._jeu.setScore(this._tour, 2, score);
-           if(score == 0){
-                    this._jeu.majColorTab(this._tour, 3, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 3, 1);
+            this._modele.calc3(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("4")){
-            for(int i = 0; i < 5; i++){
-               if(des[i] == 4){
-                   score += des[i];
-               }
-           }
-           this._scoresValides[this._tour][3] = false;
-           this._jeu.setScore(this._tour, 3, score);
-           if(score == 0){
-                    this._jeu.majColorTab(this._tour, 4, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 4, 1);
+            this._modele.calc4(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("5")){
-            for(int i = 0; i < 5; i++){
-               if(des[i] == 5){
-                   score += des[i];
-               }
-           }
-           this._scoresValides[this._tour][4] = false;
-           this._jeu.setScore(this._tour, 4, score);
-           if(score == 0){
-                    this._jeu.majColorTab(this._tour, 5, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 5, 1);
+            this._modele.calc5(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("6")){
-            for(int i = 0; i < 5; i++){
-               if(des[i] == 6){
-                   score += des[i];
-               }
-           }
-           this._scoresValides[this._tour][5] = false;
-           this._jeu.setScore(this._tour, 5, score);
-           if(score == 0){
-                    this._jeu.majColorTab(this._tour, 6, -1);
-                }
-                else this._jeu.majColorTab(this._tour, 6, 1);
+            this._modele.calc6(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("+")){
-            for(int i = 0; i < 5; i++){
-                   score += des[i];
-           }
-           this._scoresValides[this._tour][6] = false;
-           this._jeu.setScore(this._tour, 9, score);
-           this._jeu.majColorTab(this._tour, 10, 1);
+            this._modele.calcPlus(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("-")){
-            
-            for(int i = 0; i < 5; i++){
-                   score += des[i];
-           }
-           this._scoresValides[this._tour][7] = false;
-           this._jeu.setScore(this._tour, 10, score);
-           this._jeu.majColorTab(this._tour, 11, 1);
+            this._modele.calcMinus(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("suite")){
-            boolean suite = true;
-            List<Integer> listDes = new ArrayList(5);
-            for(int i = 0; i < 5; i++){
-                Integer val = new Integer(des[i]);
-                listDes.add(val);
-            }
-            Collections.sort(listDes);
-            for(int i = 0; i < 4; i++){
-                int de1 = listDes.get(i);
-                int de2 = listDes.get(i+1) - 1;
-                if(de1 != de2){
-                    suite = false;
-                }
-            }
-            if(suite){
-                score = 20;
-                this._jeu.majColorTab(this._tour, 13, 1);
-            }
-            else{
-                this._jeu.majColorTab(this._tour, 13, -1);
-            }
-           this._scoresValides[this._tour][8] = false;
-            this._jeu.setScore(this._tour, 12, score);
+            this._modele.calcSuite(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("full")){
-            boolean full = false;
-            List<Integer> listDes = new ArrayList(5);
-            for(int i = 0; i < 5; i++){
-                Integer val = new Integer(des[i]);
-                listDes.add(val);
-            }
-            Collections.sort(listDes);
-            if(listDes.get(0).equals(listDes.get(1)) && listDes.get(0).equals(listDes.get(2)) && (listDes.get(0) != listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
-                full = true;
-            }
-            else if(listDes.get(0).equals(listDes.get(1)) && (listDes.get(0) != listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
-                full = true;
-            }
-            if(full){
-                score = 30;
-                this._jeu.majColorTab(this._tour, 14, 1);
-            }
-            else{
-                this._jeu.majColorTab(this._tour, 14, -1);
-            }
-           this._scoresValides[this._tour][9] = false;
-            this._jeu.setScore(this._tour, 13, score);
+            this._modele.calcFull(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("carré")){
-            boolean carre = false;
-            List<Integer> listDes = new ArrayList<Integer>(5);
-            for(int i = 0; i < 5; i++){
-                Integer val = new Integer(des[i]);
-                listDes.add(val);
-            }
-            Collections.sort(listDes);
-            
-            if((listDes.get(0).equals(listDes.get(1)) && listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3))) || (listDes.get(1).equals(listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4)))){
-                carre = true;
-            }
-            
-            if(carre){
-                score = 40;
-                this._jeu.majColorTab(this._tour, 15, 1);
-            }
-            else{
-                this._jeu.majColorTab(this._tour, 15, -1);
-            }
-            this._scoresValides[this._tour][10] = false;
-            this._jeu.setScore(this._tour, 14, score);
+            this._modele.calcCarre(des, this._scoresValides, this._tour, this._jeu);
         }
         else if(choix.equals("yam's")){
-            boolean yam = true;
-            int i = 0;
-            while((i < 4) && (yam)){
-               if(des[i] != des[i+1]){
-                   yam = false;
-               }
-               i++;
-           }
-            if(yam){
-                score = 50;
-                this._jeu.majColorTab(this._tour, 16, 1);
-            }
-            else{
-                this._jeu.majColorTab(this._tour, 16, -1);
-            }
-           this._scoresValides[this._tour][11] = false;
-           this._jeu.setScore(this._tour, 15, score);
+            this._modele.calcYam(des, this._scoresValides, this._tour, this._jeu);
         }
+        
         this._finTour.setAffichage(false);
         this._jeu.setTotalPoints(true);
         if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(Yams.PREFSOUND))){
