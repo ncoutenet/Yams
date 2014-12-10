@@ -393,8 +393,8 @@ public class YamModele {
         else {
             jeu.majColorTab(tour, 13, ColorTab.ROUGE);
         }
-        scores[tour][8] = false;
         jeu.setScore(tour, 12, score);
+        scores[tour][8] = false;
         
         return score;
     }
@@ -420,13 +420,28 @@ public class YamModele {
         }
         if(full){
             score = 30;
-            jeu.majColorTab(tour, 13, ColorTab.VERT);
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                jeu.majColorTab(tour, 14, ColorTab.VERT);
+            }
+            else{
+                jeu.majColorTab(tour, 13, ColorTab.VERT);
+            }
         }
         else {
-            jeu.majColorTab(tour, 13, ColorTab.ROUGE);
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                jeu.majColorTab(tour, 14, ColorTab.ROUGE);
+            }
+            else{
+                jeu.majColorTab(tour, 13, ColorTab.ROUGE);
+            }
+        }
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            jeu.setScore(tour, 13, score);
+        }
+        else{
+            jeu.setScore(tour, 12, score);
         }
         scores[tour][9] = false;
-        jeu.setScore(tour, 12, score);
         
         return score;
     }
@@ -451,13 +466,28 @@ public class YamModele {
 
         if(carre){
             score = 40;
-            jeu.majColorTab(tour, 14, ColorTab.VERT);
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                jeu.majColorTab(tour, 15, ColorTab.VERT);
+            }
+            else{
+                jeu.majColorTab(tour, 14, ColorTab.VERT);
+            }
         }
         else{
-            jeu.majColorTab(tour, 14, ColorTab.ROUGE);
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                jeu.majColorTab(tour, 15, ColorTab.ROUGE);
+            }
+            else{
+                jeu.majColorTab(tour, 14, ColorTab.ROUGE);
+            }
+        }
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            jeu.setScore(tour, 14, score);
+        }
+        else{
+            jeu.setScore(tour, 13, score);
         }
         scores[tour][10] = false;
-        jeu.setScore(tour, 13, score);
         
         return score;
     }
@@ -478,13 +508,28 @@ public class YamModele {
         }
         if(yam){
             score = 50;
-            jeu.majColorTab(tour, 15, ColorTab.VERT);
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                jeu.majColorTab(tour, 16, ColorTab.VERT);
+            }
+            else{
+                jeu.majColorTab(tour, 15, ColorTab.VERT);
+            }
         }
         else{
-            jeu.majColorTab(tour, 15, ColorTab.ROUGE);
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                jeu.majColorTab(tour, 16, ColorTab.ROUGE);
+            }
+            else{
+                jeu.majColorTab(tour, 15, ColorTab.ROUGE);
+            }
+        }
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            jeu.setScore(tour, 15, score);
+        }
+        else{
+            jeu.setScore(tour, 14, score);
         }
         scores[tour][11] = false;
-        jeu.setScore(tour, 14, score);
         
         return score;
     }

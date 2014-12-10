@@ -17,6 +17,8 @@ import yams.pojos.Joueur;
  * @author nicolas
  */
 
+// FIXME taille de la fenêtre avec 10 joueurs
+
 /*
  * Fenêtre affichée en fin de partie. Elle donne le pseudo et le score du gagnant puis elle demande à l'utilisateur ce qu'il veux faire
  */
