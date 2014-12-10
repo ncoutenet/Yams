@@ -12,8 +12,6 @@ import yams.control.YamControl;
  */
 
 // TODO permettre l'export des scores
-// TODO colorier les lignes des meilleurs scores avec 2 couleurs pour bien les distinguer
-// TODO mettre les règles à jour
 // TODO ajouter le mode sec
 
 /*

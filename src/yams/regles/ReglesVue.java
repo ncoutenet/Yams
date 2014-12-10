@@ -147,19 +147,40 @@ public class ReglesVue extends JFrame {
         texte.append("            <td>Somme des 6</td>");
         texte.append("        </tr>");
         texte.append("        <tr>");
-        texte.append("            <td>+</td>");
-        texte.append("            <td>Maximum possible</td>");
-        texte.append("            <td>Somme des dés</td>");
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            texte.append("            <td>+</td>");
+            texte.append("            <td>Maximum possible</td>");
+            texte.append("            <td>Somme des dés</td>");
+        }
+        else{
+            texte.append("            <td>Brelan</td>");
+            texte.append("            <td>3 dés identique</td>");
+            texte.append("            <td>10</td>");
+        }
         texte.append("        </tr>");
         texte.append("        <tr>");
-        texte.append("            <td>-</td>");
-        texte.append("            <td>Minimum possible</td>");
-        texte.append("            <td>Somme des dés</td>");
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            texte.append("            <td>-</td>");
+            texte.append("            <td>Minimum possible</td>");
+            texte.append("            <td>Somme des dés</td>");
+        }
+        else{
+            texte.append("            <td>Petite suite</td>");
+            texte.append("            <td>1 2 3 4 5</td>");
+            texte.append("            <td>15</td>");
+        }
         texte.append("        </tr>");
         texte.append("        <tr>");
-        texte.append("            <td>Suite</td>");
-        texte.append("            <td>5 dés qui se suivent</td>");
-        texte.append("            <td>20</td>");
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            texte.append("            <td>Suite</td>");
+            texte.append("            <td>5 dés qui se suivent</td>");
+            texte.append("            <td>20</td>");
+        }
+        else{
+            texte.append("            <td>Grande suite</td>");
+            texte.append("            <td>2 3 4 5 6</td>");
+            texte.append("            <td>25</td>");
+        }
         texte.append("        </tr>");
         texte.append("        <tr>");
         texte.append("            <td>Full</td>");
@@ -176,14 +197,21 @@ public class ReglesVue extends JFrame {
         texte.append("            <td>5 dés identiques</td>");
         texte.append("            <td>50</td>");
         texte.append("        </tr>");
+        if(!this._myControler.getPrefs().get(Yams.PREFRULES)){
+            texte.append("        <tr>");
+            texte.append("            <td>Chance</td>");
+            texte.append("            <td>Maximum possible</td>");
+            texte.append("            <td>Somme des dés</td>");
+            texte.append("        </tr>");
+        }
         texte.append("    </tbody>");
         texte.append("</table>");
         texte.append("<p>Remarque: Si un joueur totalise 63 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 35 points.</p>");
         texte.append("<h2>Préférences</h2>");
         texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
         texte.append("Pour le réactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
-        texte.append("<h4>Menu Préférences</h4>");
-        texte.append("<p>Dans ce menu il est possible de régler le son et la manière de lancer les dés.</p>");
+        texte.append("<h3>Menu Préférences</h3>");
+        texte.append("<p>Dans ce menu il est possible de régler le son, la manière de lancer les dés et les coups à jouer.</p>");
         texte.append("<p>Si la case \"son\" est cochée, l'application jouera les sons</p>");
         texte.append("<p>l'option \"Garder les dés sélectionnés\" permet de <strong>conserver</strong> les dés sélectionnés.<br/>"
                 + "l'option\"Relancer les dés sélectionnés\" permet de <strong>relancer</strong> les dés sélectionnés.</p>");
