@@ -18,6 +18,7 @@ import yams.hightScores.events.ComboBoxEvents;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.table.ModelRowHeader;
 import yams.hightScores.table.ModeleTableHightScore;
+import yams.table.ColorTab;
 
 /**
  *
@@ -29,6 +30,7 @@ public class HightScoreVue extends JFrame{
     private ModeleTableHightScore _modelScore;
     private JTable _rowHeader;
     private ModelRowHeader _modelRow;
+    private ColorTab _gestionnaire;
     
     private JComboBox _cbModeJeu;
     private JButton _btnRetour;
@@ -52,6 +54,8 @@ public class HightScoreVue extends JFrame{
         colHead.setPreferredWidth(20);
         this._tableScore = new JTable(this._modelScore);
         this._tableScore.setFocusable(false);
+        this._gestionnaire = new ColorTab(10, 2);
+        this._tableScore.setDefaultRenderer(Object.class, this._gestionnaire);
         Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
         this._tableScore.setFont(font);
         this._tableScore.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -109,25 +113,43 @@ public class HightScoreVue extends JFrame{
     /*
      * Mise à jour du tableau
      */
-    public void changeScores(int mode){
+    public final void changeScores(int mode){
         this._modelScore.delScores();
+        this._gestionnaire.clear();
+        
         switch(mode){
             case Yams.MODELIBRE:
                 for(int i=0; i<this._scoresLibres.size(); i++){
                     this._modelScore.addScore(this._scoresLibres.get(i));
+                    if(i%2 == 0){
+                        for(int col=0; col<2; col++){
+                            this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
+                        }
+                    }
                 }
                 break;
             case Yams.MODEMONTANT:
                 for(int i=0; i<this._scoresMontants.size(); i++){
                     this._modelScore.addScore(this._scoresMontants.get(i));
+                    if(i%2 == 0){
+                        for(int col=0; col<2; col++){
+                            this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
+                        }
+                    }
                 }
                 break;
             case Yams.MODEDESCENDANT:
                 for(int i=0; i<this._scoresDescendants.size(); i++){
                     this._modelScore.addScore(this._scoresDescendants.get(i));
+                    if(i%2 == 0){
+                        for(int col=0; col<2; col++){
+                            this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
+                        }
+                    }
                 }
                 break;
             default:
+                System.err.println("Mode de jeu inconnu");
                 break; //n'arrivera pas
         }
         this._tableScore.updateUI();

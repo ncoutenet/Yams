@@ -133,24 +133,22 @@ public class JeuVue extends JFrame {
         this._tableau.setGridColor(Color.black);
 //        this._tableau.getTableHeader().setDefaultRenderer(new HeaderRenderer());
         
-        //initialisation du tableau des couleurs du tableau des scores
-        int[][] colorTab = new int[nbJoueurs][18];
+        //initialisation du gestionnaire de couleurs
+        this._gestionnaire = new ColorTab(nbJoueurs, 18);
+        
         for(int i = 0; i < nbJoueurs; i++){
             for(int j = 0; j < 18; j++){
                 if(this._myControler.getPrefs().get(Yams.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
-                    colorTab[i][j] = ColorTab.GRIS;
+                    this._gestionnaire.setCouleurs(i, j, ColorTab.GRIS);
                 }
                 else if(((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 17))){
-                    colorTab[i][j] = ColorTab.GRIS;
+                    this._gestionnaire.setCouleurs(i, j, ColorTab.GRIS);
                 }
                 else{
-                    colorTab[i][j] = ColorTab.BLANC;
+                    this._gestionnaire.setCouleurs(i, j, ColorTab.BLANC);
                 }
             }
         }
-        
-        //initialisation du gestionnaire de couleurs
-        this._gestionnaire = new ColorTab(colorTab, nbJoueurs);
         
         //liaison du tableau avec son gestionnaire de couleur
         this._tableau.setDefaultRenderer(Object.class, this._gestionnaire);
