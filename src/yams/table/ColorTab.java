@@ -60,6 +60,7 @@ public class ColorTab extends DefaultTableCellRenderer{
                   this.setBackground(Color.white);
                   break;
               default:
+                  System.err.println("Code couleur inconnu!");
                   break; //n'arrivera pas
           }
           this.setHorizontalAlignment(JLabel.CENTER);
