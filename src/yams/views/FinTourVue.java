@@ -243,13 +243,28 @@ public class FinTourVue extends JDialog{
                     type = "6";
                     break;
                 case 6:
-                    type = "+";
+                    if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "+";
+                    }
+                    else{
+                        type = "brelan";
+                    }
                     break;
                 case 7:
-                    type = "-";
+                    if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "-";
+                    }
+                    else{
+                        type = "petite suite";
+                    }
                     break;
                 case 8:
-                    type = "suite";
+                    if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "suite";
+                    }
+                    else{
+                        type = "grande suite";
+                    }
                     break;
                 case 9:
                     type = "full";
@@ -260,6 +275,10 @@ public class FinTourVue extends JDialog{
                 case 11:
                     type = "yam's";
                     break;
+                case 12:
+                    if(!this._myControler.getPrefs().get(Yams.PREFRULES)){
+                        type = "chance";
+                    }
                 default:
                     break;
             }
