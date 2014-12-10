@@ -17,8 +17,6 @@ import yams.pojos.Joueur;
  * @author nicolas
  */
 
-// FIXME taille de la fenêtre avec 10 joueurs
-
 /*
  * Fenêtre affichée en fin de partie. Elle donne le pseudo et le score du gagnant puis elle demande à l'utilisateur ce qu'il veux faire
  */
@@ -91,7 +89,7 @@ public class FinPartieVue extends JDialog{
             
         }
         else {
-            this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height*3);
+            this.setSize(pan.getPreferredSize().width*2, pan.getPreferredSize().height+100);
         }
         this.setLocationRelativeTo(this.getParent());
         Point p = this.getLocation();
