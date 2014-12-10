@@ -45,21 +45,22 @@ public class ColorTab extends DefaultTableCellRenderer{
     @Override
     public Component getTableCellRendererComponent (JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column){
           super.getTableCellRendererComponent (table,value,isSelected,hasFocus,row,column); 
-          if (this._colorTable[row][column] == ColorTab.ROUGE) { 
-              this.setBackground(rate);
-          }
-          else {
-              if (this._colorTable[row][column] == ColorTab.VERT) { 
-                   this.setBackground(valide);
-              }
-              else {
-                  if (this._colorTable[row][column] == ColorTab.GRIS){
-                      this.setBackground(titre);
-                  }
-                  else {
-                   this.setBackground(Color.white);
-                  }
-              }      
+          
+          switch(this._colorTable[row][column]){
+              case ColorTab.ROUGE: 
+                  this.setBackground(rate);
+                  break;
+              case ColorTab.VERT:
+                  this.setBackground(valide);
+                  break;
+              case ColorTab.GRIS:
+                  this.setBackground(titre);
+                  break;
+              case ColorTab.BLANC:
+                  this.setBackground(Color.white);
+                  break;
+              default:
+                  break; //n'arrivera pas
           }
           this.setHorizontalAlignment(JLabel.CENTER);
           return this;
