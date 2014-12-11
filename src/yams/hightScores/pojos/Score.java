@@ -7,6 +7,8 @@
 package yams.hightScores.pojos;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -16,10 +18,12 @@ public class Score implements Serializable{
     private int _id;
     private String _name;
     private int _score;
+    private Date _date;
 
     public Score(String name, int score) {
         this._name = name;
         this._score = score;
+        this._date = new Date();
     }
 
     public String getName() {
@@ -36,6 +40,11 @@ public class Score implements Serializable{
 
     public void setScore(int score) {
         this._score = score;
+    }
+    
+    public String getDate(){
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        return formater.format(this._date);
     }
 
     public int getId() {

@@ -55,7 +55,7 @@ public class HightScoreVue extends JFrame{
         colHead.setPreferredWidth(20);
         this._tableScore = new JTable(this._modelScore);
         this._tableScore.setFocusable(false);
-        this._gestionnaire = new ColorTab(10, 2);
+        this._gestionnaire = new ColorTab(10, 3);
         this._tableScore.setDefaultRenderer(Object.class, this._gestionnaire);
         Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
         this._tableScore.setFont(font);
@@ -87,8 +87,11 @@ public class HightScoreVue extends JFrame{
         Dimension d = jsp.getPreferredSize();
         d.height = this._rowHeader.getPreferredSize().height+20;
         jsp.setPreferredSize(d);
-        TableColumn colName = this._tableScore.getColumnModel().getColumn(0);
-        colName.setPreferredWidth(jsp.getPreferredSize().width-74);
+        this._tableScore.getColumnModel().getColumn(0).setPreferredWidth(jsp.getPreferredSize().width-180); //ajustement de la colonne du pseudo
+        this._tableScore.getColumnModel().getColumn(2).setPreferredWidth(this._tableScore.getColumnModel().getColumn(2).getPreferredWidth()+30); //ajustement de la colonne de la date
+        for(int i=0; i<3; i++){
+            this._tableScore.getColumnModel().getColumn(i).setResizable(false);
+        }
         Dimension dh = this._rowHeader.getPreferredScrollableViewportSize();
         dh.width = this._rowHeader.getPreferredSize().width;
         this._rowHeader.setPreferredScrollableViewportSize(dh);
@@ -107,9 +110,9 @@ public class HightScoreVue extends JFrame{
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
-        this._scoresLibres = this._myControler.loadHightScores(0);
-        this._scoresMontants = this._myControler.loadHightScores(1);
-        this._scoresDescendants = this._myControler.loadHightScores(2);
+        this._scoresLibres = this._myControler.loadHightScores(Yams.MODELIBRE);
+        this._scoresMontants = this._myControler.loadHightScores(Yams.MODEMONTANT);
+        this._scoresDescendants = this._myControler.loadHightScores(Yams.MODEDESCENDANT);
         
         this.changeScores(Yams.MODELIBRE);
         
@@ -122,6 +125,8 @@ public class HightScoreVue extends JFrame{
      * Mise à jour du tableau
      */
     public final void changeScores(int mode){
+        int nbCol = 3;
+        
         this._modelScore.delScores();
         this._gestionnaire.clear();
         
@@ -130,7 +135,7 @@ public class HightScoreVue extends JFrame{
                 for(int i=0; i<this._scoresLibres.size(); i++){
                     this._modelScore.addScore(this._scoresLibres.get(i));
                     if(i%2 == 0){
-                        for(int col=0; col<2; col++){
+                        for(int col=0; col<nbCol; col++){
                             this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
                         }
                     }
@@ -140,7 +145,7 @@ public class HightScoreVue extends JFrame{
                 for(int i=0; i<this._scoresMontants.size(); i++){
                     this._modelScore.addScore(this._scoresMontants.get(i));
                     if(i%2 == 0){
-                        for(int col=0; col<2; col++){
+                        for(int col=0; col<nbCol; col++){
                             this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
                         }
                     }
@@ -150,7 +155,7 @@ public class HightScoreVue extends JFrame{
                 for(int i=0; i<this._scoresDescendants.size(); i++){
                     this._modelScore.addScore(this._scoresDescendants.get(i));
                     if(i%2 == 0){
-                        for(int col=0; col<2; col++){
+                        for(int col=0; col<nbCol; col++){
                             this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
                         }
                     }

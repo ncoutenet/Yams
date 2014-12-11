@@ -17,7 +17,7 @@ import yams.hightScores.pojos.Score;
  */
 public class ModeleTableHightScore extends AbstractTableModel{
     private List<Score> _scores;
-    private final String[] _entetes = {"Nom", "Score"};
+    private final String[] _entetes = {"Nom", "Score", "date"};
     
     public ModeleTableHightScore(){
         super();
@@ -57,6 +57,13 @@ public class ModeleTableHightScore extends AbstractTableModel{
                 return this._scores.get(rowIndex).getName();
             case 1:
                 return this._scores.get(rowIndex).getScore();
+            case 2:
+                try{
+                    return this._scores.get(rowIndex).getDate();
+                } catch(NullPointerException e){
+                    System.err.println("Pas de date à récupérer pour le score numéro " + (rowIndex+1));
+                    return "";
+                }
             default:
                 return null;
         }
