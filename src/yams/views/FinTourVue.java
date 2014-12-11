@@ -79,12 +79,21 @@ public class FinTourVue extends JDialog{
         //verification du dernier lancer
         boolean[] scores = _myControler.getScoresValides();
         int cpt = 0;
-        for(int i = 0; i < 12; i++){
+        int nbCoupsMax;
+        
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            nbCoupsMax = 12;
+        }
+        else{
+            nbCoupsMax = 13;
+        }
+        
+        for(int i = 0; i < nbCoupsMax; i++){
             if(!scores[i]){
                 cpt++;
             }
         }
-        if(cpt == 11){
+        if(cpt == nbCoupsMax-1){
             int index = 0;
             while(!scores[index]){
                 index++;
@@ -220,8 +229,16 @@ public class FinTourVue extends JDialog{
      */
     private String getDernierScore(){
         String score = null;
+        int nbCoups;
         
-        for(int i = 0; i < 12; i++){
+        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            nbCoups = 12;
+        }
+        else{
+            nbCoups = 13;
+        }
+        
+        for(int i = 0; i < nbCoups; i++){
             String type = new String();
             switch(i){
                 case 0:
