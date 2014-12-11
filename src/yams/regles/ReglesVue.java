@@ -92,20 +92,35 @@ public class ReglesVue extends JFrame {
             texte.append("Pour relancer les dés il faut cliquer sur ceux que l'on souhaite relancer puis valider en cliquant sur le bouton \"lancer\"");
         }
         if(this._mode == Yams.MODELIBRE){
-        texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
-                + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
-                + "plus tard, elle est retirée des figures à obtenir.</p>");
-        texte.append("<p>Il y a 12 figures à réaliser dans le désordre:</p>");
+            texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
+                    + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
+                    + "plus tard, elle est retirée des figures à obtenir.</p>");
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                texte.append("<p>Il y a 12 figures à réaliser dans le désordre:</p>");
+            }
+            else{
+                texte.append("<p>Il y a 13 figures à réaliser dans le désordre:</p>");
+            }
         }
         else if(this._mode == Yams.MODEMONTANT){
-        texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
-                + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
-        texte.append("<p>Il y a 12 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
+            texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
+                    + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                texte.append("<p>Il y a 12 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
+            }
+            else{
+                texte.append("<p>Il y a 13 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
+            }
         }
         else if(this._mode == Yams.MODEDESCENDANT){
-        texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
-                + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
-        texte.append("<p>Il y a 12 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");
+            texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
+                    + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
+            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+                texte.append("<p>Il y a 12 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");
+            }
+            else{
+                texte.append("<p>Il y a 13 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");
+            }
         }
         texte.append("<table border='1' align='center'>");
         texte.append("    <thead>");
@@ -207,6 +222,14 @@ public class ReglesVue extends JFrame {
         texte.append("    </tbody>");
         texte.append("</table>");
         texte.append("<p>Remarque: Si un joueur totalise 63 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 35 points.</p>");
+        texte.append("<h2>Tableau des meilleurs scores</h2>");
+        texte.append("<p>Ici sont sauvegardé les meilleurs score. Chaque mode de jeu a son tableau.</p>");
+        texte.append("<p>Pour afficher le tableau d'un mode de jeu, il suffit de le choisir dans le menu déroulant du tableau.</p>");
+        texte.append("<p>Le bouton \"Reset...\" en bas à gauche du tableau permet d'effacer soit"
+                    + "    <ul>"
+                    + "        <li>Le tableau en cours d'affichage</li>"
+                    + "        <li>Tous les tableaux</li>"
+                    + "    </ul></p>");
         texte.append("<h2>Préférences</h2>");
         texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
         texte.append("Pour le réactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
