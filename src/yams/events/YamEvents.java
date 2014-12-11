@@ -73,9 +73,6 @@ public class YamEvents implements ActionListener{
         if(ae.getActionCommand().equals("openHightScores")){
             _myControler.openHightScores();
         }
-        if(ae.getActionCommand().equals("closeHightScores")){
-            _myControler.closeHightScores();
-        }
         if(ae.getActionCommand().equals("prefs")){
             _myControler.showPrefs();
         }

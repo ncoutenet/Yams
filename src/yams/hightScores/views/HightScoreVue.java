@@ -15,6 +15,7 @@ import yams.Yams;
 import yams.control.YamControl;
 import yams.events.YamEvents;
 import yams.hightScores.events.ComboBoxEvents;
+import yams.hightScores.events.HightScoreEvents;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.table.ModelRowHeader;
 import yams.hightScores.table.ModeleTableHightScore;
@@ -93,10 +94,16 @@ public class HightScoreVue extends JFrame{
         this._rowHeader.setPreferredScrollableViewportSize(dh);
         pan.add(jsp, BorderLayout.CENTER);
         
+        JButton btnReset = new JButton("Reset...");
+        btnReset.addActionListener(new HightScoreEvents(this._myControler));
+        btnReset.setActionCommand("resetHightScores");
+        
         this._btnRetour = new JButton("Retour");
-        this._btnRetour.addActionListener(new YamEvents(this._myControler));
+        this._btnRetour.addActionListener(new HightScoreEvents(this._myControler));
         this._btnRetour.setActionCommand("closeHightScores");
-        JPanel panBtn = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        Box panBtn = Box.createHorizontalBox();
+        panBtn.add(btnReset);
+        panBtn.add(Box.createHorizontalGlue());
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
@@ -108,6 +115,7 @@ public class HightScoreVue extends JFrame{
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(this.getParent());
     }
     
     /*
@@ -195,7 +203,20 @@ public class HightScoreVue extends JFrame{
     }
     
     public void setScores(List<Score> scores, int mode){
-        throw new UnsupportedOperationException("Not implemented yet");
+        switch(mode){
+            case Yams.MODELIBRE:
+                this._scoresLibres = scores;
+                break;
+            case Yams.MODEMONTANT:
+                this._scoresMontants = scores;
+                break;
+            case Yams.MODEDESCENDANT:
+                this._scoresDescendants = scores;
+                break;
+            default:
+                System.err.println("Mode de jeu inexistant");
+                break;
+        }
     }
     
     /*

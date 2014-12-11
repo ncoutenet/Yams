@@ -6,11 +6,11 @@ package yams.control;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import yams.Yams;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.views.HightScoreVue;
+import yams.hightScores.views.ResetHightScoresVue;
 import yams.model.YamModele;
 import yams.pojos.Joueur;
 import yams.regles.ReglesVue;
@@ -51,6 +51,7 @@ public class YamControl {
     private ConfirmQuitVue _confirmQuit;
     private InfoScoreVue _confScores;
     private HightScoreVue _HightScore;
+    private ResetHightScoresVue _resetHightScores;
     private PreferencesVue _preferences;
     private DataFolder _data;
     private FinTourVue _finTour;
@@ -74,6 +75,7 @@ public class YamControl {
         this._connexion.affichage(true);
         this._HightScore = new HightScoreVue(this);
         this._confirmFinTour = new ConfirmScoreVue(this, this._jeu);
+        this._resetHightScores = new ResetHightScoresVue(this, this._HightScore);
     }
     
     /*
@@ -729,6 +731,61 @@ public class YamControl {
      */
     public void closeHightScores(){
         this._HightScore.setVisible(false);
+    }
+    
+    /*
+     * Ouvre la fenêtre de confirmation de l'effacement des scores
+     */
+    public void confirmResetHightScores(){
+        this._resetHightScores.setVisible(true);
+    }
+    
+    /*
+     * Efface les meilleurs scores
+     */
+    public void resetHightScores(boolean all){
+        this._resetHightScores.dispose();
+        
+        if(all){
+            this._HightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
+            this._data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
+            
+            this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+            this._data.saveScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+            
+            this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+            this._data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+        }
+        else{
+            switch(this._HightScore.getModeJeu()){
+                case Yams.MODELIBRE:
+                    this._HightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
+                    this._data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
+                    this._HightScore.changeScores(Yams.MODELIBRE);
+                    break;
+                case Yams.MODEMONTANT:
+                    this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+                    this._data.saveScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+                    
+                    this._HightScore.changeScores(Yams.MODEMONTANT);
+                    break;
+                case Yams.MODEDESCENDANT:
+                    this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+                    this._data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+                    this._HightScore.changeScores(Yams.MODEDESCENDANT);
+                    break;
+                default:
+                    System.err.println("Mode de jeu inexistant");
+                    break;
+            }
+        }
+    }
+    
+    /*
+     * ferme la fenêtre de confirmation de l'effacement des scores
+     */
+    public void cancelResetHightScore(){
+        this._resetHightScores.dispose();
     }
     
     /*
