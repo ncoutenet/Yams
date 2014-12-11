@@ -279,34 +279,4 @@ public class DataFolder{
         }
         return result;
     }
-    
-    /*
-     * Permet d'effacer les scores
-     */
-    public void resetScores(int mode){
-        String f;
-        
-        switch(mode){
-            case Yams.MODELIBRE:
-                f = new String(this.LIBRE);
-                break;
-            case Yams.MODEMONTANT:
-                f = new String(this.MONTANT);
-                break;
-            case Yams.MODEDESCENDANT:
-                f = new String(this.DESCENDANT);
-                break;
-            default:
-                System.err.println("Mode inconnu");
-                return; // mode incorrect, annulation de la fonction
-        }
-        
-        try{
-            FileWriter fw = new FileWriter(new File(this._dirName + f));
-            fw.close();
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-        
-    }
 }
