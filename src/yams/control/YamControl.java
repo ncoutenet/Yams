@@ -761,24 +761,23 @@ public class YamControl {
                 case Yams.MODELIBRE:
                     this._HightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
                     this._data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
-                    this._HightScore.changeScores(Yams.MODELIBRE);
                     break;
                 case Yams.MODEMONTANT:
                     this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
-                    this._data.saveScores(new ArrayList<Score>(), Yams.MODEMONTANT);
                     
                     this._HightScore.changeScores(Yams.MODEMONTANT);
                     break;
                 case Yams.MODEDESCENDANT:
                     this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
                     this._data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
-                    this._HightScore.changeScores(Yams.MODEDESCENDANT);
                     break;
                 default:
                     System.err.println("Mode de jeu inexistant");
                     break;
             }
         }
+        
+        this._HightScore.changeScores(this._HightScore.getModeJeu());
     }
     
     /*
