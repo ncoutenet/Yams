@@ -13,7 +13,6 @@ import javax.swing.*;
 import javax.swing.table.TableColumn;
 import yams.Yams;
 import yams.control.YamControl;
-import yams.events.YamEvents;
 import yams.hightScores.events.ComboBoxEvents;
 import yams.hightScores.events.HightScoreEvents;
 import yams.hightScores.pojos.Score;
