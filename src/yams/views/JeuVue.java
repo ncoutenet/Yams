@@ -4,6 +4,7 @@
  */
 package yams.views;
 
+import yams.pojos.MyMenuBar;
 import java.awt.*;
 import javax.swing.*;
 import yams.Yams;
