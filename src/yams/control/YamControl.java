@@ -701,7 +701,9 @@ public class YamControl {
      */
     public void openHightScores(){
         this._HightScore.toFront();
-        this._HightScore.setMode(this._mode);
+        if(!this._actualWindow.equals("FinPartie")){
+            this._HightScore.setMode(this._mode);
+        }
         this._HightScore.setVisible(true);
     }
     
@@ -724,6 +726,14 @@ public class YamControl {
      */
     public void addAScore(Score s){
         this._HightScore.addScore(s, this._mode);
+    }
+    
+    /**
+     * Met en relief les score de la dernière partie
+     */
+    public void selectScores(List<Score> scores){
+        this._HightScore.setMode(this._mode);
+        this._HightScore.selectScores(scores, this._mode);
     }
     
     /*

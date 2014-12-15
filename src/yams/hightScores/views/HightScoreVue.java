@@ -166,6 +166,52 @@ public class HightScoreVue extends JFrame{
         }
         this._tableScore.updateUI();
     }
+    
+    /**
+     * Met en relief les parties en paramètre
+     */
+    public void selectScores(List<Score> newScores, int mode){
+        List<Score> scores;
+        int nbCol = 3;
+        
+        switch(mode){
+            case Yams.MODELIBRE:
+                scores = this._scoresLibres;
+                break;
+            case Yams.MODEMONTANT:
+                scores = this._scoresMontants;
+                break;
+            case Yams.MODEDESCENDANT:
+                scores = this._scoresDescendants;
+                break;
+            default:
+                return;
+        }
+        for(int i=0; i<newScores.size(); i++){
+            int j = 0;
+            while((j<scores.size()) && (!this.isEquals(newScores.get(i), scores.get(j)))){
+                j++;
+            }
+            if(j<scores.size()){
+                for(int col=0; col<nbCol; col++){
+                    this._gestionnaire.setCouleurs(j, col, ColorTab.VERT);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Retourne vrai si les scores en paramètre sont égaux, faux sinon
+     */
+    private boolean isEquals(Score s1, Score s2){
+        if((s1.getName().equals(s2.getName())) && (s1.getScore() == s2.getScore()) && (s1.getDate().equals(s2.getDate()))){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     /*
      * Permet d'afficher les score du mode de jeu choisis par l'utilisateur
      */

@@ -6,6 +6,8 @@ package yams.views;
 
 import yams.pojos.MyMenuBar;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
@@ -58,9 +60,13 @@ public class FinPartieVue extends JDialog{
                 position++;
             }
         }
+        List<Score> scores = new ArrayList<Score>();
         for(int i = gagnants.length-1; i>=0; i--){
-            this._myControler.addAScore(new Score(gagnants[i].getNom(), gagnants[i].getScore(16)));
+            Score score = new Score(gagnants[i].getNom(), gagnants[i].getScore(16));
+            this._myControler.addAScore(score);
+            scores.add(score);
         }
+        this._myControler.selectScores(scores);
         
         listeJoueurs = new JEditorPane("text/html", new String(liste));
         listeJoueurs.setEditable(false);
