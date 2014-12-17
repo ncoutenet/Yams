@@ -59,17 +59,13 @@ public class Joueur {
             this._util[index] = true;
             if(index < 6){
                 this.setTotal(6);
-                this.setTotal(16);
             }
             else if(this._maxiMini){
                 if( index < 11){
                     this.setTotal(11);
-                    this.setTotal(16);
                 }
             }
-            else if( index < 16){
-                this.setTotal(16);
-            }
+            this.setTotal(16);
         }
     }
     
