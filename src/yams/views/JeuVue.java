@@ -41,7 +41,7 @@ public class JeuVue extends JFrame {
     private JLabel _labSound;
     private JMenuItem _mSound;
     private Icon[] _iSounds;
-    private int _normalHeight;
+    private double _normalHeight;
     
     private int[] _valDes;
     private boolean[] _selDes;
@@ -260,7 +260,7 @@ public class JeuVue extends JFrame {
         
         //mise en place des détails de la fenêtre
         this.pack();
-        this._normalHeight = this.getHeight();
+        this._normalHeight = this.getBounds().getHeight();
         this.addWindowStateListener(new GameWindowStateListener(this._myControler));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
@@ -546,9 +546,10 @@ public class JeuVue extends JFrame {
      */
     public void redimDices(boolean big){
         if(big){
-            int maximizedHeight = this.getHeight();
-            int coef = maximizedHeight / this._normalHeight;
+            double maximizedHeight = this.getBounds().getHeight();
+            int coef = (int)maximizedHeight / (int)this._normalHeight;
             coef = coef * 100;
+            coef = coef - 15; //correction du coefficient pour un affichage complet sur petit écran
             
             this._des[0] = new ImageIcon(this._des[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
             this._des[1] = new ImageIcon(this._des[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
