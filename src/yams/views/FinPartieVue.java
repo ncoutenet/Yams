@@ -28,6 +28,7 @@ public class FinPartieVue extends JDialog{
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur[] gagnants){
         super(parent, "Fin de la partie", false); //fenêtre non modale pour pouvoir afficher les scores et modifier les préférences
+        super.setResizable(false);
         this._myControler = yc;
         this.setJMenuBar(new MyMenuBar(this._myControler, "finPartie"));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)

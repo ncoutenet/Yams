@@ -41,6 +41,7 @@ public class HightScoreVue extends JFrame{
     
     public HightScoreVue(YamControl c){
         super("Hight Scores");
+        super.setResizable(false);
         this._scoresLibres = new ArrayList<Score>();
         this._scoresMontants = new ArrayList<Score>();
         this._scoresDescendants = new ArrayList<Score>();

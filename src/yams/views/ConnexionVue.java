@@ -44,6 +44,7 @@ public class ConnexionVue extends JFrame{
     
     public ConnexionVue(YamControl yc, boolean sound){
         super("Yam's");
+        super.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         _myControler = yc;
         //initialisation du conteneur principal
