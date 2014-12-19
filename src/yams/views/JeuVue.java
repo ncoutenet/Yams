@@ -259,7 +259,7 @@ public class JeuVue extends JFrame {
         
         //mise en place des détails de la fenêtre
         this.pack();
-        this.addWindowStateListener(new GameWindowStateListener(this._myControler));
+//        this.addWindowStateListener(new GameWindowStateListener(this._myControler)); // FIXME redimentionner les dés en fonction de la taille de l'écran
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
     }
