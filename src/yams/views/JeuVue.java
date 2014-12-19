@@ -27,9 +27,9 @@ import yams.table.ModeleTableScore;
  * Elle contient les dés et le tableau des scores
  */
 public class JeuVue extends JFrame {
-    private Icon[] _des;
-    private Icon[]  _delSelect;
-    private Icon[] _desUnSelect;
+    private ImageIcon[] _des;
+    private ImageIcon[]  _delSelect;
+    private ImageIcon[] _desUnSelect;
     private JLabel _aQui;
     private JLabel[] _labDes;
     private JLabel _nbLancers;
@@ -41,6 +41,7 @@ public class JeuVue extends JFrame {
     private JLabel _labSound;
     private JMenuItem _mSound;
     private Icon[] _iSounds;
+    private int _normalHeight;
     
     private int[] _valDes;
     private boolean[] _selDes;
@@ -74,7 +75,7 @@ public class JeuVue extends JFrame {
         this._sound = sound;
         
         //initialisation des images des dés et de la couleur de fond
-        this._delSelect = new Icon[6];
+        this._delSelect = new ImageIcon[6];
         this._delSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/select/1.png"));
         this._delSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/select/2.png"));
         this._delSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/select/3.png"));
@@ -82,7 +83,7 @@ public class JeuVue extends JFrame {
         this._delSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/select/5.png"));
         this._delSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/select/6.png"));
         
-        this._desUnSelect = new Icon[6];
+        this._desUnSelect = new ImageIcon[6];
         this._desUnSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/1.png"));
         this._desUnSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/2.png"));
         this._desUnSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/3.png"));
@@ -90,7 +91,7 @@ public class JeuVue extends JFrame {
         this._desUnSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/5.png"));
         this._desUnSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/6.png"));
         
-        this._des = new Icon[7];
+        this._des = new ImageIcon[7];
         this._des[0] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/indef.png"));
         this._des[1] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/1.png"));
         this._des[2] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/2.png"));
@@ -259,7 +260,8 @@ public class JeuVue extends JFrame {
         
         //mise en place des détails de la fenêtre
         this.pack();
-//        this.addWindowStateListener(new GameWindowStateListener(this._myControler)); // FIXME redimentionner les dés en fonction de la taille de l'écran
+        this._normalHeight = this.getHeight();
+        this.addWindowStateListener(new GameWindowStateListener(this._myControler));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
     }
@@ -544,27 +546,31 @@ public class JeuVue extends JFrame {
      */
     public void redimDices(boolean big){
         if(big){
-            this._des[0] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/indef.png"));
-            this._des[1] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/1.png"));
-            this._des[2] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/2.png"));
-            this._des[3] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/3.png"));
-            this._des[4] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/4.png"));
-            this._des[5] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/5.png"));
-            this._des[6] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/big/6.png"));
+            int maximizedHeight = this.getHeight();
+            int coef = maximizedHeight / this._normalHeight;
+            coef = coef * 100;
             
-            this._delSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/select/big/1.png"));
-            this._delSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/select/big/2.png"));
-            this._delSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/select/big/3.png"));
-            this._delSelect[3] = new ImageIcon(getClass().getResource("/resources/images/dés/select/big/4.png"));
-            this._delSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/select/big/5.png"));
-            this._delSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/select/big/6.png"));
+            this._des[0] = new ImageIcon(this._des[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._des[1] = new ImageIcon(this._des[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._des[2] = new ImageIcon(this._des[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._des[3] = new ImageIcon(this._des[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._des[4] = new ImageIcon(this._des[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._des[5] = new ImageIcon(this._des[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._des[6] = new ImageIcon(this._des[6].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
             
-            this._desUnSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/big/1.png"));
-            this._desUnSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/big/2.png"));
-            this._desUnSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/big/3.png"));
-            this._desUnSelect[3] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/big/4.png"));
-            this._desUnSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/big/5.png"));
-            this._desUnSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/big/6.png"));
+            this._delSelect[0] = new ImageIcon(this._delSelect[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._delSelect[1] = new ImageIcon(this._delSelect[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._delSelect[2] = new ImageIcon(this._delSelect[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._delSelect[3] = new ImageIcon(this._delSelect[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._delSelect[4] = new ImageIcon(this._delSelect[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._delSelect[5] = new ImageIcon(this._delSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            
+            this._desUnSelect[0] = new ImageIcon(this._desUnSelect[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._desUnSelect[1] = new ImageIcon(this._desUnSelect[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._desUnSelect[2] = new ImageIcon(this._desUnSelect[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._desUnSelect[3] = new ImageIcon(this._desUnSelect[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._desUnSelect[4] = new ImageIcon(this._desUnSelect[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this._desUnSelect[5] = new ImageIcon(this._desUnSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
         }
         else{
             this._des[0] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/indef.png"));
