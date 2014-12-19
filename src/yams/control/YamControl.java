@@ -803,4 +803,11 @@ public class YamControl {
     public void closeConfirmWindow(){
         this._confirmFinTour.setVisible(false);
     }
+    
+    /**
+     * redimentionne les dés
+     */
+    public void resizeDices(boolean big){
+        this._jeu.redimDices(big);
+    }
 }
