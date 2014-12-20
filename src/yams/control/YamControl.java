@@ -6,6 +6,7 @@ package yams.control;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
 import yams.Yams;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
@@ -809,5 +810,15 @@ public class YamControl {
      */
     public void resizeDices(boolean big){
         this._jeu.redimDices(big);
+    }
+    
+    public void ExportHightScores(List<Score> libres, List<Score> montants, List<Score> descendants){
+        JFileChooser jfc = new JFileChooser();
+        jfc.setDialogTitle("Veuillez choisir un dossier de destination et un nom pour le fichier résultat");
+        int returnVal = jfc.showSaveDialog(null);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            
+        }
     }
 }
