@@ -279,8 +279,33 @@ public class DataFolder{
         }
         return result;
     }
+    /**
+     * Exporte les scores
+     * @param extantion
+     * @param path
+     * @param libres
+     * @param montants
+     * @param descendants 
+     */
+    public void exportScores(String extantion, String path, List<Score> libres, List<Score> montants, List<Score> descendants){
+        if(extantion.equals("*.csv")){
+            this.writeCSVFile(path, libres, montants, descendants);
+            return;
+        }
+        if(extantion.equals("*.cvs")){
+            this.writeXMLFile(path, libres, montants, descendants);
+            return;
+        }
+    }
     
-    public void exportScores(String path, List<Score> libres, List<Score> montants, List<Score> descendants){
+    /**
+     * Ecrit le fichier csv
+     * @param path
+     * @param libres
+     * @param montants
+     * @param descendants 
+     */
+    private void writeCSVFile(String path, List<Score> libres, List<Score> montants, List<Score> descendants){
         if(!path.endsWith(".csv")){
             path = path + ".csv";
         }
@@ -291,22 +316,22 @@ public class DataFolder{
             
             fw.write("Meilleurs scores du yam's;;;;;;;;;\r\n");
             fw.write(";;;;;;;;;\r\n");
-            fw.write(";Libre;;;Montant;;;Descendant;;\r\n");
+            fw.write(";Libre;;;;Montant;;;;Descendant;;\r\n");
             
             for(int i=0; i<10; i++){
-                fw.write(String.valueOf(i+1) + ";");
+                fw.write(";");
                 if(i<libres.size()){
-                    fw.write(libres.get(i).getName()+";"+libres.get(i).getScore()+";"+libres.get(i).getDate()+";");
+                    fw.write(libres.get(i).getName()+";"+libres.get(i).getScore()+";"+libres.get(i).getDate()+";;");
                 }
                 else{
-                    fw.write(";;;");
+                    fw.write(";;;;");
                 }
                 
                 if(i<montants.size()){
-                    fw.write(montants.get(i).getName()+";"+montants.get(i).getScore()+";"+montants.get(i).getDate()+";");
+                    fw.write(montants.get(i).getName()+";"+montants.get(i).getScore()+";"+montants.get(i).getDate()+";;");
                 }
                 else{
-                    fw.write(";;;");
+                    fw.write(";;;;");
                 }
                 
                 if(i<descendants.size()){
@@ -317,6 +342,46 @@ public class DataFolder{
                 }
                 fw.write("\r\n");
             }
+            
+            fw.close();
+        }catch(IOException e){
+            System.err.println("Erreur lors de l'export: " + e.getMessage());
+        }
+    }
+    
+    private void writeXMLFile(String path, List<Score> libres, List<Score> montants, List<Score> descendants){
+        if(!path.endsWith(".xml")){
+            path = path + ".xml";
+        }
+        File f = new File(path);
+        
+        try{
+            FileWriter fw = new FileWriter(f);
+            
+            fw.write("<Scores>\r\n");
+            
+            fw.write("\t<Mode type=\"Libre\">\r\n");
+            for(int i=0; i<libres.size(); i++){
+                fw.write("\t\t<Score name=\""+libres.get(i).getName()+"\" value=\""+libres.get(i).getScore()+"\" date=\""+libres.get(i).getDate()+"\" />");
+                fw.write("\r\n");
+            }
+            fw.write("\t</Mode>\r\n");
+            
+            fw.write("\t<Mode type=\"Montant\">\r\n");
+            for(int i=0; i<montants.size(); i++){
+                fw.write("\t\t<Score name=\""+montants.get(i).getName()+"\" value=\""+montants.get(i).getScore()+"\" date=\""+montants.get(i).getDate()+"\" />");
+                fw.write("\r\n");
+            }
+            fw.write("\t</Mode>\r\n");
+            
+            fw.write("\t<Mode type=\"Descedant\">\r\n");
+            for(int i=0; i<descendants.size(); i++){
+                fw.write("\t\t<Score name=\""+descendants.get(i).getName()+"\" value=\""+descendants.get(i).getScore()+"\" date=\""+descendants.get(i).getDate()+"\" />");
+                fw.write("\r\n");
+            }
+            fw.write("\t</Mode>\r\n");
+            
+            fw.write("</Scores>");
             
             fw.close();
         }catch(IOException e){

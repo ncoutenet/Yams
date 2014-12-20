@@ -24,7 +24,7 @@ public class MyFileFilter extends FileFilter {
 		}
 		String fileName = f.getName().toLowerCase();
 		
-		return fileName.endsWith(_extension);
+		return fileName.endsWith("."+this._extension);
 	}
 
 	@Override

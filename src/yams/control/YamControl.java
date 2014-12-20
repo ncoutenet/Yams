@@ -815,12 +815,14 @@ public class YamControl {
     
     public void ExportHightScores(){
         JFileChooser jfc = new JFileChooser();
-        jfc.setDialogTitle("Veuillez choisir un dossier de destination et un nom pour le fichier résultat");
-        jfc.setFileFilter(new MyFileFilter("CSV (séparateur : point-virgule)(.csv)", "csv"));
+        jfc.setDialogTitle("Export des meilleurs scores");
+        jfc.setAcceptAllFileFilterUsed(false);
+        jfc.addChoosableFileFilter(new MyFileFilter("*.xml", "xml"));
+        jfc.setFileFilter(new MyFileFilter("*.csv", "csv"));
         int returnVal = jfc.showSaveDialog(null);
         
         if(returnVal == JFileChooser.APPROVE_OPTION){
-            this._data.exportScores(jfc.getSelectedFile().getAbsolutePath(), this._HightScore.getScores(Yams.MODELIBRE), this._HightScore.getScores(Yams.MODEMONTANT), this._HightScore.getScores(Yams.MODEDESCENDANT));
+            this._data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this._HightScore.getScores(Yams.MODELIBRE), this._HightScore.getScores(Yams.MODEMONTANT), this._HightScore.getScores(Yams.MODEDESCENDANT));
         }
     }
 }
