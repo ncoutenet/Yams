@@ -13,6 +13,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import yams.control.YamControl;
+import yams.events.MenuEvents;
 import yams.events.YamEvents;
 
 /**
@@ -53,7 +54,7 @@ public class ConfirmQuitVue extends JDialog{
         JLabel label = new JLabel("Êtes-vous sûr de vouloir abandonner cette partie?"); 
         label.setForeground(Color.WHITE); //label écrit en blanc
         btnValider = new JButton("Oui");
-        btnValider.addActionListener(new YamEvents(this._myControler));
+        btnValider.addActionListener(new MenuEvents(this._myControler));
         
         //mise en place de la commande à executer lors de la validation
         if(!quit){
@@ -65,7 +66,7 @@ public class ConfirmQuitVue extends JDialog{
         
         //suite de l'initialisation des composants
         btnAnnuler = new JButton("Non");
-        btnAnnuler.addActionListener(new YamEvents(this._myControler));
+        btnAnnuler.addActionListener(new MenuEvents(this._myControler));
         btnAnnuler.setActionCommand("annuler");
         
         //initialisation des sous-conteneurs de la fenêtre

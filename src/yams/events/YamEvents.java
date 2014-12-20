@@ -26,58 +26,25 @@ public class YamEvents implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         System.out.println(" commande reçue: " + ae.getActionCommand());
         if(ae.getActionCommand().equals("commencer")){
-            _myControler.commencer();
+            this._myControler.commencer();
         }
         if(ae.getActionCommand().equals("lancer")){
-            _myControler.lancer();
-        }
-        if(ae.getActionCommand().equals("nouveau")){
-            _myControler.nouveau();
-        }
-        if(ae.getActionCommand().equals("quitter")){
-            _myControler.quitter();
+            this._myControler.lancer();
         }
         if(ae.getActionCommand().equals("finTour")){
-            _myControler.finTour(false);
+            this._myControler.finTour(false);
         }
         if(ae.getActionCommand().equals("validerFinTour")){
-            _myControler.validationScore();
+            this._myControler.validationScore();
         }
         if(ae.getActionCommand().equals("annulerFinTour")){
-            _myControler.annulerFinTour();
-        }
-        if(ae.getActionCommand().equals("nouvellePartie")){
-            _myControler.nouvellePartie();
-        }
-        if(ae.getActionCommand().equals("recommencer")){
-            _myControler.recommencer();
-        }
-        if(ae.getActionCommand().equals("regles")){
-                _myControler.affichageRegles();
-        }
-        if (ae.getActionCommand().equals("annuler")){
-            _myControler.annuler();
-        }
-        if(ae.getActionCommand().equals("confirmNouveau")){
-            _myControler.confirmQuit(false);
-        }
-        if (ae.getActionCommand().equals("confirmQuit")){
-            _myControler.confirmQuit(true);
+            this._myControler.annulerFinTour();
         }
         if (ae.getActionCommand().equals("confScore")){
-            _myControler.confScores();
-        }
-        if (ae.getActionCommand().equals("aperçuRegles")){
-            _myControler.apercuRegle();
-        }
-        if(ae.getActionCommand().equals("openHightScores")){
-            _myControler.openHightScores();
-        }
-        if(ae.getActionCommand().equals("prefs")){
-            _myControler.showPrefs();
+            this._myControler.confScores();
         }
         if(ae.getActionCommand().equals("changePrefs")){
-            _myControler.changePrefs();
+            this._myControler.changePrefs();
         }
         if(ae.getActionCommand().equals("confirmFinTour")){
             this._myControler.finTour();

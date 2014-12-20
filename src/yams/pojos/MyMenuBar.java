@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import yams.control.YamControl;
+import yams.events.MenuEvents;
 import yams.events.YamEvents;
 
 /**
@@ -26,7 +27,7 @@ public class MyMenuBar extends JMenuBar{
         JMenu mJeu = new JMenu("Jeu");
         JMenu mPartie = new JMenu("Partie");
         JMenuItem miNouveau = new JMenuItem("Nouveau");
-        miNouveau.addActionListener(new YamEvents(this._myControler));
+        miNouveau.addActionListener(new MenuEvents(this._myControler));
         if(this._myType.equals("jeu")){
             miNouveau.setActionCommand("confirmNouveau");
         }
@@ -35,7 +36,7 @@ public class MyMenuBar extends JMenuBar{
         }
         mPartie.add(miNouveau);
         JMenuItem miRecommencer = new JMenuItem("Recommencer");
-        miRecommencer.addActionListener(new YamEvents(this._myControler));
+        miRecommencer.addActionListener(new MenuEvents(this._myControler));
         miRecommencer.setActionCommand("recommencer");
         mPartie.add(miRecommencer);
         mJeu.add(mPartie);
@@ -43,16 +44,16 @@ public class MyMenuBar extends JMenuBar{
             mPartie.setEnabled(false);
         }
         JMenuItem miScores = new JMenuItem("Scores");
-        miScores.addActionListener(new YamEvents(this._myControler));
+        miScores.addActionListener(new MenuEvents(this._myControler));
         miScores.setActionCommand("openHightScores");
         mJeu.add(miScores);
         JMenuItem miPrefs = new JMenuItem("Préférences");
-        miPrefs.addActionListener(new YamEvents(this._myControler));
+        miPrefs.addActionListener(new MenuEvents(this._myControler));
         miPrefs.setActionCommand("prefs");
         mJeu.add(miPrefs);
         mJeu.addSeparator();
         JMenuItem miQuitter = new JMenuItem("Quitter");
-        miQuitter.addActionListener(new YamEvents(this._myControler));
+        miQuitter.addActionListener(new MenuEvents(this._myControler));
         if(this._myType.equals("jeu")){
             miQuitter.setActionCommand("confirmQuit");
         }
@@ -64,8 +65,12 @@ public class MyMenuBar extends JMenuBar{
         
         //menu aide
         JMenu mAide = new JMenu("Aide");
+        JMenuItem miTuto = new JMenuItem("Mode d'emploi");
+        miTuto.addActionListener(new MenuEvents(this._myControler));
+        miTuto.setActionCommand("help");
+        mAide.add(miTuto);
         JMenuItem miRegles = new JMenuItem("Règles");
-        miRegles.addActionListener(new YamEvents(this._myControler));
+        miRegles.addActionListener(new MenuEvents(this._myControler));
         if(this._myType.equals("connexion")){
             miRegles.setActionCommand("aperçuRegles");
         }

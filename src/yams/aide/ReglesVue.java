@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams.regles;
+package yams.aide;
 
 import java.awt.*;
 import javax.swing.JEditorPane;
@@ -34,10 +34,10 @@ public class ReglesVue extends JFrame {
         
         int width = 500;
         int height = 800;
-        StringBuffer nom;
-        nom = saisieTexte();
+        StringBuffer texte;
+        texte = saisieTexte();
         
-        JEditorPane jep = new JEditorPane("text/html", new String(nom));
+        JEditorPane jep = new JEditorPane("text/html", new String(texte));
         jep.setEditable(false);
         jep.setCaretPosition(0);
         
@@ -222,24 +222,6 @@ public class ReglesVue extends JFrame {
         texte.append("    </tbody>");
         texte.append("</table>");
         texte.append("<p>Remarque: Si un joueur totalise 63 points ou plus avec les 6 premières lignes du tableau il gagne un bonus de 35 points.</p>");
-        texte.append("<h2>Tableau des meilleurs scores</h2>");
-        texte.append("<p>Ici sont sauvegardé les meilleurs score. Chaque mode de jeu a son tableau.</p>");
-        texte.append("<p>Pour afficher le tableau d'un mode de jeu, il suffit de le choisir dans le menu déroulant du tableau.</p>");
-        texte.append("<p>Le bouton \"Reset...\" en bas à gauche du tableau permet d'effacer soit"
-                    + "    <ul>"
-                    + "        <li>Le tableau en cours d'affichage</li>"
-                    + "        <li>Tous les tableaux</li>"
-                    + "    </ul></p>");
-        texte.append("<h2>Préférences</h2>");
-        texte.append("<p>Pour désactiver le son il suffit de cliquer sur <img src=\""+soundOn+"\" /><br/>");
-        texte.append("Pour le réactiver, cliquer sur <img src=\""+soundOff+"\" /></p>");
-        texte.append("<h3>Menu Préférences</h3>");
-        texte.append("<p>Dans ce menu il est possible de régler le son, la manière de lancer les dés et les coups à jouer.</p>");
-        texte.append("<p>Si la case \"son\" est cochée, l'application jouera les sons</p>");
-        texte.append("<p>l'option \"Garder les dés sélectionnés\" permet de <strong>conserver</strong> les dés sélectionnés.<br/>"
-                + "l'option\"Relancer les dés sélectionnés\" permet de <strong>relancer</strong> les dés sélectionnés.</p>");
-        texte.append("<p>Les dés sélectionné pour être gardés sont coloriés en <span style=\"color:green;\">vert</span>.<br/>"
-                + "Les dés sélectionnés pour être relancé seront coloriés en <span style=\"color:red;\">rouge</span>.</p>");
         
 	return texte; 
     }

@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import yams.Yams;
+import yams.aide.AideVue;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.views.HightScoreVue;
 import yams.hightScores.views.ResetHightScoresVue;
 import yams.model.YamModele;
 import yams.pojos.Joueur;
-import yams.regles.ReglesVue;
+import yams.aide.ReglesVue;
 import yams.views.*;
 
 /**
@@ -696,6 +697,13 @@ public class YamControl {
     public void apercuRegle(){
         int mode = this._connexion.getModeJeu();
         ReglesVue rv = new ReglesVue(mode, this);
+    }
+    
+    /**
+     * affichage du mode d'emploi
+     */
+    public void affichHelp(){
+        AideVue aide = new AideVue(this);
     }
     
     /*
