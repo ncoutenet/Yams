@@ -43,8 +43,12 @@ public class Score implements Serializable{
     }
     
     public String getDate(){
-        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-        return formater.format(this._date);
+        try{
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+            return formater.format(this._date);
+        } catch(NullPointerException e){
+            return new String();
+        }
     }
 
     public int getId() {

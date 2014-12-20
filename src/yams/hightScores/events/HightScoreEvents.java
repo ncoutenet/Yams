@@ -27,19 +27,22 @@ public class HightScoreEvents implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         System.out.println(" commande reçue: " + ae.getActionCommand());
         if(ae.getActionCommand().equals("closeHightScores")){
-            _myControler.closeHightScores();
+            this._myControler.closeHightScores();
         }
         if(ae.getActionCommand().equals("resetHightScores")){
-            _myControler.confirmResetHightScores();
+            this._myControler.confirmResetHightScores();
         }
         if(ae.getActionCommand().equals("resetAllScores")){
-            _myControler.resetHightScores(true);
+            this._myControler.resetHightScores(true);
         }
         if(ae.getActionCommand().equals("resetOneScore")){
-            _myControler.resetHightScores(false);
+            this._myControler.resetHightScores(false);
         }
         if(ae.getActionCommand().equals("resetNoScore")){
-            _myControler.cancelResetHightScore();
+            this._myControler.cancelResetHightScore();
+        }
+        if(ae.getActionCommand().equals("exportHightScores")){
+            this._myControler.ExportHightScores();
         }
     }
     

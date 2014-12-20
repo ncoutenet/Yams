@@ -11,7 +11,6 @@ import yams.control.YamControl;
  * @author nicolas
  */
 
-// TODO permettre l'export des scores
 // TODO ajouter le mode sec
 
 /*

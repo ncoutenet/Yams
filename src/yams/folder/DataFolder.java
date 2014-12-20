@@ -279,4 +279,48 @@ public class DataFolder{
         }
         return result;
     }
+    
+    public void exportScores(String path, List<Score> libres, List<Score> montants, List<Score> descendants){
+        if(!path.endsWith(".csv")){
+            path = path + ".csv";
+        }
+        File f = new File(path);
+        
+        try{
+            FileWriter fw = new FileWriter(f);
+            
+            fw.write("Meilleurs scores du yam's;;;;;;;;;\r\n");
+            fw.write(";;;;;;;;;\r\n");
+            fw.write(";Libre;;;Montant;;;Descendant;;\r\n");
+            
+            for(int i=0; i<10; i++){
+                fw.write(String.valueOf(i+1) + ";");
+                if(i<libres.size()){
+                    fw.write(libres.get(i).getName()+";"+libres.get(i).getScore()+";"+libres.get(i).getDate()+";");
+                }
+                else{
+                    fw.write(";;;");
+                }
+                
+                if(i<montants.size()){
+                    fw.write(montants.get(i).getName()+";"+montants.get(i).getScore()+";"+montants.get(i).getDate()+";");
+                }
+                else{
+                    fw.write(";;;");
+                }
+                
+                if(i<descendants.size()){
+                    fw.write(descendants.get(i).getName()+";"+descendants.get(i).getScore()+";"+descendants.get(i).getDate()+";");
+                }
+                else{
+                    fw.write(";;;");
+                }
+                fw.write("\r\n");
+            }
+            
+            fw.close();
+        }catch(IOException e){
+            System.err.println("Erreur lors de l'export: " + e.getMessage());
+        }
+    }
 }

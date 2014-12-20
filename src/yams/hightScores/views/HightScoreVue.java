@@ -101,11 +101,16 @@ public class HightScoreVue extends JFrame{
         btnReset.addActionListener(new HightScoreEvents(this._myControler));
         btnReset.setActionCommand("resetHightScores");
         
+        JButton btnExport = new JButton("Exporter...");
+        btnExport.addActionListener(new HightScoreEvents(this._myControler));
+        btnExport.setActionCommand("exportHightScores");
+        
         this._btnRetour = new JButton("Retour");
         this._btnRetour.addActionListener(new HightScoreEvents(this._myControler));
         this._btnRetour.setActionCommand("closeHightScores");
         Box panBtn = Box.createHorizontalBox();
         panBtn.add(btnReset);
+        panBtn.add(btnExport);
         panBtn.add(Box.createHorizontalGlue());
         panBtn.add(this._btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);

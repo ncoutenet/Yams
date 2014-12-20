@@ -4,6 +4,7 @@
  */
 package yams.control;
 
+import com.listacl.ncoutenet.views.files.MyFileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -812,13 +813,14 @@ public class YamControl {
         this._jeu.redimDices(big);
     }
     
-    public void ExportHightScores(List<Score> libres, List<Score> montants, List<Score> descendants){
+    public void ExportHightScores(){
         JFileChooser jfc = new JFileChooser();
         jfc.setDialogTitle("Veuillez choisir un dossier de destination et un nom pour le fichier résultat");
+        jfc.setFileFilter(new MyFileFilter("CSV (séparateur : point-virgule)(.csv)", "csv"));
         int returnVal = jfc.showSaveDialog(null);
         
         if(returnVal == JFileChooser.APPROVE_OPTION){
-            
+            this._data.exportScores(jfc.getSelectedFile().getAbsolutePath(), this._HightScore.getScores(Yams.MODELIBRE), this._HightScore.getScores(Yams.MODEMONTANT), this._HightScore.getScores(Yams.MODEDESCENDANT));
         }
     }
 }
