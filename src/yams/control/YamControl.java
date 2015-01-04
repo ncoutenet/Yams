@@ -4,7 +4,6 @@
  */
 package yams.control;
 
-import com.listacl.ncoutenet.views.files.MyFileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -17,6 +16,7 @@ import yams.hightScores.views.ResetHightScoresVue;
 import yams.model.YamModele;
 import yams.pojos.Joueur;
 import yams.aide.ReglesVue;
+import yams.folder.MyFileFilter;
 import yams.views.*;
 
 /**
