@@ -76,29 +76,29 @@ public class JeuVue extends JFrame {
         
         //initialisation des images des dés et de la couleur de fond
         this._delSelect = new ImageIcon[6];
-        this._delSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/select/1.png"));
-        this._delSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/select/2.png"));
-        this._delSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/select/3.png"));
-        this._delSelect[3] = new ImageIcon(getClass().getResource("/resources/images/dés/select/4.png"));
-        this._delSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/select/5.png"));
-        this._delSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/select/6.png"));
+        this._delSelect[0] = new ImageIcon(getClass().getResource("/images/dés/select/1.png"));
+        this._delSelect[1] = new ImageIcon(getClass().getResource("/images/dés/select/2.png"));
+        this._delSelect[2] = new ImageIcon(getClass().getResource("/images/dés/select/3.png"));
+        this._delSelect[3] = new ImageIcon(getClass().getResource("/images/dés/select/4.png"));
+        this._delSelect[4] = new ImageIcon(getClass().getResource("/images/dés/select/5.png"));
+        this._delSelect[5] = new ImageIcon(getClass().getResource("/images/dés/select/6.png"));
         
         this._desUnSelect = new ImageIcon[6];
-        this._desUnSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/1.png"));
-        this._desUnSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/2.png"));
-        this._desUnSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/3.png"));
-        this._desUnSelect[3] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/4.png"));
-        this._desUnSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/5.png"));
-        this._desUnSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/6.png"));
+        this._desUnSelect[0] = new ImageIcon(getClass().getResource("/images/dés/unselect/1.png"));
+        this._desUnSelect[1] = new ImageIcon(getClass().getResource("/images/dés/unselect/2.png"));
+        this._desUnSelect[2] = new ImageIcon(getClass().getResource("/images/dés/unselect/3.png"));
+        this._desUnSelect[3] = new ImageIcon(getClass().getResource("/images/dés/unselect/4.png"));
+        this._desUnSelect[4] = new ImageIcon(getClass().getResource("/images/dés/unselect/5.png"));
+        this._desUnSelect[5] = new ImageIcon(getClass().getResource("/images/dés/unselect/6.png"));
         
         this._des = new ImageIcon[7];
-        this._des[0] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/indef.png"));
-        this._des[1] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/1.png"));
-        this._des[2] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/2.png"));
-        this._des[3] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/3.png"));
-        this._des[4] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/4.png"));
-        this._des[5] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/5.png"));
-        this._des[6] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/6.png"));
+        this._des[0] = new ImageIcon(getClass().getResource("/images/dés/normal/indef.png"));
+        this._des[1] = new ImageIcon(getClass().getResource("/images/dés/normal/1.png"));
+        this._des[2] = new ImageIcon(getClass().getResource("/images/dés/normal/2.png"));
+        this._des[3] = new ImageIcon(getClass().getResource("/images/dés/normal/3.png"));
+        this._des[4] = new ImageIcon(getClass().getResource("/images/dés/normal/4.png"));
+        this._des[5] = new ImageIcon(getClass().getResource("/images/dés/normal/5.png"));
+        this._des[6] = new ImageIcon(getClass().getResource("/images/dés/normal/6.png"));
         this._labDes = new JLabel[5];
         Color couleur = new Color(43, 133, 53);
         for(int i = 0; i < 5; i++){
@@ -234,8 +234,8 @@ public class JeuVue extends JFrame {
         JPanel panBtnBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panBtnBar.setBackground(couleur);
         this._iSounds = new Icon[2];
-        this._iSounds[0] = new ImageIcon(getClass().getResource("/resources/images/sound/soundOff.png"));
-        this._iSounds[1] = new ImageIcon(getClass().getResource("/resources/images/sound/soundOn.png"));
+        this._iSounds[0] = new ImageIcon(getClass().getResource("/images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("/images/sound/soundOn.png"));
         this._labSound = new JLabel();
         this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
         this.majSound(this._sound);
@@ -574,27 +574,27 @@ public class JeuVue extends JFrame {
             this._desUnSelect[5] = new ImageIcon(this._desUnSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
         }
         else{
-            this._des[0] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/indef.png"));
-            this._des[1] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/1.png"));
-            this._des[2] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/2.png"));
-            this._des[3] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/3.png"));
-            this._des[4] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/4.png"));
-            this._des[5] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/5.png"));
-            this._des[6] = new ImageIcon(getClass().getResource("/resources/images/dés/normal/6.png"));
+            this._des[0] = new ImageIcon(getClass().getResource("/images/dés/normal/indef.png"));
+            this._des[1] = new ImageIcon(getClass().getResource("/images/dés/normal/1.png"));
+            this._des[2] = new ImageIcon(getClass().getResource("/images/dés/normal/2.png"));
+            this._des[3] = new ImageIcon(getClass().getResource("/images/dés/normal/3.png"));
+            this._des[4] = new ImageIcon(getClass().getResource("/images/dés/normal/4.png"));
+            this._des[5] = new ImageIcon(getClass().getResource("/images/dés/normal/5.png"));
+            this._des[6] = new ImageIcon(getClass().getResource("/images/dés/normal/6.png"));
             
-            this._delSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/select/1.png"));
-            this._delSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/select/2.png"));
-            this._delSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/select/3.png"));
-            this._delSelect[3] = new ImageIcon(getClass().getResource("/resources/images/dés/select/4.png"));
-            this._delSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/select/5.png"));
-            this._delSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/select/6.png"));
+            this._delSelect[0] = new ImageIcon(getClass().getResource("/images/dés/select/1.png"));
+            this._delSelect[1] = new ImageIcon(getClass().getResource("/images/dés/select/2.png"));
+            this._delSelect[2] = new ImageIcon(getClass().getResource("/images/dés/select/3.png"));
+            this._delSelect[3] = new ImageIcon(getClass().getResource("/images/dés/select/4.png"));
+            this._delSelect[4] = new ImageIcon(getClass().getResource("/images/dés/select/5.png"));
+            this._delSelect[5] = new ImageIcon(getClass().getResource("/images/dés/select/6.png"));
             
-            this._desUnSelect[0] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/1.png"));
-            this._desUnSelect[1] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/2.png"));
-            this._desUnSelect[2] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/3.png"));
-            this._desUnSelect[3] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/4.png"));
-            this._desUnSelect[4] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/5.png"));
-            this._desUnSelect[5] = new ImageIcon(getClass().getResource("/resources/images/dés/unselect/6.png"));
+            this._desUnSelect[0] = new ImageIcon(getClass().getResource("/images/dés/unselect/1.png"));
+            this._desUnSelect[1] = new ImageIcon(getClass().getResource("/images/dés/unselect/2.png"));
+            this._desUnSelect[2] = new ImageIcon(getClass().getResource("/images/dés/unselect/3.png"));
+            this._desUnSelect[3] = new ImageIcon(getClass().getResource("/images/dés/unselect/4.png"));
+            this._desUnSelect[4] = new ImageIcon(getClass().getResource("/images/dés/unselect/5.png"));
+            this._desUnSelect[5] = new ImageIcon(getClass().getResource("/images/dés/unselect/6.png"));
         }
         
         for(int i=0; i<5; i++){
