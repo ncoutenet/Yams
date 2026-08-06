@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath' | { read -r f; case \"$f\" in *.java) JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home /Users/nicolas/eclipse/apache-maven-3.8.1/bin/mvn compile -q ;; esac; }",
+            "timeout": 60,
+            "statusMessage": "Compiling..."
+          }
+        ]
+      }
+    ]
+  }
+}

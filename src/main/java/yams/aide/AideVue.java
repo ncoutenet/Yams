@@ -63,8 +63,8 @@ public class AideVue extends JFrame{
      * Retourne les règles suivant le mode de jeu
      */
     private StringBuffer saisieTexte(){
-        String soundOn = getClass().getResource("/resources/images/sound/soundOn.png").toString();
-        String soundOff = getClass().getResource("/resources/images/sound/soundOff.png").toString();
+        String soundOn = getClass().getResource("/images/sound/soundOn.png").toString();
+        String soundOff = getClass().getResource("/images/sound/soundOff.png").toString();
 	StringBuffer texte = new StringBuffer();
         
         texte.append("<h1 align='center' color='red'>Mode d'emploi</h1>");

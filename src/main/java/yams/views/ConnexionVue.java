@@ -77,8 +77,8 @@ public class ConnexionVue extends JFrame{
         
         //création du bouton pour le son
         this._iSounds = new Icon[2];
-        this._iSounds[0] = new ImageIcon(getClass().getResource("/resources/images/sound/soundOff.png"));
-        this._iSounds[1] = new ImageIcon(getClass().getResource("/resources/images/sound/soundOn.png"));
+        this._iSounds[0] = new ImageIcon(getClass().getResource("/images/sound/soundOff.png"));
+        this._iSounds[1] = new ImageIcon(getClass().getResource("/images/sound/soundOn.png"));
         this._labSound = new JLabel();
         this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
         this.majSound(this._sound);
