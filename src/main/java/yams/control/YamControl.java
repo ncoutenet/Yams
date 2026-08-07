@@ -7,8 +7,10 @@ package yams.control;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.Timer;
 import yams.Yams;
 import yams.aide.AideVue;
+import yams.events.AnimationLancerListener;
 import yams.folder.DataFolder;
 import yams.hightScores.pojos.Score;
 import yams.hightScores.views.HightScoreVue;
@@ -305,30 +307,40 @@ public class YamControl {
      * fonction de lancement des dés
      */
     public void lancer(){
-        int[]des;
+        int[] des;
         int lancesRestants = _jeu.getLancesRestants();
-        
+
         if(this._listPrefs.get(Yams.PREFSOUND)){
             _modele.playSoundDe();
         }
-        
+
         des = _modele.lancer();
         lancesRestants = _modele.majNbLances(lancesRestants);
-        _jeu.setNbLancers(lancesRestants);
         boolean[] selDes = this._jeu.getSelectedDes();
+        boolean[] aAnimer = new boolean[5];
         for(int i = 0; i < 5; i++){
-            if(lancesRestants == 2){
-                _jeu.setValDe(i, des[i], false);
-            }
-            else if(selDes[i] != this._listPrefs.get(Yams.PREFSELECT)){
-                _jeu.setValDe(i, des[i], false);
-            }
+            aAnimer[i] = (lancesRestants == 2) || (selDes[i] != this._listPrefs.get(Yams.PREFSELECT));
         }
+
+        _jeu.setEnabledLancer(false);
+        _jeu.setAnimationEnCours(true);
+        Timer timer = new Timer(AnimationLancerListener.INTERVAL_MS, new AnimationLancerListener(_jeu, this, aAnimer, des, lancesRestants));
+        timer.start();
+    }
+
+    /*
+     * appelée en fin d'animation de lancer : fixe l'état final des dés et poursuit la logique de jeu
+     */
+    public void finLancer(int lancesRestants){
+        _jeu.setAnimationEnCours(false);
+        _jeu.setNbLancers(lancesRestants);
         _jeu.setEnabledFinTour(true);
         _jeu.setTotalPoints(false);
         if(lancesRestants == 0){
-            _jeu.setEnabledLancer(false);
             this.finTour(true);
+        }
+        else{
+            _jeu.setEnabledLancer(true);
         }
         if(!this.getPrefs().get(Yams.PREFSELECT)){
             this.checkDes();
