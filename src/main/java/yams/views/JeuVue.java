@@ -4,8 +4,10 @@
  */
 package yams.views;
 
+import sun.security.krb5.SCDynamicStoreConfig;
 import yams.pojos.MyMenuBar;
 import java.awt.*;
+import java.util.Random;
 import javax.swing.*;
 import yams.Yams;
 import yams.control.YamControl;
@@ -27,6 +29,7 @@ import yams.table.ModeleTableScore;
  * Elle contient les dés et le tableau des scores
  */
 public class JeuVue extends JFrame {
+    private static final Random RANDOM = new Random();
     private ImageIcon[] _des;
     private ImageIcon[]  _delSelect;
     private ImageIcon[] _desUnSelect;
@@ -39,7 +42,6 @@ public class JeuVue extends JFrame {
     private JLabel _labPointsConserves;
     private JLabel _labCoupsRestants;
     private JLabel _labSound;
-    private JMenuItem _mSound;
     private Icon[] _iSounds;
     private double _normalHeight;
     
@@ -49,6 +51,7 @@ public class JeuVue extends JFrame {
     private int _tour;
     private int _lancesRestants;
     private boolean _sound;
+    private boolean _animationEnCours;
     
     private JTable _tableau;
     private ModeleTableScore _tabModel;
@@ -134,8 +137,7 @@ public class JeuVue extends JFrame {
         Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
         this._tableau.setFont(font);
         this._tableau.setGridColor(Color.black);
-//        this._tableau.getTableHeader().setDefaultRenderer(new HeaderRenderer());
-        
+
         //initialisation du gestionnaire de couleurs
         this._gestionnaire = new ColorTab(nbJoueurs, 18);
         
@@ -162,7 +164,7 @@ public class JeuVue extends JFrame {
         this._valDes = new int[5];
         this._selDes = new boolean[5];
         this._aQui = new JLabel();
-        this._aQui.setHorizontalAlignment(JLabel.CENTER);
+        this._aQui.setHorizontalAlignment(SwingConstants.CENTER);
         this._aQui.setForeground(Color.WHITE);
         this._aQui.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         for(int i = 0; i < 5; i++){
@@ -200,7 +202,7 @@ public class JeuVue extends JFrame {
         _btnLancer.addActionListener(new YamEvents(_myControler));
         _btnLancer.setActionCommand("lancer");
         this._nbLancers = new JLabel();
-        this._nbLancers.setHorizontalAlignment(JLabel.CENTER);
+        this._nbLancers.setHorizontalAlignment(SwingConstants.CENTER);
         this._nbLancers.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         this.setNbLancers(3);
         _btnFinTour = new JButton("Fin du Tour");
@@ -220,9 +222,9 @@ public class JeuVue extends JFrame {
         panLancement.add(this._nbLancers);
         this._nbLancers.setForeground(Color.WHITE);
         this._labTotalPoints.setForeground(Color.WHITE);
-        this._labTotalPoints.setHorizontalAlignment(JLabel.CENTER);
+        this._labTotalPoints.setHorizontalAlignment(SwingConstants.CENTER);
         this._labPointsConserves.setForeground(Color.WHITE);
-        this._labPointsConserves.setHorizontalAlignment(JLabel.CENTER);
+        this._labPointsConserves.setHorizontalAlignment(SwingConstants.CENTER);
         panLancement.setBackground(couleur);
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
@@ -243,7 +245,7 @@ public class JeuVue extends JFrame {
         
         //label des couts restants
         this._labCoupsRestants = new JLabel();
-        this._labCoupsRestants.setHorizontalAlignment(JLabel.CENTER);
+        this._labCoupsRestants.setHorizontalAlignment(SwingConstants.CENTER);
         this._labCoupsRestants.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         
         //assemblage des éléments de la fenêtre
@@ -307,6 +309,9 @@ public class JeuVue extends JFrame {
      * Met de coté les dés à conserver via le tableau de booléens _selDes
      */
     public void majSelDes(int index){
+        if(this._animationEnCours){
+            return;
+        }
         if(this._valDes[index] == 0){
             System.err.println("Erreur: Dé non lancé!!!");
         }
@@ -376,6 +381,24 @@ public class JeuVue extends JFrame {
      */
     public int[] getDes(){
         return this._valDes;
+    }
+
+    /*
+     * Affiche une face aléatoire sur les dés concernés (utilisé pendant l'animation de lancer)
+     */
+    public void afficherFacesAleatoires(boolean[] aAnimer){
+        for(int i = 0; i < 5; i++){
+            if(aAnimer[i]){
+                this._labDes[i].setIcon(this._des[1 + RANDOM.nextInt(6)]);
+            }
+        }
+    }
+
+    /*
+     * Indique si une animation de lancer est en cours, pour bloquer la sélection des dés
+     */
+    public void setAnimationEnCours(boolean animationEnCours){
+        this._animationEnCours = animationEnCours;
     }
     
     /*
@@ -491,7 +514,7 @@ public class JeuVue extends JFrame {
     /*
      * met à jour l'affichage du nombrre de lancés restants
      */
-    public void set_nb_Lances(){
+    public void setNbLances(){
         int nb = this.getLancesRestants();
         String lances = "Reste ";
         lances += String.valueOf(nb);
