@@ -29,10 +29,12 @@ public class LimitedTextField extends JTextField {
             this.max = max;
         }
 
+        @Override
         public void insertString(DocumentFilter.FilterBypass fb, int offset, String str, AttributeSet attr) throws BadLocationException {
             replace(fb, offset, 0, str, attr);
         }
 
+        @Override
         public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String str, AttributeSet attrs) throws BadLocationException {
             int newLength = fb.getDocument().getLength() - length + str.length();
 

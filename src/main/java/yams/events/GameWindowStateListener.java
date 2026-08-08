@@ -8,6 +8,7 @@ package yams.events;
 import com.sun.glass.ui.Window;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.util.logging.Logger;
 import yams.control.YamControl;
 
 /**
@@ -15,21 +16,22 @@ import yams.control.YamControl;
  * @author nicolas
  */
 public class GameWindowStateListener implements WindowStateListener{
-    private YamControl _myControler;
-    
+    private static final Logger LOGGER = Logger.getLogger(GameWindowStateListener.class.getName());
+    private YamControl myControler;
+
     public GameWindowStateListener(YamControl yc){
-        this._myControler = yc;
+        this.myControler = yc;
     }
 
     @Override
     public void windowStateChanged(WindowEvent e) {
         if(e.getNewState() == Window.NORMAL){
-            this._myControler.resizeDices(false);
-            System.out.println("normal");
+            this.myControler.resizeDices(false);
+            LOGGER.info("normal");
         }
         else{
-            this._myControler.resizeDices(true);
-            System.out.println("miximisé");
+            this.myControler.resizeDices(true);
+            LOGGER.info("miximisé");
         }
     }
     

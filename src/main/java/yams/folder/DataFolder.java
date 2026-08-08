@@ -7,12 +7,12 @@
 package yams.folder;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import yams.Yams;
-import yams.control.YamControl;
 import yams.hightScores.pojos.Score;
 
 /**
@@ -21,258 +21,180 @@ import yams.hightScores.pojos.Score;
  */
 
 public class DataFolder{
-    private final String LIBRE = "scoresLibres.dat";
-    private final String MONTANT = "scoresMontants.dat";
-    private final String DESCENDANT = "scoresDescendants.dat";
-    private final String PREFERENCES = "preferences.dat";
-    private YamControl _myControler;
-    
-    private String _OS;
-    private String _dirName;
-    private boolean _created;
-    
-    public DataFolder(YamControl ctrl){
-        this._myControler = ctrl;
-        
-    	this._created = false;
+    private static final Logger LOGGER = Logger.getLogger(DataFolder.class.getName());
+    private static final String LIBRE = "scoresLibres.dat";
+    private static final String MONTANT = "scoresMontants.dat";
+    private static final String DESCENDANT = "scoresDescendants.dat";
+    private static final String PREFERENCES = "preferences.dat";
+    private static final String TAG_MODE_CLOSE = "\t</Mode>\r\n";
+    private static final String SCORE_OPEN = "\t\t<Score name=\"";
+    private static final String ATTR_VALUE = "\" value=\"";
+    private static final String ATTR_DATE = "\" date=\"";
+    private static final String SELF_CLOSE = "\" />";
+    private String os;
+    private String dirName;
+    private boolean created;
+
+    public DataFolder(){
+    	this.created = false;
         String workingDirectory;
-        this._OS = System.getProperty("os.name").toUpperCase();
-        
-        if(this._OS.contains("WIN")){
+        this.os = System.getProperty("os.name").toUpperCase();
+
+        if(this.os.contains("WIN")){
             workingDirectory = System.getenv("AppData");
-            this._dirName = workingDirectory + "/yams/";
+            this.dirName = workingDirectory + "/yams/";
         }
         else{
             workingDirectory = System.getProperty("user.home");
-            if(this._OS.contains("MAC")){
+            if(this.os.contains("MAC")){
                 workingDirectory += "/Library/Application Support";
-                this._dirName = workingDirectory + "/yams/";
+                this.dirName = workingDirectory + "/yams/";
             }
             else{
-                this._dirName = workingDirectory + "/.yams/";
+                this.dirName = workingDirectory + "/.yams/";
             }
         }
-        
-        File f = new File(this._dirName);
+
+        File f = new File(this.dirName);
         if(f.exists()){
-        	this._created = true;
+        	this.created = true;
         }
     }
-    
+
     public void createDataFolder(){
         boolean isCreated = false;
-        if(!this._created){
-	        File dir = new File(this._dirName);
+        if(!this.created){
+	        File dir = new File(this.dirName);
 	        isCreated = dir.mkdir();
         }
         if(isCreated){
-        	System.out.println("folder created");
+        	LOGGER.info("folder created");
         }
         else{
-        	System.out.println("folder not created");
+        	LOGGER.info("folder not created");
         }
     }
-    
+
     public void createNewBDDFiles(){
-        boolean isCreated1 = false;
-        boolean isCreated2 = false;
-        boolean isCreated3 = false;
-        boolean isCreated4 = false;
-        File file1 = new File(this._dirName + LIBRE);
-        File file2 = new File(this._dirName + MONTANT);
-        File file3 = new File(this._dirName + DESCENDANT);
-        File file4 = new File(this._dirName + PREFERENCES);
-        if(!file1.exists()){
+        createFileIfMissing(new File(this.dirName + LIBRE), "file 1");
+        createFileIfMissing(new File(this.dirName + MONTANT), "file 2");
+        createFileIfMissing(new File(this.dirName + DESCENDANT), "file 3");
+        createFileIfMissing(new File(this.dirName + PREFERENCES), "file 4");
+    }
+
+    private void createFileIfMissing(File file, String label){
+        boolean isCreated = false;
+        if(!file.exists()){
 	        try {
-	            isCreated1 = file1.createNewFile();
+	            isCreated = file.createNewFile();
 	        } catch (IOException ex) {
-	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
+	            LOGGER.log(Level.SEVERE, null, ex);
 	        }
         }
-        if(isCreated1){
-        	System.out.println("file 1 created");
+        if(isCreated){
+        	LOGGER.log(Level.INFO, "{0} created", label);
         }
         else{
-        	System.out.println("file 1 not created");
-        }
-        
-        if(!file2.exists()){
-	        try {
-	            isCreated2 = file2.createNewFile();
-	        } catch (IOException ex) {
-	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
-	        }
-        }
-        if(isCreated2){
-        	System.out.println("file 2 created");
-        }
-        else{
-        	System.out.println("file 2 not created");
-        }
-        
-        if(!file3.exists()){
-	        try {
-	            isCreated3 = file3.createNewFile();
-	        } catch (IOException ex) {
-	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
-	        }
-        }
-        if(isCreated3){
-        	System.out.println("file 3 created");
-        }
-        else{
-        	System.out.println("file 3 not created");
-        }
-        
-        if(!file4.exists()){
-	        try {
-	            isCreated4 = file4.createNewFile();
-	        } catch (IOException ex) {
-	            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, ex);
-	        }
-        }
-        if(isCreated4){
-        	System.out.println("file 4 created");
-        }
-        else{
-        	System.out.println("file 4 not created");
+        	LOGGER.log(Level.INFO, "{0} not created", label);
         }
     }
-    
+
     public void saveScores(List<Score> scores, int mode){
         String f;
-        FileOutputStream svg = null;
-        ObjectOutputStream saver = null;
-        
+
         switch(mode){
             case Yams.MODELIBRE:
-                f = new String(LIBRE);
+                f = LIBRE;
                 break;
             case Yams.MODEMONTANT:
-                f = new String(MONTANT);
+                f = MONTANT;
                 break;
             case Yams.MODEDESCENDANT:
-                f = new String(DESCENDANT);
+                f = DESCENDANT;
                 break;
             default:
-                f = new String(); //n'arrivera pas
+                f = ""; //n'arrivera pas
         }
-        
+
+        File file = new File(this.dirName + f);
         try{
-            try{
-                File file = new File(this._dirName + f);
-                file.delete();
-                svg = new FileOutputStream(file);
-                saver = new ObjectOutputStream(svg);
+            boolean deleted = Files.deleteIfExists(file.toPath());
+            if(LOGGER.isLoggable(Level.FINE)){
+                LOGGER.fine(deleted ? "ancien fichier supprimé" : "aucun fichier existant à supprimer");
+            }
+            try(FileOutputStream svg = new FileOutputStream(file);
+                ObjectOutputStream saver = new ObjectOutputStream(svg)){
                 saver.writeObject(scores);
-                saver.flush();
-                saver.close();
-            } finally{
-                saver.flush();
-                saver.close();
             }
         } catch(IOException e){
-            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, null, e);
         }
     }
-    
+
     public List<Score> loadScores(int mode){
-        List<Score> result = null;
+        List<Score> result;
         String f;
-        FileInputStream svg = null;
-        ObjectInputStream loader = null;
-        
+
         switch(mode){
             case Yams.MODELIBRE:
-                f = new String(LIBRE);
+                f = LIBRE;
                 break;
             case Yams.MODEMONTANT:
-                f = new String(MONTANT);
+                f = MONTANT;
                 break;
             case Yams.MODEDESCENDANT:
-                f = new String(DESCENDANT);
+                f = DESCENDANT;
                 break;
             default:
-                f = new String(); //n'arrivera pas
+                f = ""; //n'arrivera pas
                 break;
         }
-        
-        try{
-            try{
-                svg = new FileInputStream(new File(this._dirName + f));
-                    loader = new ObjectInputStream(new BufferedInputStream(svg)); 
-                    result = (ArrayList<Score>)loader.readObject();
-                    System.out.println("chargement de "+result.size()+" score(s)");
-            }catch(EOFException e){
-                System.err.println(e.toString());
-                result = new ArrayList<Score>();
-            }finally{
-                if(loader != null){
-                    loader.close();
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+
+        try(ObjectInputStream loader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(this.dirName + f))))){
+            result = (ArrayList<Score>)loader.readObject();
+            LOGGER.info("chargement de "+result.size()+" score(s)");
+        }catch(EOFException e){
+            LOGGER.warning(e.toString());
+            result = new ArrayList<>();
+        }catch(IOException | ClassNotFoundException e){
+            LOGGER.log(Level.SEVERE, null, e);
+            result = new ArrayList<>();
         }
-        
-        if(result == null){
-            result = new ArrayList<Score>();
-        }
+
         return result;
     }
-    
+
     public void savePrefs(List<Boolean> prefs){
-        FileOutputStream svg = null;
-        ObjectOutputStream saver = null;
-        
+        File file = new File(this.dirName + PREFERENCES);
         try{
-            try{
-                File file = new File(this._dirName + PREFERENCES);
-                file.delete();
-                svg = new FileOutputStream(file);
-                saver = new ObjectOutputStream(svg);
+            boolean deleted = Files.deleteIfExists(file.toPath());
+            if(LOGGER.isLoggable(Level.FINE)){
+                LOGGER.fine(deleted ? "ancien fichier supprimé" : "aucun fichier existant à supprimer");
+            }
+            try(FileOutputStream svg = new FileOutputStream(file);
+                ObjectOutputStream saver = new ObjectOutputStream(svg)){
                 saver.writeObject(prefs);
-                saver.flush();
-                saver.close();
-            } finally{
-                saver.flush();
-                saver.close();
             }
         } catch(IOException e){
-            Logger.getLogger(DataFolder.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, null, e);
         }
     }
-    
+
     public List<Boolean> loadPrefs(){
-        List<Boolean> result = null;
-        FileInputStream svg = null;
-        ObjectInputStream loader = null;
-        
-        try{
-            try{
-                svg = new FileInputStream(new File(this._dirName + PREFERENCES));
-                    loader = new ObjectInputStream(new BufferedInputStream(svg)); 
-                    result = (ArrayList<Boolean>)loader.readObject();
-                    System.out.println("chargement de " + result.size() + " préférences");
-            }catch(EOFException e){
-                System.err.println(e.toString());
-                result = new ArrayList<Boolean>();
-            }finally{
-                if(loader != null){
-                    loader.close();
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        List<Boolean> result;
+
+        try(ObjectInputStream loader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(this.dirName + PREFERENCES))))){
+            result = (ArrayList<Boolean>)loader.readObject();
+            LOGGER.info("chargement de " + result.size() + " préférences");
+        }catch(EOFException e){
+            LOGGER.warning(e.toString());
+            result = new ArrayList<>();
+        }catch(IOException | ClassNotFoundException e){
+            LOGGER.log(Level.SEVERE, null, e);
+            result = new ArrayList<>();
         }
-        
-        if(result == null){
-            result = new ArrayList<Boolean>();
-            for(int i=0; i<3; i++){
-                result.add(true);
-            }
-        }
-        else if(result.isEmpty()){
+
+        if(result.isEmpty()){
             for(int i=0; i<3; i++){
                 result.add(true);
             }
@@ -285,7 +207,7 @@ public class DataFolder{
      * @param path
      * @param libres
      * @param montants
-     * @param descendants 
+     * @param descendants
      */
     public void exportScores(String extantion, String path, List<Score> libres, List<Score> montants, List<Score> descendants){
         if(extantion.equals("*.csv")){
@@ -294,30 +216,27 @@ public class DataFolder{
         }
         if(extantion.equals("*.cvs")){
             this.writeXMLFile(path, libres, montants, descendants);
-            return;
         }
     }
-    
+
     /**
      * Ecrit le fichier csv
      * @param path
      * @param libres
      * @param montants
-     * @param descendants 
+     * @param descendants
      */
     private void writeCSVFile(String path, List<Score> libres, List<Score> montants, List<Score> descendants){
         if(!path.endsWith(".csv")){
             path = path + ".csv";
         }
         File f = new File(path);
-        
-        try{
-            FileWriter fw = new FileWriter(f);
-            
+
+        try(FileWriter fw = new FileWriter(f)){
             fw.write("Meilleurs scores du yam's;;;;;;;;;\r\n");
             fw.write(";;;;;;;;;\r\n");
             fw.write(";Libre;;;;Montant;;;;Descendant;;\r\n");
-            
+
             for(int i=0; i<10; i++){
                 fw.write(";");
                 if(i<libres.size()){
@@ -326,14 +245,14 @@ public class DataFolder{
                 else{
                     fw.write(";;;;");
                 }
-                
+
                 if(i<montants.size()){
                     fw.write(montants.get(i).getName()+";"+montants.get(i).getScore()+";"+montants.get(i).getDate()+";;");
                 }
                 else{
                     fw.write(";;;;");
                 }
-                
+
                 if(i<descendants.size()){
                     fw.write(descendants.get(i).getName()+";"+descendants.get(i).getScore()+";"+descendants.get(i).getDate()+";");
                 }
@@ -342,50 +261,44 @@ public class DataFolder{
                 }
                 fw.write("\r\n");
             }
-            
-            fw.close();
         }catch(IOException e){
-            System.err.println("Erreur lors de l'export: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Erreur lors de l'export", e);
         }
     }
-    
+
     private void writeXMLFile(String path, List<Score> libres, List<Score> montants, List<Score> descendants){
         if(!path.endsWith(".xml")){
             path = path + ".xml";
         }
         File f = new File(path);
-        
-        try{
-            FileWriter fw = new FileWriter(f);
-            
+
+        try(FileWriter fw = new FileWriter(f)){
             fw.write("<Scores>\r\n");
-            
+
             fw.write("\t<Mode type=\"Libre\">\r\n");
             for(int i=0; i<libres.size(); i++){
-                fw.write("\t\t<Score name=\""+libres.get(i).getName()+"\" value=\""+libres.get(i).getScore()+"\" date=\""+libres.get(i).getDate()+"\" />");
+                fw.write(SCORE_OPEN+libres.get(i).getName()+ATTR_VALUE+libres.get(i).getScore()+ATTR_DATE+libres.get(i).getDate()+SELF_CLOSE);
                 fw.write("\r\n");
             }
-            fw.write("\t</Mode>\r\n");
-            
+            fw.write(TAG_MODE_CLOSE);
+
             fw.write("\t<Mode type=\"Montant\">\r\n");
             for(int i=0; i<montants.size(); i++){
-                fw.write("\t\t<Score name=\""+montants.get(i).getName()+"\" value=\""+montants.get(i).getScore()+"\" date=\""+montants.get(i).getDate()+"\" />");
+                fw.write(SCORE_OPEN+montants.get(i).getName()+ATTR_VALUE+montants.get(i).getScore()+ATTR_DATE+montants.get(i).getDate()+SELF_CLOSE);
                 fw.write("\r\n");
             }
-            fw.write("\t</Mode>\r\n");
-            
+            fw.write(TAG_MODE_CLOSE);
+
             fw.write("\t<Mode type=\"Descedant\">\r\n");
             for(int i=0; i<descendants.size(); i++){
-                fw.write("\t\t<Score name=\""+descendants.get(i).getName()+"\" value=\""+descendants.get(i).getScore()+"\" date=\""+descendants.get(i).getDate()+"\" />");
+                fw.write(SCORE_OPEN+descendants.get(i).getName()+ATTR_VALUE+descendants.get(i).getScore()+ATTR_DATE+descendants.get(i).getDate()+SELF_CLOSE);
                 fw.write("\r\n");
             }
-            fw.write("\t</Mode>\r\n");
-            
+            fw.write(TAG_MODE_CLOSE);
+
             fw.write("</Scores>");
-            
-            fw.close();
         }catch(IOException e){
-            System.err.println("Erreur lors de l'export: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Erreur lors de l'export", e);
         }
     }
 }

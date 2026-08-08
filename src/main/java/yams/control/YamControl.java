@@ -6,6 +6,7 @@ package yams.control;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import yams.Yams;
@@ -49,45 +50,52 @@ import yams.views.*;
  * Classe controleur, elle gère le bon fonctionnement du jeu
  */
 public class YamControl {
-    private ConnexionVue _connexion;
-    private YamModele _modele;
-    private JeuVue _jeu;
-    private FinPartieVue _finPartie;
-    private ConfirmQuitVue _confirmQuit;
-    private InfoScoreVue _confScores;
-    private HightScoreVue _HightScore;
-    private ResetHightScoresVue _resetHightScores;
-    private PreferencesVue _preferences;
-    private DataFolder _data;
-    private FinTourVue _finTour;
-    private ConfirmScoreVue _confirmFinTour;
+    private static final Logger LOGGER = Logger.getLogger(YamControl.class.getName());
+    private static final String SUITE = "suite";
+    private static final String PETITE_SUITE = "petite suite";
+    private static final String CHANCE = "chance";
+    private static final String CARRE = "carré";
+    private static final String YAM = "yam's";
+    private static final String GRANDE_SUITE = "grande suite";
+    private static final String BRELAN = "brelan";
+    private ConnexionVue connexion;
+    private YamModele modele;
+    private JeuVue jeu;
+    private FinPartieVue finPartie;
+    private ConfirmQuitVue confirmQuit;
+    private InfoScoreVue confScores;
+    private HightScoreVue hightScore;
+    private ResetHightScoresVue resetHightScores;
+    private PreferencesVue preferences;
+    private DataFolder data;
+    private FinTourVue finTour;
+    private ConfirmScoreVue confirmFinTour;
     
-    private String _actualWindow;
-    private String[] _nomsJoueurs;
-    private int _nbJoueurs;
-    private boolean[][] _scoresValides;
-    private int _tour;
-    private int _mode;
-    private List<Boolean> _listPrefs;
+    private String actualWindow;
+    private int nbJoueurs;
+    private boolean[][] scoresValides;
+    private int tour;
+    private int mode;
+    private List<Boolean> listPrefs;
     
     public YamControl(){
-        this._data = new DataFolder(this);
-        this._data.createDataFolder();
-        this._data.createNewBDDFiles();
-        this._listPrefs = _data.loadPrefs();
+        this.data = new DataFolder();
+        this.data.createDataFolder();
+        this.data.createNewBDDFiles();
+        this.listPrefs = data.loadPrefs();
         
-        this._connexion = new ConnexionVue(this, this._listPrefs.get(Yams.PREFSOUND));
-        this._connexion.affichage(true);
-        this._HightScore = new HightScoreVue(this);
-        this._confirmFinTour = new ConfirmScoreVue(this, this._jeu);
-        this._resetHightScores = new ResetHightScoresVue(this, this._HightScore);
+        this.connexion = new ConnexionVue(this, this.listPrefs.get(Yams.PREFSOUND));
+        this.connexion.affichage(true);
+        this.hightScore = new HightScoreVue(this);
+        this.confirmFinTour = new ConfirmScoreVue(this, this.jeu);
+        this.resetHightScores = new ResetHightScoresVue(this, this.hightScore);
     }
     
     /*
      * Initialise les joueurs
      */
     public void setNomsJoueurs(){
-        _connexion.setJoueurs();
+        connexion.setJoueurs();
     }
     
     /*
@@ -101,24 +109,24 @@ public class YamControl {
      * Sauvegarde la derniere fenêtre ouverte
      */
     public void setActualWindow(String actualWindow) {
-        this._actualWindow = actualWindow;
+        this.actualWindow = actualWindow;
     }
     
     /*
      * Retourne les préférences de son
      */
     public boolean isSound() {
-        return this._listPrefs.get(Yams.PREFSOUND);
+        return this.listPrefs.get(Yams.PREFSOUND);
     }
     
     /*
      * Affiche les préférences
      */
     public void showPrefs(){
-        this._preferences = new PreferencesVue(this, _listPrefs);
-        if(this._actualWindow.equals("Jeu")){
-            this._preferences.enableGroup(Yams.PREFSELECT, false);
-            this._preferences.enableGroup(Yams.PREFRULES, false);
+        this.preferences = new PreferencesVue(this, listPrefs);
+        if(this.actualWindow.equals("Jeu")){
+            this.preferences.enableGroup(Yams.PREFSELECT, false);
+            this.preferences.enableGroup(Yams.PREFRULES, false);
         }
     }
     
@@ -126,104 +134,61 @@ public class YamControl {
      * Récupère les préférences modifiées
      */
     public void changePrefs(){
-        this._preferences.setPrefs();
-        this._listPrefs = this._preferences.getPrefs();
-        this._preferences.dispose();
+        this.preferences.setPrefs();
+        this.listPrefs = this.preferences.getPrefs();
+        this.preferences.dispose();
         this.majSound();
     }
     
     /*
      * Retourne les coups restants
      */
+    private String nomCoup(int i, boolean rules){
+        switch(i){
+            case 0:
+                return "1";
+            case 1:
+                return "2";
+            case 2:
+                return "3";
+            case 3:
+                return "4";
+            case 4:
+                return "5";
+            case 5:
+                return "6";
+            case 6:
+                return rules ? "+" : BRELAN;
+            case 7:
+                return rules ? "-" : PETITE_SUITE;
+            case 8:
+                return rules ? SUITE : GRANDE_SUITE;
+            case 9:
+                return "full";
+            case 10:
+                return CARRE;
+            case 11:
+                return YAM;
+            case 12:
+                return rules ? "" : CHANCE;
+            default:
+                return "";
+        }
+    }
+
     private String getCoupsRestants(int joueur){
         List<String> coups = new ArrayList<String>();
-        String result = new String();
-        int cpt = 0;
-        int nbCoups;
-        
-        if(this.getPrefs().get(Yams.PREFRULES)){
-            nbCoups = 12;
-        }
-        else{
-            nbCoups = 13;
-        }
-        
+        boolean rules = this.getPrefs().get(Yams.PREFRULES);
+        int nbCoups = rules ? 12 : 13;
+
         for(int i = 0; i < nbCoups; i++){
-            String coup = new String();
-            switch(i){
-                case 0:
-                    coup = "1";
-                    break;
-                case 1:
-                    coup = "2";
-                    break;
-                case 2:
-                    coup = "3";
-                    break;
-                case 3:
-                    coup = "4";
-                    break;
-                case 4:
-                    coup = "5";
-                    break;
-                case 5:
-                    coup = "6";
-                    break;
-                case 6:
-                    if(this.getPrefs().get(Yams.PREFRULES)){
-                        coup = "+";
-                    }
-                    else{
-                        coup = "brelan";
-                    }
-                    break;
-                case 7:
-                    if(this.getPrefs().get(Yams.PREFRULES)){
-                        coup = "-";
-                    }
-                    else{
-                        coup = "petite suite";
-                    }
-                    break;
-                case 8:
-                    if(this.getPrefs().get(Yams.PREFRULES)){
-                        coup = "suite";
-                    }
-                    else{
-                        coup = "grande suite";
-                    }
-                    break;
-                case 9:
-                    coup = "full";
-                    break;
-                case 10:
-                    coup = "carré";
-                    break;
-                case 11:
-                    coup = "yam's";
-                    break;
-                case 12:
-                    if(!this.getPrefs().get(Yams.PREFRULES)){
-                        coup = "chance";
-                    }
-                    break;
-                default:
-                    break;
-            }
-            if(this._scoresValides[joueur][i]){
+            String coup = nomCoup(i, rules);
+            if(this.scoresValides[joueur][i]){
                 coups.add(coup);
             }
         }
-        
-        while(cpt < coups.size()){
-            result += coups.get(cpt);
-            if(cpt != coups.size()-1){
-                result += " ";
-            }
-            cpt++;
-        }
-        
-        return result;
+
+        return String.join(" ", coups);
     }
     
     /*
@@ -231,13 +196,14 @@ public class YamControl {
      */
     public boolean[] getScoresValides(){
         boolean[] scores;
-        if(this.getPrefs().get(Yams.PREFRULES)){
+        boolean rules = this.getPrefs().get(Yams.PREFRULES);
+        if(rules){
             scores = new boolean[12];
-            System.arraycopy(_scoresValides[_tour], 0, scores, 0, 12);
+            System.arraycopy(scoresValides[tour], 0, scores, 0, 12);
         }
         else{
             scores = new boolean[13];
-            System.arraycopy(_scoresValides[_tour], 0, scores, 0, 13);
+            System.arraycopy(scoresValides[tour], 0, scores, 0, 13);
         }
         
         return scores;
@@ -247,58 +213,50 @@ public class YamControl {
      * fonction d'initialisation de la partie
      */
     public void commencer(){
-        _mode = _connexion.getModeJeu();
-        _nomsJoueurs = _connexion.getNomsJoueurs();
-        _nbJoueurs = _connexion.getNbJoueurs();
-        _modele = new YamModele(_nbJoueurs, this);
-        if(this.getPrefs().get(Yams.PREFRULES)){
-            this._scoresValides = new boolean[_nbJoueurs][12];
-            for(int i = 0; i < _nbJoueurs; i++){
+        mode = connexion.getModeJeu();
+        String[] nomsJoueurs = connexion.getNomsJoueurs();
+        nbJoueurs = connexion.getNbJoueurs();
+        modele = new YamModele(nbJoueurs, this);
+        boolean rules = this.getPrefs().get(Yams.PREFRULES);
+        if(rules){
+            this.scoresValides = new boolean[nbJoueurs][12];
+            for(int i = 0; i < nbJoueurs; i++){
                 for(int j = 0; j < 12; j++){
-                    _scoresValides[i][j] = true;
+                    scoresValides[i][j] = true;
                 }
             }
         }
         else{
-            this._scoresValides = new boolean[_nbJoueurs][13];
-            for(int i = 0; i < _nbJoueurs; i++){
+            this.scoresValides = new boolean[nbJoueurs][13];
+            for(int i = 0; i < nbJoueurs; i++){
                 for(int j = 0; j < 13; j++){
-                    _scoresValides[i][j] = true;
+                    scoresValides[i][j] = true;
                 }
             }
         }
         
-        _tour = _modele.getTour();
+        tour = modele.getTour();
         
         //initialisation et mise à jour des vues
-        _jeu = new JeuVue(_nbJoueurs, _nomsJoueurs, _tour, this, this._mode, this._listPrefs.get(Yams.PREFSOUND));
-        _jeu.initDes();
-        _connexion.affichage(false);
-        _jeu.affichage(true);
-        _jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
+        jeu = new JeuVue(nbJoueurs, nomsJoueurs, tour, this, this.mode, this.listPrefs.get(Yams.PREFSOUND));
+        jeu.initDes();
+        connexion.affichage(false);
+        jeu.affichage(true);
+        jeu.majCoupsRestants(this.getCoupsRestants(this.tour));
     }
     
     /*
      * fonction permettant de verifier si le joueur peux relancer des dés
      */
     public void checkDes(){
-        boolean[] select = this._jeu.getSelectedDes();
-        if(this._jeu.getLancesRestants() < 3){
-            if(this._listPrefs.get(Yams.PREFSELECT)){
-                if(select[0] && select[1] && select[2] && select[3] && select[4]){
-                    this._jeu.setEnabledLancer(false);
-                }
-                else{
-                    this._jeu.setEnabledLancer(true);
-                }
+        boolean[] select = this.jeu.getSelectedDes();
+        if(this.jeu.getLancesRestants() < 3){
+            boolean garde = this.listPrefs.get(Yams.PREFSELECT);
+            if(garde){
+                this.jeu.setEnabledLancer(!(select[0] && select[1] && select[2] && select[3] && select[4]));
             }
             else{
-                if(!select[0] && !select[1] && !select[2] && !select[3] && !select[4]){
-                    this._jeu.setEnabledLancer(false);
-                }
-                else{
-                    this._jeu.setEnabledLancer(true);
-                }
+                this.jeu.setEnabledLancer(!(!select[0] && !select[1] && !select[2] && !select[3] && !select[4]));
             }
         }
     }
@@ -308,23 +266,25 @@ public class YamControl {
      */
     public void lancer(){
         int[] des;
-        int lancesRestants = _jeu.getLancesRestants();
+        int lancesRestants = jeu.getLancesRestants();
+        boolean sound = this.listPrefs.get(Yams.PREFSOUND);
 
-        if(this._listPrefs.get(Yams.PREFSOUND)){
-            _modele.playSoundDe();
+        if(sound){
+            modele.playSoundDe();
         }
 
-        des = _modele.lancer();
-        lancesRestants = _modele.majNbLances(lancesRestants);
-        boolean[] selDes = this._jeu.getSelectedDes();
+        des = modele.lancer();
+        lancesRestants = modele.majNbLances(lancesRestants);
+        boolean[] selDes = this.jeu.getSelectedDes();
         boolean[] aAnimer = new boolean[5];
+        boolean garde = this.listPrefs.get(Yams.PREFSELECT);
         for(int i = 0; i < 5; i++){
-            aAnimer[i] = (lancesRestants == 2) || (selDes[i] != this._listPrefs.get(Yams.PREFSELECT));
+            aAnimer[i] = (lancesRestants == 2) || (selDes[i] != garde);
         }
 
-        _jeu.setEnabledLancer(false);
-        _jeu.setAnimationEnCours(true);
-        Timer timer = new Timer(AnimationLancerListener.INTERVAL_MS, new AnimationLancerListener(_jeu, this, aAnimer, des, lancesRestants));
+        jeu.setEnabledLancer(false);
+        jeu.setAnimationEnCours(true);
+        Timer timer = new Timer(AnimationLancerListener.INTERVAL_MS, new AnimationLancerListener(jeu, this, aAnimer, des, lancesRestants));
         timer.start();
     }
 
@@ -332,17 +292,18 @@ public class YamControl {
      * appelée en fin d'animation de lancer : fixe l'état final des dés et poursuit la logique de jeu
      */
     public void finLancer(int lancesRestants){
-        _jeu.setAnimationEnCours(false);
-        _jeu.setNbLancers(lancesRestants);
-        _jeu.setEnabledFinTour(true);
-        _jeu.setTotalPoints(false);
+        jeu.setAnimationEnCours(false);
+        jeu.setNbLancers(lancesRestants);
+        jeu.setEnabledFinTour(true);
+        jeu.setTotalPoints(false);
         if(lancesRestants == 0){
             this.finTour(true);
         }
         else{
-            _jeu.setEnabledLancer(true);
+            jeu.setEnabledLancer(true);
         }
-        if(!this.getPrefs().get(Yams.PREFSELECT)){
+        boolean garde = this.getPrefs().get(Yams.PREFSELECT);
+        if(!garde){
             this.checkDes();
         }
     }
@@ -351,29 +312,29 @@ public class YamControl {
      * nouvelle partie (après abandon)
      */
     public void nouveau(){
-        _confirmQuit.activation(false);
-        _jeu.affichage(false);
-        _connexion.affichage(true);
+        confirmQuit.activation(false);
+        jeu.affichage(false);
+        connexion.affichage(true);
     }
     
     /*
      * nouvelle partie
      */
     public void nouvellePartie(){
-        _finPartie.affichage(false);
-        _finPartie.dispose();
-        _jeu.affichage(false);
-        _connexion.affichage(true);
+        finPartie.affichage(false);
+        finPartie.dispose();
+        jeu.affichage(false);
+        connexion.affichage(true);
     }
     
     /*
      * Nouvelle partie avec les mêmes joueurs que précédement
      */
     public void recommencer(){
-        if(this._finPartie != null){
-            this._finPartie.affichage(false);
+        if(this.finPartie != null){
+            this.finPartie.affichage(false);
         }
-        _jeu.affichage(false);
+        jeu.affichage(false);
         this.commencer();
     }
     
@@ -381,17 +342,19 @@ public class YamControl {
      * Prend en compte le clic sur l'image du son
      */
     public void majSoundOnClic(){
-        this._listPrefs.set(Yams.PREFSOUND, !this._listPrefs.get(Yams.PREFSOUND));
+        boolean sound = this.listPrefs.get(Yams.PREFSOUND);
+        this.listPrefs.set(Yams.PREFSOUND, !sound);
         this.majSound();
     }
-    
+
     /*
      * mise à jour de la préférence de son
      */
     public void majSound(){
-        this._connexion.majSound(this._listPrefs.get(Yams.PREFSOUND));
-        if(this._jeu != null){
-            this._jeu.majSound(this._listPrefs.get(Yams.PREFSOUND));
+        boolean sound = this.listPrefs.get(Yams.PREFSOUND);
+        this.connexion.majSound(sound);
+        if(this.jeu != null){
+            this.jeu.majSound(sound);
         }
     }
     
@@ -399,153 +362,156 @@ public class YamControl {
      * fermeture du programme
      */
     public void quitter(){
-        this._data.savePrefs(this._listPrefs);
+        this.data.savePrefs(this.listPrefs);
         System.exit(0);
     }
     
     /*
      * gestion de la fin du tour
      */
+    private int indexCoupMontant(){
+        int i = 0;
+        while(!scoresValides[tour][i]){
+            i++;
+        }
+        return i;
+    }
+
+    private int indexCoupDescendant(){
+        boolean rules = this.getPrefs().get(Yams.PREFRULES);
+        int i = rules ? 11 : 12;
+        while(!scoresValides[tour][i]){
+            i--;
+        }
+        return i;
+    }
+
     public void finTour(){
-        _jeu.setTour(_tour);
-        this._confirmFinTour.setVisible(false); //ferme l'éventuelle fenêtre de confirmation ouverte
-        if(_mode == 0){
-            _finTour = new FinTourVue(_scoresValides, _tour, this, false, this._jeu);
-            _finTour.setAffichage(true);
+        jeu.setTour(tour);
+        this.confirmFinTour.setVisible(false); //ferme l'éventuelle fenêtre de confirmation ouverte
+        if(mode == 0){
+            finTour = new FinTourVue(scoresValides, tour, this, false, this.jeu);
+            finTour.setAffichage(true);
         }
-        else if(_mode == 1){
-            int i = 0;
-            while(!_scoresValides[_tour][i]){
-                i++;
-            }
-            finTourMontantDescendant(_tour, i);
+        else if(mode == 1){
+            finTourMontantDescendant(indexCoupMontant());
         }
-        else if(_mode == 2){
-            int i;
-            if(this.getPrefs().get(Yams.PREFRULES)){
-                i = 11;
-            }
-            else{
-                i = 12;
-            }
-            while(!_scoresValides[_tour][i]){
-                i--;
-            }
-            finTourMontantDescendant(_tour, i);
+        else if(mode == 2){
+            finTourMontantDescendant(indexCoupDescendant());
         }
         else{
-            System.err.println("[ERREUR] mode de jeu faux");
+            LOGGER.warning("[ERREUR] mode de jeu faux");
             System.exit(1);
         }
     }
     
-    private void finTourMontantDescendant(int joueur, int index){
-        String strScore = new String();
-        int[] des = this._jeu.getDes();
+    private void finTourMontantDescendant(int index){
+        String strScore = "";
+        int[] des = this.jeu.getDes();
         int score = 0;
-        
+        boolean rules = this.getPrefs().get(Yams.PREFRULES);
+
         switch(index){
             case 0:
-                score = this._modele.calc1(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calc1(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "1";
                 break;
             case 1:
-                score = this._modele.calc2(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calc2(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "2";
                 break;
             case 2:
-                score = this._modele.calc3(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calc3(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "3";
                 break;
             case 3:
-                score = this._modele.calc4(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calc4(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "4";
                 break;
             case 4:
-                score = this._modele.calc5(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calc5(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "5";
                 break;
             case 5:
-                score = this._modele.calc6(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calc6(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "6";
                 break;
             case 6:
-                if(this.getPrefs().get(Yams.PREFRULES)){
-                    score = this._modele.calcPlus(des, this._scoresValides, this._tour, this._jeu);
+                if(rules){
+                    score = this.modele.calcPlus(des, this.scoresValides, this.tour, this.jeu);
                     strScore = "+";
                 }
                 else{
-                    score = this._modele.calcBrelan(des, this._scoresValides, this._tour, this._jeu);
-                    strScore = "brelan";
+                    score = this.modele.calcBrelan(des, this.scoresValides, this.tour, this.jeu);
+                    strScore = BRELAN;
                 }
                 break;
             case 7:
-                if(this.getPrefs().get(Yams.PREFRULES)){
-                    score = this._modele.calcMinus(des, this._scoresValides, this._tour, this._jeu);
+                if(rules){
+                    score = this.modele.calcMinus(des, this.scoresValides, this.tour, this.jeu);
                     strScore = "-";
                 }
                 else{
-                    score = this._modele.calcLittleSuite(des, this._scoresValides, this._tour, this._jeu);
-                    strScore = "petite suite";
+                    score = this.modele.calcLittleSuite(des, this.scoresValides, this.tour, this.jeu);
+                    strScore = PETITE_SUITE;
                 }
                 break;
             case 8:
-                if(this.getPrefs().get(Yams.PREFRULES)){
-                    score = this._modele.calcSuite(des, this._scoresValides, this._tour, this._jeu);
-                    strScore = "suite";
+                if(rules){
+                    score = this.modele.calcSuite(des, this.scoresValides, this.tour, this.jeu);
+                    strScore = SUITE;
                 }
                 else{
-                    score = this._modele.calcBigSuite(des, this._scoresValides, this._tour, this._jeu);
-                    strScore = "grande suite";
+                    score = this.modele.calcBigSuite(des, this.scoresValides, this.tour, this.jeu);
+                    strScore = GRANDE_SUITE;
                 }
                 break;
             case 9:
-                score = this._modele.calcFull(des, this._scoresValides, this._tour, this._jeu);
+                score = this.modele.calcFull(des, this.scoresValides, this.tour, this.jeu);
                 strScore = "full";
                 break;
             case 10:
-                score = this._modele.calcCarre(des, this._scoresValides, this._tour, this._jeu);
-                strScore = "carré";
+                score = this.modele.calcCarre(des, this.scoresValides, this.tour, this.jeu);
+                strScore = CARRE;
                 break;
             case 11:
-                score = this._modele.calcYam(des, this._scoresValides, this._tour, this._jeu);
-                strScore = "yam's";
+                score = this.modele.calcYam(des, this.scoresValides, this.tour, this.jeu);
+                strScore = YAM;
                 break;
             case 12:
-                score = this._modele.calcChance(des, this._scoresValides, this._tour, this._jeu);
-                strScore = "chance";
+                score = this.modele.calcChance(des, this.scoresValides, this.tour, this.jeu);
+                strScore = CHANCE;
                 break;
             default: //n'arrive jamais
                 break;
         }
         
         //affichage de la fenetre d'information
-        this._confScores = new InfoScoreVue(score, strScore, _jeu, this);
-        this._confScores.activation(true);
+        this.confScores = new InfoScoreVue(score, strScore, jeu, this);
+        this.confScores.activation(true);
     }
     
     /*
      * gestion de la fin du tour en montante/descendante
      */
     public void confScores(){
-        this._confScores.activation(false);
+        this.confScores.activation(false);
         
-        if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(Yams.PREFSOUND))){
-            Joueur[] joueurs = new Joueur[this._nbJoueurs];
-            int max = 0;
-            
-            for(int i = 0; i < this._nbJoueurs; i++){
-                joueurs[i] = this._jeu.getJoueur(i);
+        if(this.modele.finPartie(this.scoresValides, this.listPrefs.get(Yams.PREFSOUND))){
+            Joueur[] joueurs = new Joueur[this.nbJoueurs];
+
+            for(int i = 0; i < this.nbJoueurs; i++){
+                joueurs[i] = this.jeu.getJoueur(i);
             }
-            System.out.println("tri joueur");
-            joueurs = this._modele.sortJoueurs(joueurs);
+            LOGGER.info("tri joueur");
+            joueurs = this.modele.sortJoueurs(joueurs);
             
-            this._finPartie = new FinPartieVue(this, this._jeu, joueurs);
-            this._finPartie.affichage(true);
+            this.finPartie = new FinPartieVue(this, this.jeu, joueurs);
+            this.finPartie.affichage(true);
         }
         else{
             this.tourSuivant();
-            this._jeu.setTotalPoints(true);
+            this.jeu.setTotalPoints(true);
         }
     }
     
@@ -553,28 +519,28 @@ public class YamControl {
      * Retourne le tableau des préférences
      */
     public List<Boolean> getPrefs(){
-        return this._listPrefs;
+        return this.listPrefs;
     }
     
     /*
      * Retourne le nombre de joueurs
      */
     public int getNbJoueurs(){
-        return this._nbJoueurs;
+        return this.nbJoueurs;
     }
     
     /*
      * gestion de la fin de partie
      */
     public void finTour(boolean fin){
-        _jeu.setTour(_tour);
-        if(_mode == 0){
-            _finTour = new FinTourVue(_scoresValides, _tour, this, fin, this._jeu);
-            _finTour.setAffichage(true);
+        jeu.setTour(tour);
+        if(mode == 0){
+            finTour = new FinTourVue(scoresValides, tour, this, fin, this.jeu);
+            finTour.setAffichage(true);
         }
         else{
             if(!fin){
-                this._confirmFinTour.setVisible(true);
+                this.confirmFinTour.setVisible(true);
             }
             else{
                 this.finTour();
@@ -585,74 +551,77 @@ public class YamControl {
     /*
      * enregistrement des scores choisis
      */
-    public void validationScore(){
-        String choix;
-        choix = this._finTour.getChoix();
-        
-        int[] des = this._jeu.getDes();
-        
+    private void appliquerChoix(String choix, int[] des){
         if(choix.equals("1")){
-            this._modele.calc1(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calc1(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("2")){
-           this._modele.calc2(des, this._scoresValides, this._tour, this._jeu);
+           this.modele.calc2(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("3")){
-            this._modele.calc3(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calc3(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("4")){
-            this._modele.calc4(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calc4(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("5")){
-            this._modele.calc5(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calc5(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("6")){
-            this._modele.calc6(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calc6(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("+")){
-            this._modele.calcPlus(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calcPlus(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("-")){
-            this._modele.calcMinus(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calcMinus(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("suite")){
-            this._modele.calcSuite(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(SUITE)){
+            this.modele.calcSuite(des, this.scoresValides, this.tour, this.jeu);
         }
         else if(choix.equals("full")){
-            this._modele.calcFull(des, this._scoresValides, this._tour, this._jeu);
+            this.modele.calcFull(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("carré")){
-            this._modele.calcCarre(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(CARRE)){
+            this.modele.calcCarre(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("yam's")){
-            this._modele.calcYam(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(YAM)){
+            this.modele.calcYam(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("brelan")){
-            this._modele.calcBrelan(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(BRELAN)){
+            this.modele.calcBrelan(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("petite suite")){
-            this._modele.calcLittleSuite(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(PETITE_SUITE)){
+            this.modele.calcLittleSuite(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("grande suite")){
-            this._modele.calcBigSuite(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(GRANDE_SUITE)){
+            this.modele.calcBigSuite(des, this.scoresValides, this.tour, this.jeu);
         }
-        else if(choix.equals("chance")){
-            this._modele.calcChance(des, this._scoresValides, this._tour, this._jeu);
+        else if(choix.equals(CHANCE)){
+            this.modele.calcChance(des, this.scoresValides, this.tour, this.jeu);
         }
-        
-        this._finTour.setAffichage(false);
-        this._jeu.setTotalPoints(true);
-        if(this._modele.finPartie(this._scoresValides, this._listPrefs.get(Yams.PREFSOUND))){
-            Joueur[] joueurs = new Joueur[this._nbJoueurs];
-            int max = 0;
-            
-            for(int i = 0; i < this._nbJoueurs; i++){
-                joueurs[i] = this._jeu.getJoueur(i);
+    }
+
+    public void validationScore(){
+        String choix;
+        choix = this.finTour.getChoix();
+
+        int[] des = this.jeu.getDes();
+
+        this.appliquerChoix(choix, des);
+
+        this.finTour.setAffichage(false);
+        this.jeu.setTotalPoints(true);
+        if(this.modele.finPartie(this.scoresValides, this.listPrefs.get(Yams.PREFSOUND))){
+            Joueur[] joueurs = new Joueur[this.nbJoueurs];
+
+            for(int i = 0; i < this.nbJoueurs; i++){
+                joueurs[i] = this.jeu.getJoueur(i);
             }
-            
-            joueurs = this._modele.sortJoueurs(joueurs);
-            this._finPartie = new FinPartieVue(this, this._jeu, joueurs);
-            this._finPartie.affichage(true);
+
+            joueurs = this.modele.sortJoueurs(joueurs);
+            this.finPartie = new FinPartieVue(this, this.jeu, joueurs);
+            this.finPartie.affichage(true);
         }
         else{
             this.tourSuivant();
@@ -663,177 +632,177 @@ public class YamControl {
      * ferme la fenêtre de fin du tour
      */
     public void annulerFinTour(){
-        this._finTour.setAffichage(false);
+        this.finTour.setAffichage(false);
     }
     
     /*
      * préparation du tour suivant
      */
     private void tourSuivant(){
-        this._jeu.setEnabledFinTour(false);
-        this._jeu.setEnabledLancer(true);
-        this._jeu.initDes();
-        this._jeu.initScoreTour();
-        this._jeu.setNbLancers(3);
-        this._modele.changerJoueur();
-        this._tour = this._modele.getTour();
-        this._jeu.setTour(this._tour);
-        this._jeu.majCoupsRestants(this.getCoupsRestants(this._tour));
+        this.jeu.setEnabledFinTour(false);
+        this.jeu.setEnabledLancer(true);
+        this.jeu.initDes();
+        this.jeu.initScoreTour();
+        this.jeu.setNbLancers(3);
+        this.modele.changerJoueur();
+        this.tour = this.modele.getTour();
+        this.jeu.setTour(this.tour);
+        this.jeu.majCoupsRestants(this.getCoupsRestants(this.tour));
     }
     
     /*
      * affichage des règles
      */
     public void affichageRegles() {
-            ReglesVue rav = new ReglesVue(_mode, this);
+            new ReglesVue(mode, this);
     }
     
     /*
      * gestion de l'annulation de l'abandon de la partie
      */
     public void annuler(){
-        this._confirmQuit.activation(false);
+        this.confirmQuit.activation(false);
     }
     
     /*
      * gestion de la confirmation de l'abandon
      */
     public void confirmQuit(boolean quit){
-        this._confirmQuit = new ConfirmQuitVue(quit, this._jeu, this);
-        this._confirmQuit.activation(true);
+        this.confirmQuit = new ConfirmQuitVue(quit, this.jeu, this);
+        this.confirmQuit.activation(true);
     }
     
     /*
      * affichage des règles lors du choix du mode
      */
     public void apercuRegle(){
-        int mode = this._connexion.getModeJeu();
-        ReglesVue rv = new ReglesVue(mode, this);
+        int mode = this.connexion.getModeJeu();
+        new ReglesVue(mode, this);
     }
     
     /**
      * affichage du mode d'emploi
      */
     public void affichHelp(){
-        AideVue aide = new AideVue(this);
+        new AideVue();
     }
     
     /*
      * Ouvre la fenêtre des hight scores
      */
     public void openHightScores(){
-        this._HightScore.toFront();
-        if(!this._actualWindow.equals("FinPartie")){
-            this._HightScore.setMode(this._mode);
+        this.hightScore.toFront();
+        if(!this.actualWindow.equals("FinPartie")){
+            this.hightScore.setMode(this.mode);
         }
-        this._HightScore.setVisible(true);
+        this.hightScore.setVisible(true);
     }
     
     /*
      * Sauve les scores
      */
-    public void saveHightScores(List<Score> scores, int mode){
-        this._data.saveScores(scores, mode);
+    public void saveHightScores(List<Score> scores, int modeJeu){
+        this.data.saveScores(scores, modeJeu);
     }
-    
+
     /*
      * Charge les scores
      */
-    public List<Score> loadHightScores(int mode){
-        return this._data.loadScores(mode);
+    public List<Score> loadHightScores(int modeJeu){
+        return this.data.loadScores(modeJeu);
     }
     
     /*
      * Ajoute un score
      */
     public void addAScore(Score s){
-        this._HightScore.addScore(s, this._mode);
+        this.hightScore.addScore(s, this.mode);
     }
     
     /**
      * Met en relief les score de la dernière partie
      */
     public void selectScores(List<Score> scores){
-        this._HightScore.setMode(this._mode);
-        this._HightScore.selectScores(scores, this._mode);
+        this.hightScore.setMode(this.mode);
+        this.hightScore.selectScores(scores, this.mode);
     }
     
     /*
      * ferme la fenêtre des hight scores
      */
     public void closeHightScores(){
-        this._HightScore.setVisible(false);
+        this.hightScore.setVisible(false);
     }
     
     /*
      * Ouvre la fenêtre de confirmation de l'effacement des scores
      */
     public void confirmResetHightScores(){
-        this._resetHightScores.setVisible(true);
+        this.resetHightScores.setVisible(true);
     }
     
     /*
      * Efface les meilleurs scores
      */
     public void resetHightScores(boolean all){
-        this._resetHightScores.dispose();
+        this.resetHightScores.dispose();
         
         if(all){
-            this._HightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
-            this._data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
+            this.hightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
+            this.data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
             
-            this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
-            this._data.saveScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+            this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+            this.data.saveScores(new ArrayList<Score>(), Yams.MODEMONTANT);
             
-            this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
-            this._data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+            this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+            this.data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
         }
         else{
-            switch(this._HightScore.getModeJeu()){
+            switch(this.hightScore.getModeJeu()){
                 case Yams.MODELIBRE:
-                    this._HightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
-                    this._data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
+                    this.hightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
+                    this.data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
                     break;
                 case Yams.MODEMONTANT:
-                    this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
+                    this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
                     
-                    this._HightScore.changeScores(Yams.MODEMONTANT);
+                    this.hightScore.changeScores(Yams.MODEMONTANT);
                     break;
                 case Yams.MODEDESCENDANT:
-                    this._HightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
-                    this._data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+                    this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+                    this.data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
                     break;
                 default:
-                    System.err.println("Mode de jeu inexistant");
+                    LOGGER.warning("Mode de jeu inexistant");
                     break;
             }
         }
         
-        this._HightScore.changeScores(this._HightScore.getModeJeu());
+        this.hightScore.changeScores(this.hightScore.getModeJeu());
     }
     
     /*
      * ferme la fenêtre de confirmation de l'effacement des scores
      */
     public void cancelResetHightScore(){
-        this._resetHightScores.dispose();
+        this.resetHightScores.dispose();
     }
     
     /*
      * ferme la fenêtre de confirmation de fin du tour en montante/descendante
      */
     public void closeConfirmWindow(){
-        this._confirmFinTour.setVisible(false);
+        this.confirmFinTour.setVisible(false);
     }
     
     /**
      * redimentionne les dés
      */
     public void resizeDices(boolean big){
-        this._jeu.redimDices(big);
+        this.jeu.redimDices(big);
     }
     
-    public void ExportHightScores(){
+    public void exportHightScores(){
         JFileChooser jfc = new JFileChooser();
         jfc.setDialogTitle("Export des meilleurs scores");
         jfc.setAcceptAllFileFilterUsed(false);
@@ -842,7 +811,7 @@ public class YamControl {
         int returnVal = jfc.showSaveDialog(null);
         
         if(returnVal == JFileChooser.APPROVE_OPTION){
-            this._data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this._HightScore.getScores(Yams.MODELIBRE), this._HightScore.getScores(Yams.MODEMONTANT), this._HightScore.getScores(Yams.MODEDESCENDANT));
+            this.data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this.hightScore.getScores(Yams.MODELIBRE), this.hightScore.getScores(Yams.MODEMONTANT), this.hightScore.getScores(Yams.MODEDESCENDANT));
         }
     }
 }

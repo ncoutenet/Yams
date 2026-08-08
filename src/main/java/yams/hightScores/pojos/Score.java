@@ -41,7 +41,7 @@ public class Score implements Serializable{
     public void setScore(int score) {
         this._score = score;
     }
-    
+
     public String getDate(){
         try{
             SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");

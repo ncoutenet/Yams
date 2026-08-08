@@ -6,8 +6,8 @@ package yams.table;
 
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -28,26 +28,20 @@ public class ColorTab extends DefaultTableCellRenderer{
     private Color rate;
     private Color valide;
     private Color titre;
-    private int[][] _colorTable;
+    private int[][] colorTable;
     
-    public ColorTab(/*int[][] couleurs, */int nbRow, int nbCol){
+    public ColorTab(int nbRow, int nbCol){
         this.rate = new Color(255, 128, 128); //rouge clair
         this.valide = new Color(132, 240, 110); //vert clair
         this.titre = new Color(191, 191, 191); //gris clair
-        this._colorTable = new int[nbRow][nbCol];
-        
-        /*for(int i = 0; i < nbRow; i++){
-            for(int j = 0; j < nbRow; j++){
-                this._colorTable[i][j] = couleurs[i][j];
-            }
-        }*/
+        this.colorTable = new int[nbRow][nbCol];
     }
     
     @Override
     public Component getTableCellRendererComponent (JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column){
           super.getTableCellRendererComponent (table,value,isSelected,hasFocus,row,column); 
           
-          switch(this._colorTable[row][column]){
+          switch(this.colorTable[row][column]){
               case ColorTab.ROUGE: 
                   this.setBackground(rate);
                   break;
@@ -62,11 +56,11 @@ public class ColorTab extends DefaultTableCellRenderer{
                   break;
               case ColorTab.BLEU:
                   this.setBackground(new Color(235, 240, 249));
+                  break;
               default:
-                  //System.err.println("Code couleur inconnu!");
                   break; //n'arrivera pas
           }
-          this.setHorizontalAlignment(JLabel.CENTER);
+          this.setHorizontalAlignment(SwingConstants.CENTER);
           return this;
     }
     
@@ -74,13 +68,13 @@ public class ColorTab extends DefaultTableCellRenderer{
      * met à jour le tableau interne des couleurs
      */
     public void setCouleurs(int lig, int col, int code){
-        this._colorTable[lig][col] = code;
+        this.colorTable[lig][col] = code;
     }
     
     /*
      * Réinitialise le tableau interne des couleurs
      */
     public void clear(){
-        this._colorTable = new int[this._colorTable.length][this._colorTable[0].length];
+        this.colorTable = new int[this.colorTable.length][this.colorTable[0].length];
     }
 }

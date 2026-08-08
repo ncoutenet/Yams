@@ -9,6 +9,7 @@ package yams.hightScores.views;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import yams.Yams;
@@ -25,42 +26,46 @@ import yams.table.ColorTab;
  * @author Nicolas
  */
 public class HightScoreVue extends JFrame{
-    private YamControl _myControler;
-    private JTable _tableScore;
-    private ModeleTableHightScore _modelScore;
-    private JTable _rowHeader;
-    private ModelRowHeader _modelRow;
-    private ColorTab _gestionnaire;
+    private static final Logger LOGGER = Logger.getLogger(HightScoreVue.class.getName());
+    private static final String LIBRE = "Libre";
+    private static final String MONTANT = "Montant";
+    private static final String DESCENDANT = "Descendant";
+    private transient YamControl myControler;
+    private JTable tableScore;
+    private ModeleTableHightScore modelScore;
+    private JTable rowHeader;
+    private ModelRowHeader modelRow;
+    private ColorTab gestionnaire;
     
-    private JComboBox _cbModeJeu;
-    private JButton _btnRetour;
+    private JComboBox cbModeJeu;
+    private JButton btnRetour;
     
-    private List<Score> _scoresLibres;
-    private List<Score> _scoresMontants;
-    private List<Score> _scoresDescendants;
+    private List<Score> scoresLibres;
+    private List<Score> scoresMontants;
+    private List<Score> scoresDescendants;
     
     public HightScoreVue(YamControl c){
         super("Hight Scores");
         super.setResizable(false);
-        this._scoresLibres = new ArrayList<Score>();
-        this._scoresMontants = new ArrayList<Score>();
-        this._scoresDescendants = new ArrayList<Score>();
-        this._myControler = c;
-        this._modelScore = new ModeleTableHightScore();
-        this._modelRow = new ModelRowHeader();
-        this._rowHeader = new JTable(this._modelRow);
-        this._rowHeader.setFocusable(false);
-        this._rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        TableColumn colHead = this._rowHeader.getColumnModel().getColumn(0);
+        this.scoresLibres = new ArrayList<Score>();
+        this.scoresMontants = new ArrayList<Score>();
+        this.scoresDescendants = new ArrayList<Score>();
+        this.myControler = c;
+        this.modelScore = new ModeleTableHightScore();
+        this.modelRow = new ModelRowHeader();
+        this.rowHeader = new JTable(this.modelRow);
+        this.rowHeader.setFocusable(false);
+        this.rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumn colHead = this.rowHeader.getColumnModel().getColumn(0);
         colHead.setPreferredWidth(20);
-        this._tableScore = new JTable(this._modelScore);
-        this._tableScore.setFocusable(false);
-        this._gestionnaire = new ColorTab(10, 3);
-        this._tableScore.setDefaultRenderer(Object.class, this._gestionnaire);
+        this.tableScore = new JTable(this.modelScore);
+        this.tableScore.setFocusable(false);
+        this.gestionnaire = new ColorTab(10, 3);
+        this.tableScore.setDefaultRenderer(Object.class, this.gestionnaire);
         Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
-        this._tableScore.setFont(font);
-        this._tableScore.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        TableColumn colScore = this._tableScore.getColumnModel().getColumn(1);
+        this.tableScore.setFont(font);
+        this.tableScore.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumn colScore = this.tableScore.getColumnModel().getColumn(1);
         colScore.setPreferredWidth(50);
         
         Container pan = this.getContentPane();
@@ -68,56 +73,56 @@ public class HightScoreVue extends JFrame{
         
         //initialisation du menu déroulant
         Object[] modes = new Object[3];
-        modes[Yams.MODELIBRE] = new String("Libre");
-        modes[Yams.MODEMONTANT] = new String("Montant");
-        modes[Yams.MODEDESCENDANT] = new String("Descendant");
+        modes[Yams.MODELIBRE] = LIBRE;
+        modes[Yams.MODEMONTANT] = MONTANT;
+        modes[Yams.MODEDESCENDANT] = DESCENDANT;
         
         //instanciation du menu
-        this._cbModeJeu = new JComboBox(modes);
-        this._cbModeJeu.addActionListener(new ComboBoxEvents(this));
+        this.cbModeJeu = new JComboBox(modes);
+        this.cbModeJeu.addActionListener(new ComboBoxEvents(this));
         JLabel labModes = new JLabel("Mode de jeu: ");
         JPanel panMod = new JPanel(new FlowLayout());
         panMod.add(labModes);
-        panMod.add(this._cbModeJeu);
+        panMod.add(this.cbModeJeu);
         pan.add(panMod, BorderLayout.NORTH);
         
         JScrollPane jsp = new JScrollPane();
-        jsp.setViewportView(this._tableScore);
-        jsp.setRowHeaderView(this._rowHeader);
+        jsp.setViewportView(this.tableScore);
+        jsp.setRowHeaderView(this.rowHeader);
         Dimension d = jsp.getPreferredSize();
-        d.height = this._rowHeader.getPreferredSize().height+20;
+        d.height = this.rowHeader.getPreferredSize().height+20;
         jsp.setPreferredSize(d);
-        this._tableScore.getColumnModel().getColumn(0).setPreferredWidth(jsp.getPreferredSize().width-180); //ajustement de la colonne du pseudo
-        this._tableScore.getColumnModel().getColumn(2).setPreferredWidth(this._tableScore.getColumnModel().getColumn(2).getPreferredWidth()+30); //ajustement de la colonne de la date
+        this.tableScore.getColumnModel().getColumn(0).setPreferredWidth(jsp.getPreferredSize().width-180); //ajustement de la colonne du pseudo
+        this.tableScore.getColumnModel().getColumn(2).setPreferredWidth(this.tableScore.getColumnModel().getColumn(2).getPreferredWidth()+30); //ajustement de la colonne de la date
         for(int i=0; i<3; i++){
-            this._tableScore.getColumnModel().getColumn(i).setResizable(false);
+            this.tableScore.getColumnModel().getColumn(i).setResizable(false);
         }
-        Dimension dh = this._rowHeader.getPreferredScrollableViewportSize();
-        dh.width = this._rowHeader.getPreferredSize().width;
-        this._rowHeader.setPreferredScrollableViewportSize(dh);
+        Dimension dh = this.rowHeader.getPreferredScrollableViewportSize();
+        dh.width = this.rowHeader.getPreferredSize().width;
+        this.rowHeader.setPreferredScrollableViewportSize(dh);
         pan.add(jsp, BorderLayout.CENTER);
         
         JButton btnReset = new JButton("Reset...");
-        btnReset.addActionListener(new HightScoreEvents(this._myControler));
+        btnReset.addActionListener(new HightScoreEvents(this.myControler));
         btnReset.setActionCommand("resetHightScores");
         
         JButton btnExport = new JButton("Exporter...");
-        btnExport.addActionListener(new HightScoreEvents(this._myControler));
+        btnExport.addActionListener(new HightScoreEvents(this.myControler));
         btnExport.setActionCommand("exportHightScores");
         
-        this._btnRetour = new JButton("Retour");
-        this._btnRetour.addActionListener(new HightScoreEvents(this._myControler));
-        this._btnRetour.setActionCommand("closeHightScores");
+        this.btnRetour = new JButton("Retour");
+        this.btnRetour.addActionListener(new HightScoreEvents(this.myControler));
+        this.btnRetour.setActionCommand("closeHightScores");
         Box panBtn = Box.createHorizontalBox();
         panBtn.add(btnReset);
         panBtn.add(btnExport);
         panBtn.add(Box.createHorizontalGlue());
-        panBtn.add(this._btnRetour);
+        panBtn.add(this.btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
-        this._scoresLibres = this._myControler.loadHightScores(Yams.MODELIBRE);
-        this._scoresMontants = this._myControler.loadHightScores(Yams.MODEMONTANT);
-        this._scoresDescendants = this._myControler.loadHightScores(Yams.MODEDESCENDANT);
+        this.scoresLibres = this.myControler.loadHightScores(Yams.MODELIBRE);
+        this.scoresMontants = this.myControler.loadHightScores(Yams.MODEMONTANT);
+        this.scoresDescendants = this.myControler.loadHightScores(Yams.MODEDESCENDANT);
         
         this.changeScores(Yams.MODELIBRE);
         
@@ -131,68 +136,29 @@ public class HightScoreVue extends JFrame{
      */
     public final void changeScores(int mode){
         int nbCol = 3;
-        
-        this._modelScore.delScores();
-        this._gestionnaire.clear();
-        
-        switch(mode){
-            case Yams.MODELIBRE:
-                for(int i=0; i<this._scoresLibres.size(); i++){
-                    this._modelScore.addScore(this._scoresLibres.get(i));
-                    if(i%2 == 0){
-                        for(int col=0; col<nbCol; col++){
-                            this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
-                        }
-                    }
+
+        this.modelScore.delScores();
+        this.gestionnaire.clear();
+
+        List<Score> scores = this.getScores(mode);
+        for(int i=0; i<scores.size(); i++){
+            this.modelScore.addScore(scores.get(i));
+            if(i%2 == 0){
+                for(int col=0; col<nbCol; col++){
+                    this.gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
                 }
-                break;
-            case Yams.MODEMONTANT:
-                for(int i=0; i<this._scoresMontants.size(); i++){
-                    this._modelScore.addScore(this._scoresMontants.get(i));
-                    if(i%2 == 0){
-                        for(int col=0; col<nbCol; col++){
-                            this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
-                        }
-                    }
-                }
-                break;
-            case Yams.MODEDESCENDANT:
-                for(int i=0; i<this._scoresDescendants.size(); i++){
-                    this._modelScore.addScore(this._scoresDescendants.get(i));
-                    if(i%2 == 0){
-                        for(int col=0; col<nbCol; col++){
-                            this._gestionnaire.setCouleurs(i, col, ColorTab.BLEU);
-                        }
-                    }
-                }
-                break;
-            default:
-                System.err.println("Mode de jeu inconnu");
-                break; //n'arrivera pas
+            }
         }
-        this._tableScore.updateUI();
+        this.tableScore.updateUI();
     }
     
     /**
      * Met en relief les parties en paramètre
      */
     public void selectScores(List<Score> newScores, int mode){
-        List<Score> scores;
+        List<Score> scores = this.getScores(mode);
         int nbCol = 3;
-        
-        switch(mode){
-            case Yams.MODELIBRE:
-                scores = this._scoresLibres;
-                break;
-            case Yams.MODEMONTANT:
-                scores = this._scoresMontants;
-                break;
-            case Yams.MODEDESCENDANT:
-                scores = this._scoresDescendants;
-                break;
-            default:
-                return;
-        }
+
         for(int i=0; i<newScores.size(); i++){
             int j = 0;
             while((j<scores.size()) && (!this.isEquals(newScores.get(i), scores.get(j)))){
@@ -200,7 +166,7 @@ public class HightScoreVue extends JFrame{
             }
             if(j<scores.size()){
                 for(int col=0; col<nbCol; col++){
-                    this._gestionnaire.setCouleurs(j, col, ColorTab.VERT);
+                    this.gestionnaire.setCouleurs(j, col, ColorTab.VERT);
                 }
             }
         }
@@ -210,23 +176,18 @@ public class HightScoreVue extends JFrame{
      * Retourne vrai si les scores en paramètre sont égaux, faux sinon
      */
     private boolean isEquals(Score s1, Score s2){
-        if((s1.getName().equals(s2.getName())) && (s1.getScore() == s2.getScore()) && (s1.getDate().equals(s2.getDate()))){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (s1.getName().equals(s2.getName())) && (s1.getScore() == s2.getScore()) && (s1.getDate().equals(s2.getDate()));
     }
     
     /*
      * Permet d'afficher les score du mode de jeu choisis par l'utilisateur
      */
     public void selectMode(){
-        if(this._cbModeJeu.getSelectedItem().equals("Libre")){
+        if(this.cbModeJeu.getSelectedItem().equals(LIBRE)){
             this.changeScores(Yams.MODELIBRE);
-        }else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
+        }else if(this.cbModeJeu.getSelectedItem().equals(MONTANT)){
             this.changeScores(Yams.MODEMONTANT);
-        }else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
+        }else if(this.cbModeJeu.getSelectedItem().equals(DESCENDANT)){
             this.changeScores(Yams.MODEDESCENDANT);
         }
     }
@@ -237,16 +198,16 @@ public class HightScoreVue extends JFrame{
     public void setMode(int mode){
         switch(mode){
             case Yams.MODELIBRE:
-                this._cbModeJeu.setSelectedIndex(Yams.MODELIBRE);
+                this.cbModeJeu.setSelectedIndex(Yams.MODELIBRE);
                 break;
             case Yams.MODEMONTANT:
-                this._cbModeJeu.setSelectedIndex(Yams.MODEMONTANT);
+                this.cbModeJeu.setSelectedIndex(Yams.MODEMONTANT);
                 break;
             case Yams.MODEDESCENDANT:
-                this._cbModeJeu.setSelectedIndex(Yams.MODEDESCENDANT);
+                this.cbModeJeu.setSelectedIndex(Yams.MODEDESCENDANT);
                 break;
                 default:
-                    System.err.println("Mauvais mode de jeu");
+                    LOGGER.warning("Mauvais mode de jeu");
                     break; //n'arrivera pas
         }
     }
@@ -261,16 +222,16 @@ public class HightScoreVue extends JFrame{
     public void setScores(List<Score> scores, int mode){
         switch(mode){
             case Yams.MODELIBRE:
-                this._scoresLibres = scores;
+                this.scoresLibres = scores;
                 break;
             case Yams.MODEMONTANT:
-                this._scoresMontants = scores;
+                this.scoresMontants = scores;
                 break;
             case Yams.MODEDESCENDANT:
-                this._scoresDescendants = scores;
+                this.scoresDescendants = scores;
                 break;
             default:
-                System.err.println("Mode de jeu inexistant");
+                LOGGER.warning("Mode de jeu inexistant");
                 break;
         }
     }
@@ -279,60 +240,28 @@ public class HightScoreVue extends JFrame{
      * Ajoute un score
      */
     public void addScore(Score s, int mode){
-        switch(mode){
-            case Yams.MODELIBRE:
-                if(this._scoresLibres.size() < 10){
-                    this._scoresLibres.add(s);
-                    this.sortScores(this._scoresLibres);
-                    this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
-                }
-                else{
-                    Score oldScore = this._scoresLibres.get(this._scoresLibres.size()-1);
-                    if(s.getScore() > oldScore.getScore()){
-                        this._scoresLibres.remove(this._scoresLibres.size()-1);
-                        this._scoresLibres.add(s);
-                        this.sortScores(this._scoresLibres);
-                        this._myControler.saveHightScores(this._scoresLibres, Yams.MODELIBRE);
-                    }
-                }
-                this.changeScores(Yams.MODELIBRE);
-                break;
-            case Yams.MODEMONTANT:
-                if(this._scoresMontants.size() < 10){
-                    this._scoresMontants.add(s);
-                    this.sortScores(this._scoresMontants);
-                    this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
-                }
-                else{
-                    Score oldScore = this._scoresMontants.get(this._scoresMontants.size()-1);
-                    if(s.getScore() > oldScore.getScore()){
-                        this._scoresMontants.remove(this._scoresMontants.size()-1);
-                        this._scoresMontants.add(s);
-                        this.sortScores(this._scoresMontants);
-                        this._myControler.saveHightScores(this._scoresMontants, Yams.MODEMONTANT);
-                    }
-                }
-                this.changeScores(Yams.MODEMONTANT);
-                break;
-            case Yams.MODEDESCENDANT:
-                if(this._scoresDescendants.size() < 10){
-                    this._scoresDescendants.add(s);
-                    this.sortScores(this._scoresDescendants);
-                    this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
-                }
-                else{
-                    Score oldScore = this._scoresDescendants.get(this._scoresDescendants.size()-1);
-                    if(s.getScore() > oldScore.getScore()){
-                        this._scoresDescendants.remove(this._scoresDescendants.size()-1);
-                        this._scoresDescendants.add(s);
-                        this.sortScores(this._scoresDescendants);
-                        this._myControler.saveHightScores(this._scoresDescendants, Yams.MODEDESCENDANT);
-                    }
-                }
-                this.changeScores(Yams.MODEDESCENDANT);
-                break;
-            default:
-                break; //n'arrivera pas
+        if(mode != Yams.MODELIBRE && mode != Yams.MODEMONTANT && mode != Yams.MODEDESCENDANT){
+            return; //n'arrivera pas
+        }
+        List<Score> scores = this.getScores(mode);
+        addScoreToList(scores, s, mode);
+        this.changeScores(mode);
+    }
+
+    private void addScoreToList(List<Score> scores, Score s, int mode){
+        if(scores.size() < 10){
+            scores.add(s);
+            this.sortScores(scores);
+            this.myControler.saveHightScores(scores, mode);
+        }
+        else{
+            Score oldScore = scores.get(scores.size()-1);
+            if(s.getScore() > oldScore.getScore()){
+                scores.remove(scores.size()-1);
+                scores.add(s);
+                this.sortScores(scores);
+                this.myControler.saveHightScores(scores, mode);
+            }
         }
     }
     
@@ -342,13 +271,13 @@ public class HightScoreVue extends JFrame{
     public List<Score> getScores(int mode){
         switch(mode){
             case Yams.MODELIBRE:
-                return this._scoresLibres;
+                return this.scoresLibres;
             case Yams.MODEMONTANT:
-                return this._scoresMontants;
+                return this.scoresMontants;
             case Yams.MODEDESCENDANT:
-                return this._scoresDescendants;
+                return this.scoresDescendants;
             default:
-                return null; //n'arrivera pas
+                return new ArrayList<>(); //n'arrivera pas
         }
     }
     
@@ -371,14 +300,14 @@ public class HightScoreVue extends JFrame{
      * Retourne le code du mode de jeu
      */
     public int getModeJeu(){
-        if(this._cbModeJeu.getSelectedItem().getClass().equals(String.class)){
-            if(this._cbModeJeu.getSelectedItem().equals("Libre")){
+        if(this.cbModeJeu.getSelectedItem().getClass().equals(String.class)){
+            if(this.cbModeJeu.getSelectedItem().equals(LIBRE)){
                 return Yams.MODELIBRE;
             }
-            else if(this._cbModeJeu.getSelectedItem().equals("Montant")){
+            else if(this.cbModeJeu.getSelectedItem().equals(MONTANT)){
                 return Yams.MODEMONTANT;
             }
-            else if(this._cbModeJeu.getSelectedItem().equals("Descendant")){
+            else if(this.cbModeJeu.getSelectedItem().equals(DESCENDANT)){
                 return Yams.MODEDESCENDANT;
             }
         }

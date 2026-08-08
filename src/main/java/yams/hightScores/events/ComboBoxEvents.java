@@ -15,15 +15,15 @@ import yams.hightScores.views.HightScoreVue;
  * @author Nicolas
  */
 public class ComboBoxEvents implements ActionListener{
-    private HightScoreVue _view;
+    private HightScoreVue view;
     
     public ComboBoxEvents(HightScoreVue v){
-        this._view = v;
+        this.view = v;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this._view.selectMode();
+        this.view.selectMode();
     }
     
 }

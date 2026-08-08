@@ -12,6 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import yams.control.YamControl;
 import yams.hightScores.pojos.Score;
 import yams.pojos.Joueur;
@@ -24,20 +25,19 @@ import yams.pojos.Joueur;
  * Fenêtre affichée en fin de partie. Elle donne le pseudo et le score du gagnant puis elle demande à l'utilisateur ce qu'il veux faire
  */
 public class FinPartieVue extends JDialog{
-    private YamControl _myControler;
+    private transient YamControl myControler;
     
     public FinPartieVue(YamControl yc, JeuVue parent, Joueur[] gagnants){
         super(parent, "Fin de la partie", false); //fenêtre non modale pour pouvoir afficher les scores et modifier les préférences
         super.setResizable(false);
-        this._myControler = yc;
-        this.setJMenuBar(new MyMenuBar(this._myControler, "finPartie"));
+        this.myControler = yc;
+        this.setJMenuBar(new MyMenuBar(this.myControler, "finPartie"));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //fermeture impossible (bouton quitter pour quitter)
         Color couleur = new Color(43, 133, 53);
         int max = gagnants.length-1;
         
         String strGagnant = gagnants[max].getNom();
-        String strChoix = "Que souhaitez-vous faire?";
-        
+
         strGagnant += " à gagné la partie avec " + gagnants[max].getScore(16) + " points!!!";
         
         JEditorPane listeJoueurs;
@@ -45,7 +45,7 @@ public class FinPartieVue extends JDialog{
         if(gagnants.length > 1){
             int position = 1;
             for(max = gagnants.length-1; max >= 0; max--){
-                String texte = new String("<center><b><span color='white'>");
+                String texte = "<center><b><span color='white'>";
                 texte += String.valueOf(position);
                 if(max == gagnants.length-1){
                     texte += "er: ";
@@ -64,10 +64,10 @@ public class FinPartieVue extends JDialog{
         List<Score> scores = new ArrayList<Score>();
         for(int i = gagnants.length-1; i>=0; i--){
             Score score = new Score(gagnants[i].getNom(), gagnants[i].getScore(16));
-            this._myControler.addAScore(score);
+            this.myControler.addAScore(score);
             scores.add(score);
         }
-        this._myControler.selectScores(scores);
+        this.myControler.selectScores(scores);
         
         listeJoueurs = new JEditorPane("text/html", new String(liste));
         listeJoueurs.setEditable(false);
@@ -80,7 +80,7 @@ public class FinPartieVue extends JDialog{
         JPanel panLabels = new JPanel(new GridLayout(3, 1, 0, 5));
         panLabels.setBackground(couleur);
         
-        labGagnant.setHorizontalAlignment(JLabel.CENTER);
+        labGagnant.setHorizontalAlignment(SwingConstants.CENTER);
         panLabels.add(labGagnant);
         if(gagnants.length > 1){
             panLabels.add(listeJoueurs);
@@ -101,7 +101,7 @@ public class FinPartieVue extends JDialog{
         }
         this.setLocationRelativeTo(this.getParent());
         Point p = this.getLocation();
-        p.setLocation(p.getX(), p.getY() + (parent.getLocation().getY() - (this.getHeight()/2)));
+        p.setLocation(p.getX(), p.getY() + (parent.getLocation().getY() - (this.getHeight()/2.0)));
     }
     
     /*
@@ -109,7 +109,7 @@ public class FinPartieVue extends JDialog{
      */
     public void affichage(boolean enable){
         if(enable){
-            this._myControler.setActualWindow("FinPartie");
+            this.myControler.setActualWindow("FinPartie");
         }
         this.setVisible(enable);
     }

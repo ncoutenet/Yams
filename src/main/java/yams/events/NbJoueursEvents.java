@@ -6,6 +6,7 @@ package yams.events;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.logging.Logger;
 import yams.control.YamControl;
 
 /**
@@ -17,16 +18,17 @@ import yams.control.YamControl;
  * Classe gérant les modifications du nombre de joueurs
  */
 public class NbJoueursEvents implements ChangeListener{
-    private YamControl _myControler;
-    
+    private static final Logger LOGGER = Logger.getLogger(NbJoueursEvents.class.getName());
+    private YamControl myControler;
+
     public NbJoueursEvents(YamControl yc){
-        _myControler = yc;
+        myControler = yc;
     }
-    
+
     @Override
     public void stateChanged(ChangeEvent ce) {
-        System.out.println(" Nombre de joueurs modifié");
-        _myControler.setNomsJoueurs();
+        LOGGER.info(" Nombre de joueurs modifié");
+        myControler.setNomsJoueurs();
     }
     
 }

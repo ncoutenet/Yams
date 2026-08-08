@@ -14,11 +14,11 @@ import yams.hightScores.events.HightScoreEvents;
  * @author nicolas
  */
 public class ResetHightScoresVue extends JDialog{
-    private YamControl _myControler;
+    private transient YamControl myControler;
     
     public ResetHightScoresVue(YamControl yc, HightScoreVue parent){
         super(parent, true);
-        this._myControler = yc;
+        this.myControler = yc;
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setTitle("Remise à zéro des meilleurs scores");
         
@@ -33,11 +33,11 @@ public class ResetHightScoresVue extends JDialog{
         JButton btnActu = new JButton("Uniquement ceux du mode actuel");
         JButton btnCancel = new JButton("Aucun");
         
-        btnAll.addActionListener(new HightScoreEvents(this._myControler));
+        btnAll.addActionListener(new HightScoreEvents(this.myControler));
         btnAll.setActionCommand("resetAllScores");
-        btnActu.addActionListener(new HightScoreEvents(this._myControler));
+        btnActu.addActionListener(new HightScoreEvents(this.myControler));
         btnActu.setActionCommand("resetOneScore");
-        btnCancel.addActionListener(new HightScoreEvents(this._myControler));
+        btnCancel.addActionListener(new HightScoreEvents(this.myControler));
         btnCancel.setActionCommand("resetNoScore");
         
         Container panel = this.getContentPane();
