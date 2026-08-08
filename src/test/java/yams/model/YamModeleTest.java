@@ -5,11 +5,15 @@ import org.junit.jupiter.api.Test;
 import yams.pojos.Joueur;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /*
  * myControler est passé à null : seules les méthodes qui ne le déréférencent
- * pas (sortJoueurs, majNbLances) sont testées ici. YamControl n'a pas de
- * constructeur léger utilisable en test (I/O disque + fenêtres Swing).
+ * pas (sortJoueurs, majNbLances, changerJoueur, getTour, lancer) sont testées
+ * ici. YamControl n'a pas de constructeur léger utilisable en test (I/O
+ * disque + fenêtres Swing), et les méthodes calc1..calcYam ont en plus
+ * besoin d'un JeuVue réel (fenêtre Swing complète construite dans son seul
+ * constructeur) donc restent hors périmètre.
  */
 class YamModeleTest {
 
@@ -47,5 +51,32 @@ class YamModeleTest {
         assertEquals("Deuxieme", tries[0].getNom());
         assertEquals("Troisieme", tries[1].getNom());
         assertEquals("Premier", tries[2].getNom());
+    }
+
+    @Test
+    void testGetTourInitialiseAZero() {
+        assertEquals(0, yamModele.getTour());
+    }
+
+    @Test
+    void testChangerJoueurTourneEtBoucle() {
+        assertEquals(1, incrementeEtGetTour());
+        assertEquals(2, incrementeEtGetTour());
+        assertEquals(0, incrementeEtGetTour());
+    }
+
+    private int incrementeEtGetTour() {
+        yamModele.changerJoueur();
+        return yamModele.getTour();
+    }
+
+    @Test
+    void testLancerRetourneCinqDesEntreUnEtSix() {
+        int[] des = yamModele.lancer();
+
+        assertEquals(5, des.length);
+        for (int de : des) {
+            assertTrue(de >= 1 && de <= 6);
+        }
     }
 }
