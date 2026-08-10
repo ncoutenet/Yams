@@ -33,8 +33,8 @@ public class AnimationLancerListener implements ActionListener{
     public AnimationLancerListener(JeuVue vue, YamControl yc, boolean[] aAnimer, int[] valeursFinales, int lancesRestants){
         this.myView = vue;
         this.myControler = yc;
-        this.aAnimer = aAnimer;
-        this.valeursFinales = valeursFinales;
+        this.aAnimer = aAnimer.clone();
+        this.valeursFinales = valeursFinales.clone();
         this.lancesRestants = lancesRestants;
         this.ticksRestants = NB_TICKS;
     }

@@ -16,6 +16,14 @@ import yams.folder.DataFolder;
 import yams.hight_scores.pojos.Score;
 import yams.hight_scores.views.HightScoreVue;
 import yams.hight_scores.views.ResetHightScoresVue;
+import yams.model.ItemName;
+import static yams.model.ItemName.SUITE;
+import static yams.model.ItemName.PETITE_SUITE;
+import static yams.model.ItemName.CHANCE;
+import static yams.model.ItemName.CARRE;
+import static yams.model.ItemName.YAM;
+import static yams.model.ItemName.GRANDE_SUITE;
+import static yams.model.ItemName.BRELAN;
 import yams.model.YamModele;
 import yams.pojos.Joueur;
 import yams.aide.ReglesVue;
@@ -51,13 +59,6 @@ import yams.views.*;
  */
 public class YamControl {
     private static final Logger LOGGER = Logger.getLogger(YamControl.class.getName());
-    private static final String SUITE = "suite";
-    private static final String PETITE_SUITE = "petite suite";
-    private static final String CHANCE = "chance";
-    private static final String CARRE = "carré";
-    private static final String YAM = "yam's";
-    private static final String GRANDE_SUITE = "grande suite";
-    private static final String BRELAN = "brelan";
     private ConnexionVue connexion;
     private YamModele modele;
     private JeuVue jeu;
@@ -143,46 +144,13 @@ public class YamControl {
     /*
      * Retourne les coups restants
      */
-    private String nomCoup(int i, boolean rules){
-        switch(i){
-            case 0:
-                return "1";
-            case 1:
-                return "2";
-            case 2:
-                return "3";
-            case 3:
-                return "4";
-            case 4:
-                return "5";
-            case 5:
-                return "6";
-            case 6:
-                return rules ? "+" : BRELAN;
-            case 7:
-                return rules ? "-" : PETITE_SUITE;
-            case 8:
-                return rules ? SUITE : GRANDE_SUITE;
-            case 9:
-                return "full";
-            case 10:
-                return CARRE;
-            case 11:
-                return YAM;
-            case 12:
-                return rules ? "" : CHANCE;
-            default:
-                return "";
-        }
-    }
-
     private String getCoupsRestants(int joueur){
         List<String> coups = new ArrayList<String>();
         boolean rules = this.getPrefs().get(Yams.PREFRULES);
         int nbCoups = rules ? 12 : 13;
 
         for(int i = 0; i < nbCoups; i++){
-            String coup = nomCoup(i, rules);
+            String coup = ItemName.nomCoup(i, rules);
             if(this.scoresValides[joueur][i]){
                 coups.add(coup);
             }
@@ -606,8 +574,7 @@ public class YamControl {
     }
 
     public void validationScore(){
-        String choix;
-        choix = this.finTour.getChoix();
+        String choix = this.finTour.getChoix();
 
         int[] des = this.jeu.getDes();
 

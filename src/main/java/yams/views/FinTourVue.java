@@ -15,6 +15,7 @@ import javax.swing.*;
 import yams.Yams;
 import yams.control.YamControl;
 import yams.events.YamEvents;
+import yams.model.ItemName;
 
 /**
  *
@@ -148,53 +149,7 @@ public class FinTourVue extends JDialog{
     }
 
     private String nomCoup(int i, boolean rules){
-        String type = "";
-        switch(i){
-            case 0:
-                type = "1";
-                break;
-            case 1:
-                type = "2";
-                break;
-            case 2:
-                type = "3";
-                break;
-            case 3:
-                type = "4";
-                break;
-            case 4:
-                type = "5";
-                break;
-            case 5:
-                type = "6";
-                break;
-            case 6:
-                type = rules ? "+" : "brelan";
-                break;
-            case 7:
-                type = rules ? "-" : "petite suite";
-                break;
-            case 8:
-                type = rules ? "suite" : "grande suite";
-                break;
-            case 9:
-                type = "full";
-                break;
-            case 10:
-                type = "carré";
-                break;
-            case 11:
-                type = "yam's";
-                break;
-            case 12:
-                if(!rules){
-                    type = "chance";
-                }
-                break;
-            default:
-                break;
-        }
-        return type;
+        return ItemName.nomCoup(i, rules);
     }
 
     private void setChoix(){
