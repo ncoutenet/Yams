@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package yams.hightScores.pojos;
 
 import java.io.Serializable;
@@ -11,10 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
- * @author Nicolas
+ * Fixture de test : reproduit à l'identique l'ancienne forme de yams.hight_scores.pojos.Score
+ * (paquet yams.hightScores et champs préfixés _) telle qu'elle existait avant le renommage,
+ * afin de générer en mémoire des flux sérialisés au format historique et vérifier la
+ * rétrocompatibilité de lecture des .dat déjà présents chez les joueurs.
  */
-public class Score implements Serializable{
+@SuppressWarnings({"java:S116", "java:S117"})
+public class Score implements Serializable {
     private int _id;
     private String _name;
     private int _score;

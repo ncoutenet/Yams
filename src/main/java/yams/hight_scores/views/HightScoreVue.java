@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package yams.hightScores.views;
+package yams.hight_scores.views;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,11 +14,11 @@ import javax.swing.*;
 import javax.swing.table.TableColumn;
 import yams.Yams;
 import yams.control.YamControl;
-import yams.hightScores.events.ComboBoxEvents;
-import yams.hightScores.events.HightScoreEvents;
-import yams.hightScores.pojos.Score;
-import yams.hightScores.table.ModelRowHeader;
-import yams.hightScores.table.ModeleTableHightScore;
+import yams.hight_scores.events.ComboBoxEvents;
+import yams.hight_scores.events.HightScoreEvents;
+import yams.hight_scores.pojos.Score;
+import yams.hight_scores.table.ModelRowHeader;
+import yams.hight_scores.table.ModeleTableHightScore;
 import yams.table.ColorTab;
 
 /**

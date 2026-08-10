@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-package yams.hightScores.events;
+package yams.hight_scores.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import yams.hightScores.views.HightScoreVue;
+import yams.hight_scores.views.HightScoreVue;
 
 /**
  *

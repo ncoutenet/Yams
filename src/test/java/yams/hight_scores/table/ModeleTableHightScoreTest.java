@@ -1,8 +1,8 @@
-package yams.hightScores.table;
+package yams.hight_scores.table;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import yams.hightScores.pojos.Score;
+import yams.hight_scores.pojos.Score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

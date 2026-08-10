@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import yams.control.YamControl;
-import yams.hightScores.pojos.Score;
+import yams.hight_scores.pojos.Score;
 import yams.pojos.Joueur;
 /**
  *

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import yams.Yams;
-import yams.hightScores.pojos.Score;
+import yams.hight_scores.pojos.Score;
 
 /**
  *
@@ -150,9 +150,11 @@ public class DataFolder{
                 break;
         }
 
-        try(ObjectInputStream loader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(this.dirName + f))))){
+        try(ObjectInputStream loader = new ScoreCompatibleObjectInputStream(new BufferedInputStream(new FileInputStream(new File(this.dirName + f))))){
             result = (ArrayList<Score>)loader.readObject();
-            LOGGER.info("chargement de "+result.size()+" score(s)");
+            if(LOGGER.isLoggable(Level.INFO)){
+                LOGGER.log(Level.INFO, "chargement de {0} score(s)", result.size());
+            }
         }catch(EOFException e){
             LOGGER.warning(e.toString());
             result = new ArrayList<>();
@@ -185,7 +187,9 @@ public class DataFolder{
 
         try(ObjectInputStream loader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(this.dirName + PREFERENCES))))){
             result = (ArrayList<Boolean>)loader.readObject();
-            LOGGER.info("chargement de " + result.size() + " préférences");
+            if(LOGGER.isLoggable(Level.INFO)){
+                LOGGER.log(Level.INFO, "chargement de {0} préférences", result.size());
+            }
         }catch(EOFException e){
             LOGGER.warning(e.toString());
             result = new ArrayList<>();
@@ -299,6 +303,24 @@ public class DataFolder{
             fw.write("</Scores>");
         }catch(IOException e){
             LOGGER.log(Level.SEVERE, "Erreur lors de l'export", e);
+        }
+    }
+
+    // redirige les .dat sérialisés avant le renommage du paquet yams.hightScores -> yams.hight_scores vers la classe Score actuelle
+    // visibilité paquet (au lieu de private) pour être exercée directement par DataFolderTest
+    static final class ScoreCompatibleObjectInputStream extends ObjectInputStream {
+        private static final String OLD_SCORE_CLASS_NAME = "yams.hightScores.pojos.Score";
+
+        ScoreCompatibleObjectInputStream(InputStream in) throws IOException {
+            super(in);
+        }
+
+        @Override
+        protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
+            if(OLD_SCORE_CLASS_NAME.equals(desc.getName())){
+                return Score.class;
+            }
+            return super.resolveClass(desc);
         }
     }
 }

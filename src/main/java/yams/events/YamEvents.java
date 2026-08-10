@@ -5,7 +5,6 @@
 package yams.events;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Logger;
 import yams.control.YamControl;
 
 /**
@@ -17,7 +16,6 @@ import yams.control.YamControl;
  * Classe gérant les clics sur les boutons
  */
 public class YamEvents implements ActionListener{
-    private static final Logger LOGGER = Logger.getLogger(YamEvents.class.getName());
     private YamControl myControler;
 
     public YamEvents(YamControl yc){
@@ -26,7 +24,6 @@ public class YamEvents implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        LOGGER.info(" commande reçue: " + ae.getActionCommand());
         if(ae.getActionCommand().equals("commencer")){
             this.myControler.commencer();
         }

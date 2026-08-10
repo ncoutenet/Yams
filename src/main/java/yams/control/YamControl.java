@@ -13,9 +13,9 @@ import yams.Yams;
 import yams.aide.AideVue;
 import yams.events.AnimationLancerListener;
 import yams.folder.DataFolder;
-import yams.hightScores.pojos.Score;
-import yams.hightScores.views.HightScoreVue;
-import yams.hightScores.views.ResetHightScoresVue;
+import yams.hight_scores.pojos.Score;
+import yams.hight_scores.views.HightScoreVue;
+import yams.hight_scores.views.ResetHightScoresVue;
 import yams.model.YamModele;
 import yams.pojos.Joueur;
 import yams.aide.ReglesVue;
@@ -503,7 +503,6 @@ public class YamControl {
             for(int i = 0; i < this.nbJoueurs; i++){
                 joueurs[i] = this.jeu.getJoueur(i);
             }
-            LOGGER.info("tri joueur");
             joueurs = this.modele.sortJoueurs(joueurs);
             
             this.finPartie = new FinPartieVue(this, this.jeu, joueurs);
@@ -552,53 +551,57 @@ public class YamControl {
      * enregistrement des scores choisis
      */
     private void appliquerChoix(String choix, int[] des){
-        if(choix.equals("1")){
-            this.modele.calc1(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("2")){
-           this.modele.calc2(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("3")){
-            this.modele.calc3(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("4")){
-            this.modele.calc4(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("5")){
-            this.modele.calc5(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("6")){
-            this.modele.calc6(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("+")){
-            this.modele.calcPlus(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("-")){
-            this.modele.calcMinus(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(SUITE)){
-            this.modele.calcSuite(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals("full")){
-            this.modele.calcFull(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(CARRE)){
-            this.modele.calcCarre(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(YAM)){
-            this.modele.calcYam(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(BRELAN)){
-            this.modele.calcBrelan(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(PETITE_SUITE)){
-            this.modele.calcLittleSuite(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(GRANDE_SUITE)){
-            this.modele.calcBigSuite(des, this.scoresValides, this.tour, this.jeu);
-        }
-        else if(choix.equals(CHANCE)){
-            this.modele.calcChance(des, this.scoresValides, this.tour, this.jeu);
+        switch(choix){
+            case "1":
+                this.modele.calc1(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "2":
+                this.modele.calc2(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "3":
+                this.modele.calc3(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "4":
+                this.modele.calc4(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "5":
+                this.modele.calc5(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "6":
+                this.modele.calc6(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "+":
+                this.modele.calcPlus(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "-":
+                this.modele.calcMinus(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case SUITE:
+                this.modele.calcSuite(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case "full":
+                this.modele.calcFull(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case CARRE:
+                this.modele.calcCarre(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case YAM:
+                this.modele.calcYam(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case BRELAN:
+                this.modele.calcBrelan(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case PETITE_SUITE:
+                this.modele.calcLittleSuite(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case GRANDE_SUITE:
+                this.modele.calcBigSuite(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            case CHANCE:
+                this.modele.calcChance(des, this.scoresValides, this.tour, this.jeu);
+                break;
+            default:
+                break;
         }
     }
 
@@ -676,8 +679,8 @@ public class YamControl {
      * affichage des règles lors du choix du mode
      */
     public void apercuRegle(){
-        int mode = this.connexion.getModeJeu();
-        new ReglesVue(mode, this);
+        int modeJeu = this.connexion.getModeJeu();
+        new ReglesVue(modeJeu, this);
     }
     
     /**

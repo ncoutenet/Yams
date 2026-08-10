@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package yams.hightScores.table;
+package yams.hight_scores.table;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
-import yams.hightScores.pojos.Score;
+import yams.hight_scores.pojos.Score;
 
 /**
  *

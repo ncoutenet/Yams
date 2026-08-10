@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package yams.hightScores.table;
+package yams.hight_scores.table;
 
 import java.util.ArrayList;
 import java.util.List;

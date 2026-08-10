@@ -1,4 +1,4 @@
-package yams.hightScores.table;
+package yams.hight_scores.table;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

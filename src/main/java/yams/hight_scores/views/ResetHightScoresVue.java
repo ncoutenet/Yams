@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams.hightScores.views;
+package yams.hight_scores.views;
 
 import java.awt.*;
 import javax.swing.*;
 import yams.control.YamControl;
-import yams.hightScores.events.HightScoreEvents;
+import yams.hight_scores.events.HightScoreEvents;
 
 /**
  *
