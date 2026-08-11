@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import yams.Yams;
+import yams.ModeJeu;
 import yams.hight_scores.pojos.Score;
 
 /**
@@ -99,17 +99,17 @@ public class DataFolder{
         }
     }
 
-    public void saveScores(List<Score> scores, int mode){
+    public void saveScores(List<Score> scores, ModeJeu mode){
         String f;
 
         switch(mode){
-            case Yams.MODELIBRE:
+            case LIBRE:
                 f = LIBRE;
                 break;
-            case Yams.MODEMONTANT:
+            case MONTANT:
                 f = MONTANT;
                 break;
-            case Yams.MODEDESCENDANT:
+            case DESCENDANT:
                 f = DESCENDANT;
                 break;
             default:
@@ -131,18 +131,18 @@ public class DataFolder{
         }
     }
 
-    public List<Score> loadScores(int mode){
+    public List<Score> loadScores(ModeJeu mode){
         List<Score> result;
         String f;
 
         switch(mode){
-            case Yams.MODELIBRE:
+            case LIBRE:
                 f = LIBRE;
                 break;
-            case Yams.MODEMONTANT:
+            case MONTANT:
                 f = MONTANT;
                 break;
-            case Yams.MODEDESCENDANT:
+            case DESCENDANT:
                 f = DESCENDANT;
                 break;
             default:

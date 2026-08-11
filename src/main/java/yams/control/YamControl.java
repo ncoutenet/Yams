@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.Timer;
+import yams.ModeJeu;
 import yams.Yams;
 import yams.aide.AideVue;
 import yams.events.AnimationLancerListener;
@@ -76,7 +77,7 @@ public class YamControl {
     private int nbJoueurs;
     private boolean[][] scoresValides;
     private int tour;
-    private int mode;
+    private ModeJeu mode;
     private List<Boolean> listPrefs;
     
     public YamControl(){
@@ -357,19 +358,21 @@ public class YamControl {
     public void finTour(){
         jeu.setTour(tour);
         this.confirmFinTour.setVisible(false); //ferme l'éventuelle fenêtre de confirmation ouverte
-        if(mode == 0){
-            finTour = new FinTourVue(scoresValides, tour, this, false, this.jeu);
-            finTour.setAffichage(true);
-        }
-        else if(mode == 1){
-            finTourMontantDescendant(indexCoupMontant());
-        }
-        else if(mode == 2){
-            finTourMontantDescendant(indexCoupDescendant());
-        }
-        else{
-            LOGGER.warning("[ERREUR] mode de jeu faux");
-            System.exit(1);
+        switch(mode){
+            case LIBRE:
+                finTour = new FinTourVue(scoresValides, tour, this, false, this.jeu);
+                finTour.setAffichage(true);
+                break;
+            case MONTANT:
+                finTourMontantDescendant(indexCoupMontant());
+                break;
+            case DESCENDANT:
+                finTourMontantDescendant(indexCoupDescendant());
+                break;
+            default:
+                LOGGER.warning("[ERREUR] mode de jeu faux");
+                System.exit(1);
+                break;
         }
     }
     
@@ -501,7 +504,7 @@ public class YamControl {
      */
     public void finTour(boolean fin){
         jeu.setTour(tour);
-        if(mode == 0){
+        if(mode == ModeJeu.LIBRE){
             finTour = new FinTourVue(scoresValides, tour, this, fin, this.jeu);
             finTour.setAffichage(true);
         }
@@ -646,7 +649,7 @@ public class YamControl {
      * affichage des règles lors du choix du mode
      */
     public void apercuRegle(){
-        int modeJeu = this.connexion.getModeJeu();
+        ModeJeu modeJeu = this.connexion.getModeJeu();
         new ReglesVue(modeJeu, this);
     }
     
@@ -671,14 +674,14 @@ public class YamControl {
     /*
      * Sauve les scores
      */
-    public void saveHightScores(List<Score> scores, int modeJeu){
+    public void saveHightScores(List<Score> scores, ModeJeu modeJeu){
         this.data.saveScores(scores, modeJeu);
     }
 
     /*
      * Charge les scores
      */
-    public List<Score> loadHightScores(int modeJeu){
+    public List<Score> loadHightScores(ModeJeu modeJeu){
         return this.data.loadScores(modeJeu);
     }
     
@@ -718,29 +721,29 @@ public class YamControl {
         this.resetHightScores.dispose();
         
         if(all){
-            this.hightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
-            this.data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
-            
-            this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
-            this.data.saveScores(new ArrayList<Score>(), Yams.MODEMONTANT);
-            
-            this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
-            this.data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+            this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.LIBRE);
+            this.data.saveScores(new ArrayList<Score>(), ModeJeu.LIBRE);
+
+            this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.MONTANT);
+            this.data.saveScores(new ArrayList<Score>(), ModeJeu.MONTANT);
+
+            this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
+            this.data.saveScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
         }
         else{
             switch(this.hightScore.getModeJeu()){
-                case Yams.MODELIBRE:
-                    this.hightScore.setScores(new ArrayList<Score>(), Yams.MODELIBRE);
-                    this.data.saveScores(new ArrayList<Score>(), Yams.MODELIBRE);
+                case LIBRE:
+                    this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.LIBRE);
+                    this.data.saveScores(new ArrayList<Score>(), ModeJeu.LIBRE);
                     break;
-                case Yams.MODEMONTANT:
-                    this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEMONTANT);
-                    
-                    this.hightScore.changeScores(Yams.MODEMONTANT);
+                case MONTANT:
+                    this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.MONTANT);
+
+                    this.hightScore.changeScores(ModeJeu.MONTANT);
                     break;
-                case Yams.MODEDESCENDANT:
-                    this.hightScore.setScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
-                    this.data.saveScores(new ArrayList<Score>(), Yams.MODEDESCENDANT);
+                case DESCENDANT:
+                    this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
+                    this.data.saveScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
                     break;
                 default:
                     LOGGER.warning("Mode de jeu inexistant");
@@ -781,7 +784,7 @@ public class YamControl {
         int returnVal = jfc.showSaveDialog(null);
         
         if(returnVal == JFileChooser.APPROVE_OPTION){
-            this.data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this.hightScore.getScores(Yams.MODELIBRE), this.hightScore.getScores(Yams.MODEMONTANT), this.hightScore.getScores(Yams.MODEDESCENDANT));
+            this.data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this.hightScore.getScores(ModeJeu.LIBRE), this.hightScore.getScores(ModeJeu.MONTANT), this.hightScore.getScores(ModeJeu.DESCENDANT));
         }
     }
 }

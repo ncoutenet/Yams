@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.Random;
 import java.util.logging.Logger;
 import javax.swing.*;
+import yams.ModeJeu;
 import yams.Yams;
 import yams.control.YamControl;
 import yams.events.GameWindowStateListener;
@@ -59,16 +60,19 @@ public class JeuVue extends JFrame {
     private ColorTab gestionnaire;
     private transient YamControl myControler;
 
-    private void setTitreMode(int mode){
-        if(mode == Yams.MODELIBRE)
-        {
-            this.setTitle("Jeu du Yam's Libre");
-        }
-        else if(mode == Yams.MODEMONTANT){
-            this.setTitle("Jeu du Yam's Montant");
-        }
-        else if(mode == Yams.MODEDESCENDANT){
-            this.setTitle("Jeu du Yam's Descendant");
+    private void setTitreMode(ModeJeu mode){
+        switch(mode){
+            case LIBRE:
+                this.setTitle("Jeu du Yam's Libre");
+                break;
+            case MONTANT:
+                this.setTitle("Jeu du Yam's Montant");
+                break;
+            case DESCENDANT:
+                this.setTitle("Jeu du Yam's Descendant");
+                break;
+            default:
+                break;
         }
     }
 
@@ -142,7 +146,7 @@ public class JeuVue extends JFrame {
         }
     }
 
-    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode, boolean sound){
+    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, ModeJeu mode, boolean sound){
         //prise en compte du mode de jeu
         this.setTitreMode(mode);
 

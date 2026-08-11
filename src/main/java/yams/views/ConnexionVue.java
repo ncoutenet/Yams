@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import yams.Yams;
+import yams.ModeJeu;
 import yams.control.YamControl;
 import yams.events.NbJoueursEvents;
 import yams.events.YamEvents;
@@ -40,7 +40,7 @@ public class ConnexionVue extends JFrame{
     private JSpinner spinner;
     private List<JTextField> joueurs;
     private JPanel panJoueurs;
-    private JComboBox cbModeJeu;
+    private JComboBox<ModeJeu> cbModeJeu;
     
     public ConnexionVue(YamControl yc, boolean sound){
         super("Yam's");
@@ -64,14 +64,8 @@ public class ConnexionVue extends JFrame{
         couleur = new Color(43, 133, 53);
         pan.setBackground(couleur);
         
-        //initialisation du menu déroulant
-        Object[] modes = new Object[3];
-        modes[Yams.MODELIBRE] = "Libre";
-        modes[Yams.MODEMONTANT] = "Montant";
-        modes[Yams.MODEDESCENDANT] = "Descendant";
-        
-        //instanciation du menu
-        this.cbModeJeu = new JComboBox(modes);
+        //instanciation du menu déroulant
+        this.cbModeJeu = new JComboBox<>(ModeJeu.values());
         JLabel labModes = new JLabel("Mode de jeu: ");
         labModes.setForeground(Color.WHITE);
         
@@ -234,19 +228,7 @@ public class ConnexionVue extends JFrame{
     /*
      * Retourne le code du mode de jeu
      */
-    public int getModeJeu(){
-        if(this.cbModeJeu.getSelectedItem().getClass().equals(String.class)){
-            if(this.cbModeJeu.getSelectedItem().equals("Libre")){
-                return Yams.MODELIBRE;
-            }
-            else if(this.cbModeJeu.getSelectedItem().equals("Montant")){
-                return Yams.MODEMONTANT;
-            }
-            else if(this.cbModeJeu.getSelectedItem().equals("Descendant")){
-                return Yams.MODEDESCENDANT;
-            }
-        }
-        
-        return -1;
+    public ModeJeu getModeJeu(){
+        return (ModeJeu) this.cbModeJeu.getSelectedItem();
     }
 }
