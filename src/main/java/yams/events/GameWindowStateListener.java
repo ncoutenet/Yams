@@ -15,22 +15,15 @@ import yams.control.YamControl;
  * @author nicolas
  */
 public class GameWindowStateListener implements WindowStateListener{
-    private YamControl _myControler;
-    
+    private final YamControl myControler;
+
     public GameWindowStateListener(YamControl yc){
-        this._myControler = yc;
+        myControler = yc;
     }
 
     @Override
     public void windowStateChanged(WindowEvent e) {
-        if(e.getNewState() == Window.NORMAL){
-            this._myControler.resizeDices(false);
-            System.out.println("normal");
-        }
-        else{
-            this._myControler.resizeDices(true);
-            System.out.println("miximisé");
-        }
+        myControler.resizeDices(e.getNewState() != Window.NORMAL);
     }
     
 }

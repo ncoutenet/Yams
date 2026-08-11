@@ -20,7 +20,7 @@ import yams.events.YamEvents;
  * @author nicolas
  */
 public class ConfirmScoreVue extends JDialog{
-    private YamControl _myControler;
+    private transient YamControl myControler;
     private JButton btnValider;
     private JButton btnAnnuler;
     
@@ -28,7 +28,7 @@ public class ConfirmScoreVue extends JDialog{
         super(parent, true); //mise en place de la modalité
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
-        this._myControler = yc;
+        this.myControler = yc;
         
         //préparation de la couleur de fond
         Color couleur = new Color(43, 133, 53);
@@ -42,11 +42,11 @@ public class ConfirmScoreVue extends JDialog{
         JLabel label = new JLabel("Êtes-vous sûr de vouloir finir ce tour maintenant?"); 
         label.setForeground(Color.WHITE); //label écrit en blanc
         btnValider = new JButton("Oui");
-        btnValider.addActionListener(new YamEvents(this._myControler));
+        btnValider.addActionListener(new YamEvents(this.myControler));
         btnValider.setActionCommand("confirmFinTour");
         
         btnAnnuler = new JButton("Non");
-        btnAnnuler.addActionListener(new YamEvents(this._myControler));
+        btnAnnuler.addActionListener(new YamEvents(this.myControler));
         btnAnnuler.setActionCommand("cancelFinTour");
         
         //initialisation des sous-conteneurs de la fenêtre

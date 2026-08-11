@@ -16,41 +16,40 @@ import yams.control.YamControl;
  * Classe gérant les clics sur les boutons
  */
 public class YamEvents implements ActionListener{
-    private YamControl _myControler;
-    
+    private YamControl myControler;
+
     public YamEvents(YamControl yc){
-        _myControler = yc;
+        myControler = yc;
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.out.println(" commande reçue: " + ae.getActionCommand());
         if(ae.getActionCommand().equals("commencer")){
-            this._myControler.commencer();
+            this.myControler.commencer();
         }
         if(ae.getActionCommand().equals("lancer")){
-            this._myControler.lancer();
+            this.myControler.lancer();
         }
         if(ae.getActionCommand().equals("finTour")){
-            this._myControler.finTour(false);
+            this.myControler.finTour(false);
         }
         if(ae.getActionCommand().equals("validerFinTour")){
-            this._myControler.validationScore();
+            this.myControler.validationScore();
         }
         if(ae.getActionCommand().equals("annulerFinTour")){
-            this._myControler.annulerFinTour();
+            this.myControler.annulerFinTour();
         }
         if (ae.getActionCommand().equals("confScore")){
-            this._myControler.confScores();
+            this.myControler.confScores();
         }
         if(ae.getActionCommand().equals("changePrefs")){
-            this._myControler.changePrefs();
+            this.myControler.changePrefs();
         }
         if(ae.getActionCommand().equals("confirmFinTour")){
-            this._myControler.finTour();
+            this.myControler.finTour();
         }
         if(ae.getActionCommand().equals("cancelFinTour")){
-            this._myControler.closeConfirmWindow();
+            this.myControler.closeConfirmWindow();
         }
     }
     

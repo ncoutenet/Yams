@@ -14,21 +14,16 @@ import java.awt.Toolkit;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
-import yams.Yams;
-import yams.control.YamControl;
 
 /**
  *
  * @author nicolas
  */
 public class AideVue extends JFrame{
-    private YamControl _myControler;
-    
-    public AideVue(YamControl yc){
+
+    public AideVue(){
         super("Aide");
-        this._myControler = yc;
-        
+
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         
@@ -45,7 +40,7 @@ public class AideVue extends JFrame{
         GraphicsConfiguration gconf = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
         
         if((tk.getScreenSize().getHeight() - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2)) < height){
-            height = (int)(tk.getScreenSize().height - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2)); 
+            height = tk.getScreenSize().height - (tk.getScreenInsets(gconf).bottom * 2) - (tk.getScreenInsets(gconf).top * 2);
         }
         
         jep.setPreferredSize(new Dimension(width, height));

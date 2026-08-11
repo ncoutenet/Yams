@@ -28,6 +28,6 @@ public class Yams {
     public static final int MODEDESCENDANT = 2;
 
     public static void main(String[] args) {
-        YamControl contoleur = new YamControl();
+        new YamControl();
     }
 }

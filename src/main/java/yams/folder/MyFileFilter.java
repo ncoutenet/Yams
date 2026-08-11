@@ -6,15 +6,15 @@ import javax.swing.filechooser.FileFilter;
 
 public class MyFileFilter extends FileFilter {
 	//description et extention acceptée par le filtre
-	private String _description;
-	private String _extension;
+	private String description;
+	private String extension;
 	
 	public MyFileFilter(String description, String extension){
 		if(description == null || extension == null){
 			throw new NullPointerException("La description (ou l'extension) ne peut être nulle");
 		}
-		this._description = description;
-		this._extension = extension;
+		this.description = description;
+		this.extension = extension;
 	}
 	
 	@Override
@@ -24,12 +24,12 @@ public class MyFileFilter extends FileFilter {
 		}
 		String fileName = f.getName().toLowerCase();
 		
-		return fileName.endsWith("."+this._extension);
+		return fileName.endsWith("."+this.extension);
 	}
 
 	@Override
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 }

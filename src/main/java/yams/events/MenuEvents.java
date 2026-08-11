@@ -14,49 +14,49 @@ import yams.control.YamControl;
  * @author nicolas
  */
 public class MenuEvents implements ActionListener{
-    private YamControl _myControler;
+    private YamControl myControler;
     
     public MenuEvents(YamControl yc){
-        this._myControler = yc;
+        this.myControler = yc;
     }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getActionCommand().equals("confirmNouveau")){
-            this._myControler.confirmQuit(false);
+            this.myControler.confirmQuit(false);
         }
         if(ae.getActionCommand().equals("nouvellePartie")){
-            this._myControler.nouvellePartie();
+            this.myControler.nouvellePartie();
         }
         if(ae.getActionCommand().equals("nouveau")){
-            this._myControler.nouveau();
+            this.myControler.nouveau();
         }
         if(ae.getActionCommand().equals("recommencer")){
-            this._myControler.recommencer();
+            this.myControler.recommencer();
         }
         if (ae.getActionCommand().equals("annuler")){
-            this._myControler.annuler();
+            this.myControler.annuler();
         }
         if(ae.getActionCommand().equals("openHightScores")){
-            this._myControler.openHightScores();
+            this.myControler.openHightScores();
         }
         if(ae.getActionCommand().equals("prefs")){
-            this._myControler.showPrefs();
+            this.myControler.showPrefs();
         }
         if (ae.getActionCommand().equals("confirmQuit")){
-            this._myControler.confirmQuit(true);
+            this.myControler.confirmQuit(true);
         }
         if(ae.getActionCommand().equals("quitter")){
-            this._myControler.quitter();
+            this.myControler.quitter();
         }
         if(ae.getActionCommand().equals("help")){
-            this._myControler.affichHelp();
+            this.myControler.affichHelp();
         }
         if(ae.getActionCommand().equals("regles")){
-            this._myControler.affichageRegles();
+            this.myControler.affichageRegles();
         }
         if (ae.getActionCommand().equals("aperçuRegles")){
-            this._myControler.apercuRegle();
+            this.myControler.apercuRegle();
         }
     }
     

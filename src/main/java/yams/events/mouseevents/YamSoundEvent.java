@@ -2,46 +2,46 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yams.events.mouseEvents;
+package yams.events.mouseevents;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import yams.views.JeuVue;
+import yams.control.YamControl;
 
 /**
  *
  * @author nicolas
  */
-public class YamMouseEvent3 implements MouseListener{
-    private JeuVue _myView;
+public class YamSoundEvent implements MouseListener{
+    private YamControl myControler;
     
-    public YamMouseEvent3(JeuVue vue){
-        this._myView = vue;
+    public YamSoundEvent(YamControl control){
+        this.myControler = control;
     }
-
+    
     @Override
     public void mouseClicked(MouseEvent me) {
-        this._myView.majSelDes(2);
+        this.myControler.majSoundOnClic();
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
-        
+        // non utilisé
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        
+        // non utilisé
     }
 
     @Override
     public void mouseEntered(MouseEvent me) {
-        
+        // non utilisé
     }
 
     @Override
     public void mouseExited(MouseEvent me) {
-        
+        // non utilisé
     }
     
 }

@@ -4,16 +4,16 @@
  */
 package yams.views;
 
-import sun.security.krb5.SCDynamicStoreConfig;
 import yams.pojos.MyMenuBar;
 import java.awt.*;
 import java.util.Random;
+import java.util.logging.Logger;
 import javax.swing.*;
 import yams.Yams;
 import yams.control.YamControl;
 import yams.events.GameWindowStateListener;
 import yams.events.YamEvents;
-import yams.events.mouseEvents.*;
+import yams.events.mouseevents.*;
 import yams.pojos.Joueur;
 import yams.table.ColorTab;
 import yams.table.ModeleTableScore;
@@ -29,37 +29,37 @@ import yams.table.ModeleTableScore;
  * Elle contient les dés et le tableau des scores
  */
 public class JeuVue extends JFrame {
+    private static final Logger LOGGER = Logger.getLogger(JeuVue.class.getName());
     private static final Random RANDOM = new Random();
-    private ImageIcon[] _des;
-    private ImageIcon[]  _delSelect;
-    private ImageIcon[] _desUnSelect;
-    private JLabel _aQui;
-    private JLabel[] _labDes;
-    private JLabel _nbLancers;
-    private JButton _btnFinTour;
-    private JButton _btnLancer;
-    private JLabel _labTotalPoints;
-    private JLabel _labPointsConserves;
-    private JLabel _labCoupsRestants;
-    private JLabel _labSound;
-    private Icon[] _iSounds;
-    private double _normalHeight;
+    private ImageIcon[] des;
+    private ImageIcon[]  delSelect;
+    private ImageIcon[] desUnSelect;
+    private JLabel aQui;
+    private JLabel[] labDes;
+    private JLabel nbLancers;
+    private JButton btnFinTour;
+    private JButton btnLancer;
+    private JLabel labTotalPoints;
+    private JLabel labPointsConserves;
+    private JLabel labCoupsRestants;
+    private JLabel labSound;
+    private transient Icon[] iSounds;
+    private double normalHeight;
     
-    private int[] _valDes;
-    private boolean[] _selDes;
-    private String[] _nomsJoueurs;
-    private int _tour;
-    private int _lancesRestants;
-    private boolean _sound;
-    private boolean _animationEnCours;
+    private int[] valDes;
+    private boolean[] selDes;
+    private String[] nomsJoueurs;
+    private int tour;
+    private int lancesRestants;
+    private boolean sound;
+    private boolean animationEnCours;
     
-    private JTable _tableau;
-    private ModeleTableScore _tabModel;
-    private ColorTab _gestionnaire;
-    private YamControl _myControler;
-    
-    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode, boolean sound){
-        //prise en compte du mode de jeu
+    private JTable tableau;
+    private ModeleTableScore tabModel;
+    private ColorTab gestionnaire;
+    private transient YamControl myControler;
+
+    private void setTitreMode(int mode){
         if(mode == Yams.MODELIBRE)
         {
             this.setTitle("Jeu du Yam's Libre");
@@ -70,116 +70,133 @@ public class JeuVue extends JFrame {
         else if(mode == Yams.MODEDESCENDANT){
             this.setTitle("Jeu du Yam's Descendant");
         }
-        
-        //sauvegarde du contrôleur
-        _myControler = yc;
-        
-        //initialisations des préférences
-        this._sound = sound;
-        
-        //initialisation des images des dés et de la couleur de fond
-        this._delSelect = new ImageIcon[6];
-        this._delSelect[0] = new ImageIcon(getClass().getResource("/images/dés/select/1.png"));
-        this._delSelect[1] = new ImageIcon(getClass().getResource("/images/dés/select/2.png"));
-        this._delSelect[2] = new ImageIcon(getClass().getResource("/images/dés/select/3.png"));
-        this._delSelect[3] = new ImageIcon(getClass().getResource("/images/dés/select/4.png"));
-        this._delSelect[4] = new ImageIcon(getClass().getResource("/images/dés/select/5.png"));
-        this._delSelect[5] = new ImageIcon(getClass().getResource("/images/dés/select/6.png"));
-        
-        this._desUnSelect = new ImageIcon[6];
-        this._desUnSelect[0] = new ImageIcon(getClass().getResource("/images/dés/unselect/1.png"));
-        this._desUnSelect[1] = new ImageIcon(getClass().getResource("/images/dés/unselect/2.png"));
-        this._desUnSelect[2] = new ImageIcon(getClass().getResource("/images/dés/unselect/3.png"));
-        this._desUnSelect[3] = new ImageIcon(getClass().getResource("/images/dés/unselect/4.png"));
-        this._desUnSelect[4] = new ImageIcon(getClass().getResource("/images/dés/unselect/5.png"));
-        this._desUnSelect[5] = new ImageIcon(getClass().getResource("/images/dés/unselect/6.png"));
-        
-        this._des = new ImageIcon[7];
-        this._des[0] = new ImageIcon(getClass().getResource("/images/dés/normal/indef.png"));
-        this._des[1] = new ImageIcon(getClass().getResource("/images/dés/normal/1.png"));
-        this._des[2] = new ImageIcon(getClass().getResource("/images/dés/normal/2.png"));
-        this._des[3] = new ImageIcon(getClass().getResource("/images/dés/normal/3.png"));
-        this._des[4] = new ImageIcon(getClass().getResource("/images/dés/normal/4.png"));
-        this._des[5] = new ImageIcon(getClass().getResource("/images/dés/normal/5.png"));
-        this._des[6] = new ImageIcon(getClass().getResource("/images/dés/normal/6.png"));
-        this._labDes = new JLabel[5];
-        Color couleur = new Color(43, 133, 53);
+    }
+
+    private void initImagesDes(){
+        this.delSelect = new ImageIcon[6];
+        this.delSelect[0] = new ImageIcon(getClass().getResource("/images/dés/select/1.png"));
+        this.delSelect[1] = new ImageIcon(getClass().getResource("/images/dés/select/2.png"));
+        this.delSelect[2] = new ImageIcon(getClass().getResource("/images/dés/select/3.png"));
+        this.delSelect[3] = new ImageIcon(getClass().getResource("/images/dés/select/4.png"));
+        this.delSelect[4] = new ImageIcon(getClass().getResource("/images/dés/select/5.png"));
+        this.delSelect[5] = new ImageIcon(getClass().getResource("/images/dés/select/6.png"));
+
+        this.desUnSelect = new ImageIcon[6];
+        this.desUnSelect[0] = new ImageIcon(getClass().getResource("/images/dés/unselect/1.png"));
+        this.desUnSelect[1] = new ImageIcon(getClass().getResource("/images/dés/unselect/2.png"));
+        this.desUnSelect[2] = new ImageIcon(getClass().getResource("/images/dés/unselect/3.png"));
+        this.desUnSelect[3] = new ImageIcon(getClass().getResource("/images/dés/unselect/4.png"));
+        this.desUnSelect[4] = new ImageIcon(getClass().getResource("/images/dés/unselect/5.png"));
+        this.desUnSelect[5] = new ImageIcon(getClass().getResource("/images/dés/unselect/6.png"));
+
+        this.des = new ImageIcon[7];
+        this.des[0] = new ImageIcon(getClass().getResource("/images/dés/normal/indef.png"));
+        this.des[1] = new ImageIcon(getClass().getResource("/images/dés/normal/1.png"));
+        this.des[2] = new ImageIcon(getClass().getResource("/images/dés/normal/2.png"));
+        this.des[3] = new ImageIcon(getClass().getResource("/images/dés/normal/3.png"));
+        this.des[4] = new ImageIcon(getClass().getResource("/images/dés/normal/4.png"));
+        this.des[5] = new ImageIcon(getClass().getResource("/images/dés/normal/5.png"));
+        this.des[6] = new ImageIcon(getClass().getResource("/images/dés/normal/6.png"));
+    }
+
+    private void initLabelsDes(){
+        this.labDes = new JLabel[5];
         for(int i = 0; i < 5; i++){
-            this._labDes[i] = new JLabel();
+            this.labDes[i] = new JLabel();
             switch(i){
                 case 0:
-                    this._labDes[i].addMouseListener(new YamMouseEvent1(this));
+                    this.labDes[i].addMouseListener(new YamMouseEvent1(this));
                     break;
                 case 1:
-                    this._labDes[i].addMouseListener(new YamMouseEvent2(this));
+                    this.labDes[i].addMouseListener(new YamMouseEvent2(this));
                     break;
                 case 2:
-                    this._labDes[i].addMouseListener(new YamMouseEvent3(this));
+                    this.labDes[i].addMouseListener(new YamMouseEvent3(this));
                     break;
                 case 3:
-                    this._labDes[i].addMouseListener(new YamMouseEvent4(this));
+                    this.labDes[i].addMouseListener(new YamMouseEvent4(this));
                     break;
                 case 4:
-                    this._labDes[i].addMouseListener(new YamMouseEvent5(this));
+                    this.labDes[i].addMouseListener(new YamMouseEvent5(this));
                     break;
                 default: //n'arrivera jamais
-                    System.err.println("ERREUR: mauvais ID de label de dé");
+                    LOGGER.warning("ERREUR: mauvais ID de label de dé");
                     break;
             }
         }
-        
-        //initialisation du tableau des scores
-        this._tabModel = new ModeleTableScore(nbJoueurs, this._myControler.getPrefs().get(Yams.PREFRULES));
-        this.setJoueurs(noms);
-        this._tableau = new JTable(_tabModel);
-        this._tableau.setName("Tableau des scores");
-        this._tableau.setFocusable(false);
-        Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
-        this._tableau.setFont(font);
-        this._tableau.setGridColor(Color.black);
+    }
 
-        //initialisation du gestionnaire de couleurs
-        this._gestionnaire = new ColorTab(nbJoueurs, 18);
-        
+    private void initCouleursTableau(int nbJoueurs, boolean rules){
         for(int i = 0; i < nbJoueurs; i++){
             for(int j = 0; j < 18; j++){
-                if(this._myControler.getPrefs().get(Yams.PREFRULES) && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
-                    this._gestionnaire.setCouleurs(i, j, ColorTab.GRIS);
+                if(rules && ((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 12) || (j == 17))){
+                    this.gestionnaire.setCouleurs(i, j, ColorTab.GRIS);
                 }
                 else if(((j == 0) || (j == 7) || (j == 8) || (j == 9) || (j == 17))){
-                    this._gestionnaire.setCouleurs(i, j, ColorTab.GRIS);
+                    this.gestionnaire.setCouleurs(i, j, ColorTab.GRIS);
                 }
                 else{
-                    this._gestionnaire.setCouleurs(i, j, ColorTab.BLANC);
+                    this.gestionnaire.setCouleurs(i, j, ColorTab.BLANC);
                 }
             }
         }
-        
+    }
+
+    public JeuVue(int nbJoueurs, String[] noms, int tour, YamControl yc, int mode, boolean sound){
+        //prise en compte du mode de jeu
+        this.setTitreMode(mode);
+
+        //sauvegarde du contrôleur
+        myControler = yc;
+
+        //initialisations des préférences
+        this.sound = sound;
+
+        //initialisation des images des dés et de la couleur de fond
+        this.initImagesDes();
+        Color couleur = new Color(43, 133, 53);
+        this.initLabelsDes();
+
+        //initialisation du tableau des scores
+        this.tabModel = new ModeleTableScore(this.myControler.getPrefs().get(Yams.PREFRULES));
+        this.setJoueurs(noms);
+        this.tableau = new JTable(tabModel);
+        this.tableau.setName("Tableau des scores");
+        this.tableau.setFocusable(false);
+        Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
+        this.tableau.setFont(font);
+        this.tableau.setGridColor(Color.black);
+
+        //initialisation du gestionnaire de couleurs
+        this.gestionnaire = new ColorTab(nbJoueurs, 18);
+        boolean rules = this.myControler.getPrefs().get(Yams.PREFRULES);
+        this.initCouleursTableau(nbJoueurs, rules);
+
         //liaison du tableau avec son gestionnaire de couleur
-        this._tableau.setDefaultRenderer(Object.class, this._gestionnaire);
-        this._tableau.updateUI();
+        this.tableau.setDefaultRenderer(Object.class, this.gestionnaire);
+        this.tableau.updateUI();
         
         //initialisation du tour, des valeurs et des sélections des dés
-        this._tour = tour;
-        this._valDes = new int[5];
-        this._selDes = new boolean[5];
-        this._aQui = new JLabel();
-        this._aQui.setHorizontalAlignment(SwingConstants.CENTER);
-        this._aQui.setForeground(Color.WHITE);
-        this._aQui.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+        this.tour = tour;
+        this.valDes = new int[5];
+        this.selDes = new boolean[5];
+        this.aQui = new JLabel();
+        this.aQui.setHorizontalAlignment(SwingConstants.CENTER);
+        this.aQui.setForeground(Color.WHITE);
+        this.aQui.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         for(int i = 0; i < 5; i++){
-            _selDes[i] = false;
-            _valDes[i] = 0;
+            selDes[i] = false;
+            valDes[i] = 0;
         }
-        this.setAQui(this._tour);
+        this.setAQui(this.tour);
         this.refreshDes();
         
         //initialisation des variables locales restantes
-        this._lancesRestants = 3;
+        this.lancesRestants = 3;
         
         //fabrication de la fenêtre
         JPanel panJeu = new JPanel(new BorderLayout());
-        panJeu.add(_aQui, BorderLayout.NORTH);
+        panJeu.add(aQui, BorderLayout.NORTH);
         panJeu.setBackground(couleur);
         
         JPanel panDes = new JPanel(new GridLayout(5, 1, 0, 5));
@@ -188,7 +205,7 @@ public class JeuVue extends JFrame {
         {
             JPanel panel = new JPanel(new FlowLayout());
             panel.setBackground(couleur);
-            panel.add(this._labDes[i]);
+            panel.add(this.labDes[i]);
             panDes.add(panel);
         }
         panDes.setBackground(couleur);
@@ -198,72 +215,72 @@ public class JeuVue extends JFrame {
         
         //emplacement des dés
         JPanel panLancement = new JPanel(new GridLayout(4, 1));
-        _btnLancer = new JButton("Lancer");
-        _btnLancer.addActionListener(new YamEvents(_myControler));
-        _btnLancer.setActionCommand("lancer");
-        this._nbLancers = new JLabel();
-        this._nbLancers.setHorizontalAlignment(SwingConstants.CENTER);
-        this._nbLancers.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+        btnLancer = new JButton("Lancer");
+        btnLancer.addActionListener(new YamEvents(myControler));
+        btnLancer.setActionCommand("lancer");
+        this.nbLancers = new JLabel();
+        this.nbLancers.setHorizontalAlignment(SwingConstants.CENTER);
+        this.nbLancers.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         this.setNbLancers(3);
-        _btnFinTour = new JButton("Fin du Tour");
-        _btnFinTour.addActionListener(new YamEvents(_myControler));
-        _btnFinTour.setActionCommand("finTour");
+        btnFinTour = new JButton("Fin du Tour");
+        btnFinTour.addActionListener(new YamEvents(myControler));
+        btnFinTour.setActionCommand("finTour");
         this.setEnabledFinTour(false);
-        _labTotalPoints = new JLabel("0 points");
-        this._labPointsConserves = new JLabel();
+        labTotalPoints = new JLabel("0 points");
+        this.labPointsConserves = new JLabel();
         this.setPointsSelect();
         JPanel panBtnLancement = new JPanel(new FlowLayout());
-        panBtnLancement.add(_btnLancer);
-        panBtnLancement.add(this._btnFinTour);
+        panBtnLancement.add(btnLancer);
+        panBtnLancement.add(this.btnFinTour);
         panBtnLancement.setBackground(couleur);
         panLancement.add(panBtnLancement);
-        panLancement.add(this._labTotalPoints);
-        panLancement.add(this._labPointsConserves);
-        panLancement.add(this._nbLancers);
-        this._nbLancers.setForeground(Color.WHITE);
-        this._labTotalPoints.setForeground(Color.WHITE);
-        this._labTotalPoints.setHorizontalAlignment(SwingConstants.CENTER);
-        this._labPointsConserves.setForeground(Color.WHITE);
-        this._labPointsConserves.setHorizontalAlignment(SwingConstants.CENTER);
+        panLancement.add(this.labTotalPoints);
+        panLancement.add(this.labPointsConserves);
+        panLancement.add(this.nbLancers);
+        this.nbLancers.setForeground(Color.WHITE);
+        this.labTotalPoints.setForeground(Color.WHITE);
+        this.labTotalPoints.setHorizontalAlignment(SwingConstants.CENTER);
+        this.labPointsConserves.setForeground(Color.WHITE);
+        this.labPointsConserves.setHorizontalAlignment(SwingConstants.CENTER);
         panLancement.setBackground(couleur);
         panJeu.add(panLancement, BorderLayout.SOUTH);
         
         //barre des menus
-        JMenuBar barre = new MyMenuBar(this._myControler, "jeu");
+        JMenuBar barre = new MyMenuBar(this.myControler, "jeu");
         this.setJMenuBar(barre);
         
         //bouton du son 
         JPanel panBtnBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panBtnBar.setBackground(couleur);
-        this._iSounds = new Icon[2];
-        this._iSounds[0] = new ImageIcon(getClass().getResource("/images/sound/soundOff.png"));
-        this._iSounds[1] = new ImageIcon(getClass().getResource("/images/sound/soundOn.png"));
-        this._labSound = new JLabel();
-        this._labSound.addMouseListener(new YamSoundEvent(this._myControler));
-        this.majSound(this._sound);
-        panBtnBar.add(this._labSound);
+        this.iSounds = new Icon[2];
+        this.iSounds[0] = new ImageIcon(getClass().getResource("/images/sound/soundOff.png"));
+        this.iSounds[1] = new ImageIcon(getClass().getResource("/images/sound/soundOn.png"));
+        this.labSound = new JLabel();
+        this.labSound.addMouseListener(new YamSoundEvent(this.myControler));
+        this.majSound(this.sound);
+        panBtnBar.add(this.labSound);
         
         //label des couts restants
-        this._labCoupsRestants = new JLabel();
-        this._labCoupsRestants.setHorizontalAlignment(SwingConstants.CENTER);
-        this._labCoupsRestants.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+        this.labCoupsRestants = new JLabel();
+        this.labCoupsRestants.setHorizontalAlignment(SwingConstants.CENTER);
+        this.labCoupsRestants.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         
         //assemblage des éléments de la fenêtre
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         pan.add(panBtnBar, BorderLayout.NORTH);
         pan.add(panJeu, BorderLayout.WEST);
-        JScrollPane spScores = new JScrollPane(this._tableau);
-        spScores.setPreferredSize(this._tableau.getPreferredSize());
+        JScrollPane spScores = new JScrollPane(this.tableau);
+        spScores.setPreferredSize(this.tableau.getPreferredSize());
         pan.add(spScores, BorderLayout.CENTER);
-        pan.add(this._labCoupsRestants, BorderLayout.SOUTH);
-        this._labCoupsRestants.setForeground(Color.WHITE);
+        pan.add(this.labCoupsRestants, BorderLayout.SOUTH);
+        this.labCoupsRestants.setForeground(Color.WHITE);
         pan.setBackground(couleur);
         
         //mise en place des détails de la fenêtre
         this.pack();
-        this._normalHeight = this.getBounds().getHeight();
-        this.addWindowStateListener(new GameWindowStateListener(this._myControler));
+        this.normalHeight = this.getBounds().getHeight();
+        this.addWindowStateListener(new GameWindowStateListener(this.myControler));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(this.getParent());
     }
@@ -273,7 +290,7 @@ public class JeuVue extends JFrame {
      */
     public void affichage(boolean enable){
         if(enable){
-            this._myControler.setActualWindow("Jeu");
+            this.myControler.setActualWindow("Jeu");
         }
         this.setVisible(enable);
     }
@@ -282,12 +299,12 @@ public class JeuVue extends JFrame {
      * Permet la mise à jour de l'icone du son
      */
     public final void majSound(boolean init){
-        this._sound = init;
+        this.sound = init;
             
-        if(this._sound){
-            this._labSound.setIcon(this._iSounds[1]);
+        if(this.sound){
+            this.labSound.setIcon(this.iSounds[1]);
         }else{
-            this._labSound.setIcon(this._iSounds[0]);
+            this.labSound.setIcon(this.iSounds[0]);
         }
     }
     
@@ -295,42 +312,43 @@ public class JeuVue extends JFrame {
      * Prend le numéro du joueur en paramètre et retourne le joueur correspondant
      */
     public Joueur getJoueur(int index){
-        return this._tabModel.getJoueur(index);
+        return this.tabModel.getJoueur(index);
     }
     
     /*
      * Met à jour la couleur du tableau suivant les index donnés
      */
     public void majColorTab(int joueur, int index, int type){
-        this._gestionnaire.setCouleurs(joueur, index, type);
+        this.gestionnaire.setCouleurs(joueur, index, type);
     }
     
     /*
-     * Met de coté les dés à conserver via le tableau de booléens _selDes
+     * Met de coté les dés à conserver via le tableau de booléens selDes
      */
     public void majSelDes(int index){
-        if(this._animationEnCours){
+        if(this.animationEnCours){
             return;
         }
-        if(this._valDes[index] == 0){
-            System.err.println("Erreur: Dé non lancé!!!");
+        if(this.valDes[index] == 0){
+            LOGGER.warning("Erreur: Dé non lancé!!!");
         }
         else {
-            this._selDes[index] = !_selDes[index];
-            if(this._selDes[index]){
-                if(this._myControler.getPrefs().get(Yams.PREFSELECT)){
-                    this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
+            this.selDes[index] = !selDes[index];
+            if(this.selDes[index]){
+                boolean garde = this.myControler.getPrefs().get(Yams.PREFSELECT);
+                if(garde){
+                    this.labDes[index].setIcon(this.delSelect[this.valDes[index]-1]);
                 }
                 else{
-                    this._labDes[index].setIcon(this._desUnSelect[this._valDes[index]-1]);
+                    this.labDes[index].setIcon(this.desUnSelect[this.valDes[index]-1]);
                     
                 }
             }
             else{
-                this._labDes[index].setIcon(this._des[this._valDes[index]]);
+                this.labDes[index].setIcon(this.des[this.valDes[index]]);
             }
             this.setPointsSelect();
-            this._myControler.checkDes();
+            this.myControler.checkDes();
         }
     }
     
@@ -340,22 +358,14 @@ public class JeuVue extends JFrame {
     public void majCoupsRestants(String coups){
         String texte = "Coups restants: ";
         texte += coups;
-        this._labCoupsRestants.setText(texte);
+        this.labCoupsRestants.setText(texte);
     }
     
     /*
      * Permet la mise à jour des affichages des dés lorsque les dés sélectionnés sont conservés
      */
     private void majDes(int index){
-        this._labDes[index].setIcon(this._des[this._valDes[index]]);
-        this.getContentPane().repaint();
-    }
-    
-    /*
-     * Permet la mise à jour des affichages des dés lorsque les dés sélectionnés sont relancés
-     */
-    private void majDesSelect(int index){
-        this._labDes[index].setIcon(this._delSelect[this._valDes[index]-1]);
+        this.labDes[index].setIcon(this.des[this.valDes[index]]);
         this.getContentPane().repaint();
     }
     
@@ -363,15 +373,15 @@ public class JeuVue extends JFrame {
      * Permet la mise à jour de la valeur d'un dé
      */
     public void setValDe(int index, int val, boolean init){
-        this._valDes[index] = val;
+        this.valDes[index] = val;
         if(init){
             this.majDes(index);
         }
         else{
-            boolean garde = this._myControler.getPrefs().get(Yams.PREFSELECT);
+            boolean garde = this.myControler.getPrefs().get(Yams.PREFSELECT);
             this.majDes(index);
             if(!garde){
-                this._selDes[index] = false;
+                this.selDes[index] = false;
             }
         }
     }
@@ -380,7 +390,7 @@ public class JeuVue extends JFrame {
      * Retourne la valeur des dés
      */
     public int[] getDes(){
-        return this._valDes;
+        return this.valDes;
     }
 
     /*
@@ -389,7 +399,7 @@ public class JeuVue extends JFrame {
     public void afficherFacesAleatoires(boolean[] aAnimer){
         for(int i = 0; i < 5; i++){
             if(aAnimer[i]){
-                this._labDes[i].setIcon(this._des[1 + RANDOM.nextInt(6)]);
+                this.labDes[i].setIcon(this.des[1 + RANDOM.nextInt(6)]);
             }
         }
     }
@@ -398,7 +408,7 @@ public class JeuVue extends JFrame {
      * Indique si une animation de lancer est en cours, pour bloquer la sélection des dés
      */
     public void setAnimationEnCours(boolean animationEnCours){
-        this._animationEnCours = animationEnCours;
+        this.animationEnCours = animationEnCours;
     }
     
     /*
@@ -409,21 +419,22 @@ public class JeuVue extends JFrame {
         String texte;
         if(!init){
             for(int i = 0; i < 5; i++){
-                somme += this._valDes[i];
+                somme += this.valDes[i];
             }
         }
         
         texte = String.valueOf(somme);
         texte += " points";
         
-        this._labTotalPoints.setText(texte);
-        this._labTotalPoints.setForeground(Color.WHITE);
+        this.labTotalPoints.setText(texte);
+        this.labTotalPoints.setForeground(Color.WHITE);
         
-        if((!init) && (!this._myControler.getPrefs().get(Yams.PREFSELECT))){
+        boolean garde = this.myControler.getPrefs().get(Yams.PREFSELECT);
+        if((!init) && (!garde)){
             texte = "(";
             texte += String.valueOf(somme);
             texte += " points conservés)";
-            this._labPointsConserves.setText(texte);
+            this.labPointsConserves.setText(texte);
         }
     }
     
@@ -433,10 +444,11 @@ public class JeuVue extends JFrame {
     private void setPointsSelect(){
         int score = 0;
         String texte;
-        
+        boolean garde = this.myControler.getPrefs().get(Yams.PREFSELECT);
+
         for(int i = 0; i < 5; i++){
-            if(this._selDes[i] == this._myControler.getPrefs().get(Yams.PREFSELECT)){
-                score += this._valDes[i];
+            if(this.selDes[i] == garde){
+                score += this.valDes[i];
             }
         }
         
@@ -444,31 +456,31 @@ public class JeuVue extends JFrame {
         texte += String.valueOf(score);
         texte += " points conservés)";
         
-        this._labPointsConserves.setText(texte);
+        this.labPointsConserves.setText(texte);
     }
     
     /*
      * Permet l'activation/désactivation du bouton "Fin du tour"
      */
     public final void setEnabledFinTour(boolean enable){
-        this._btnFinTour.setEnabled(enable);
+        this.btnFinTour.setEnabled(enable);
     }
     
     /*
      * Permet l'activation/désactivation du bouton "lancer"
      */
     public void setEnabledLancer(boolean enable){
-        this._btnLancer.setEnabled(enable);
+        this.btnLancer.setEnabled(enable);
     }
     
     /*
      * Permet d'afficher le tour du joueur
      */
     private void setAQui(int index){
-        String tour = "Tour de: ";
-        String nom = this._nomsJoueurs[index];
-            tour += nom;
-        this._aQui.setText(tour);
+        String texteTour = "Tour de: ";
+        String nom = this.nomsJoueurs[index];
+            texteTour += nom;
+        this.aQui.setText(texteTour);
     }
     
     /*
@@ -479,8 +491,8 @@ public class JeuVue extends JFrame {
         
         lancer += String.valueOf(nb);
         lancer += " lancers";
-        this._nbLancers.setText(lancer);
-        this._lancesRestants = nb;
+        this.nbLancers.setText(lancer);
+        this.lancesRestants = nb;
     }
     
     /*
@@ -488,7 +500,7 @@ public class JeuVue extends JFrame {
      */
     public final void refreshDes(){
         for(int i = 0; i < 5; i++){
-            _labDes[i].setIcon(_des[_valDes[i]]);
+            labDes[i].setIcon(des[valDes[i]]);
         }
     }
     
@@ -505,7 +517,7 @@ public class JeuVue extends JFrame {
      */
     public void initDes(){
         for(int i = 0; i < 5; i++){
-            this._selDes[i] = false;
+            this.selDes[i] = false;
         }
         for(int i = 0; i < 5; i++){
             this.setValDe(i, 0, true);
@@ -520,24 +532,24 @@ public class JeuVue extends JFrame {
         lances += String.valueOf(nb);
         lances += " lancers.";
         
-        this._nbLancers.setText(lances);
+        this.nbLancers.setText(lances);
     }
     /*
      * retourne le nombre de lancés restants
      */
     public int getLancesRestants(){
-        return this._lancesRestants;
+        return this.lancesRestants;
     }
     
     /*
      * Ajoute les joueurs au tableau des scores
      */
     public final void setJoueurs(String[] joueurs){
-        this._nomsJoueurs = new String[joueurs.length];
+        this.nomsJoueurs = new String[joueurs.length];
         for(int i = 0; i < joueurs.length; i++){
-            Joueur j = new Joueur(joueurs[i], this._myControler.getPrefs().get(Yams.PREFRULES));
-            this._tabModel.addJoueur(j);
-            this._nomsJoueurs[i] = joueurs[i];
+            Joueur j = new Joueur(joueurs[i], this.myControler.getPrefs().get(Yams.PREFRULES));
+            this.tabModel.addJoueur(j);
+            this.nomsJoueurs[i] = joueurs[i];
         }
     }
     
@@ -545,23 +557,23 @@ public class JeuVue extends JFrame {
      * Met à jour le tableau des scores
      */
     public void setScore(int joueur, int index, int score){
-        this._tabModel.setScoreJoueur(joueur, index, score);
-        this._tableau.updateUI();
+        this.tabModel.setScoreJoueur(joueur, index, score);
+        this.tableau.updateUI();
     }
     
     /*
      * Retourne le tableau de la séléction des dés
      */
     public boolean[] getSelectedDes(){
-        return this._selDes;
+        return this.selDes;
     }
     
     /*
      * Définit à qui est le tour
      */
     public void setTour(int tour){
-        this._tour = tour;
-        this.setAQui(this._tour);
+        this.tour = tour;
+        this.setAQui(this.tour);
     }
     
     /**
@@ -570,54 +582,54 @@ public class JeuVue extends JFrame {
     public void redimDices(boolean big){
         if(big){
             double maximizedHeight = this.getBounds().getHeight();
-            int coef = (int)maximizedHeight / (int)this._normalHeight;
+            int coef = (int)maximizedHeight / (int)this.normalHeight;
             coef = coef * 100;
             coef = coef - 15; //correction du coefficient pour un affichage complet sur petit écran
             
-            this._des[0] = new ImageIcon(this._des[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._des[1] = new ImageIcon(this._des[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._des[2] = new ImageIcon(this._des[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._des[3] = new ImageIcon(this._des[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._des[4] = new ImageIcon(this._des[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._des[5] = new ImageIcon(this._des[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._des[6] = new ImageIcon(this._des[6].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[0] = new ImageIcon(this.des[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[1] = new ImageIcon(this.des[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[2] = new ImageIcon(this.des[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[3] = new ImageIcon(this.des[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[4] = new ImageIcon(this.des[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[5] = new ImageIcon(this.des[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.des[6] = new ImageIcon(this.des[6].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
             
-            this._delSelect[0] = new ImageIcon(this._delSelect[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._delSelect[1] = new ImageIcon(this._delSelect[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._delSelect[2] = new ImageIcon(this._delSelect[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._delSelect[3] = new ImageIcon(this._delSelect[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._delSelect[4] = new ImageIcon(this._delSelect[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._delSelect[5] = new ImageIcon(this._delSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.delSelect[0] = new ImageIcon(this.delSelect[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.delSelect[1] = new ImageIcon(this.delSelect[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.delSelect[2] = new ImageIcon(this.delSelect[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.delSelect[3] = new ImageIcon(this.delSelect[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.delSelect[4] = new ImageIcon(this.delSelect[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.delSelect[5] = new ImageIcon(this.delSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
             
-            this._desUnSelect[0] = new ImageIcon(this._desUnSelect[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._desUnSelect[1] = new ImageIcon(this._desUnSelect[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._desUnSelect[2] = new ImageIcon(this._desUnSelect[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._desUnSelect[3] = new ImageIcon(this._desUnSelect[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._desUnSelect[4] = new ImageIcon(this._desUnSelect[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
-            this._desUnSelect[5] = new ImageIcon(this._desUnSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.desUnSelect[0] = new ImageIcon(this.desUnSelect[0].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.desUnSelect[1] = new ImageIcon(this.desUnSelect[1].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.desUnSelect[2] = new ImageIcon(this.desUnSelect[2].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.desUnSelect[3] = new ImageIcon(this.desUnSelect[3].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.desUnSelect[4] = new ImageIcon(this.desUnSelect[4].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
+            this.desUnSelect[5] = new ImageIcon(this.desUnSelect[5].getImage().getScaledInstance(coef, coef, Image.SCALE_DEFAULT));
         }
         else{
-            this._des[0] = new ImageIcon(getClass().getResource("/images/dés/normal/indef.png"));
-            this._des[1] = new ImageIcon(getClass().getResource("/images/dés/normal/1.png"));
-            this._des[2] = new ImageIcon(getClass().getResource("/images/dés/normal/2.png"));
-            this._des[3] = new ImageIcon(getClass().getResource("/images/dés/normal/3.png"));
-            this._des[4] = new ImageIcon(getClass().getResource("/images/dés/normal/4.png"));
-            this._des[5] = new ImageIcon(getClass().getResource("/images/dés/normal/5.png"));
-            this._des[6] = new ImageIcon(getClass().getResource("/images/dés/normal/6.png"));
+            this.des[0] = new ImageIcon(getClass().getResource("/images/dés/normal/indef.png"));
+            this.des[1] = new ImageIcon(getClass().getResource("/images/dés/normal/1.png"));
+            this.des[2] = new ImageIcon(getClass().getResource("/images/dés/normal/2.png"));
+            this.des[3] = new ImageIcon(getClass().getResource("/images/dés/normal/3.png"));
+            this.des[4] = new ImageIcon(getClass().getResource("/images/dés/normal/4.png"));
+            this.des[5] = new ImageIcon(getClass().getResource("/images/dés/normal/5.png"));
+            this.des[6] = new ImageIcon(getClass().getResource("/images/dés/normal/6.png"));
             
-            this._delSelect[0] = new ImageIcon(getClass().getResource("/images/dés/select/1.png"));
-            this._delSelect[1] = new ImageIcon(getClass().getResource("/images/dés/select/2.png"));
-            this._delSelect[2] = new ImageIcon(getClass().getResource("/images/dés/select/3.png"));
-            this._delSelect[3] = new ImageIcon(getClass().getResource("/images/dés/select/4.png"));
-            this._delSelect[4] = new ImageIcon(getClass().getResource("/images/dés/select/5.png"));
-            this._delSelect[5] = new ImageIcon(getClass().getResource("/images/dés/select/6.png"));
+            this.delSelect[0] = new ImageIcon(getClass().getResource("/images/dés/select/1.png"));
+            this.delSelect[1] = new ImageIcon(getClass().getResource("/images/dés/select/2.png"));
+            this.delSelect[2] = new ImageIcon(getClass().getResource("/images/dés/select/3.png"));
+            this.delSelect[3] = new ImageIcon(getClass().getResource("/images/dés/select/4.png"));
+            this.delSelect[4] = new ImageIcon(getClass().getResource("/images/dés/select/5.png"));
+            this.delSelect[5] = new ImageIcon(getClass().getResource("/images/dés/select/6.png"));
             
-            this._desUnSelect[0] = new ImageIcon(getClass().getResource("/images/dés/unselect/1.png"));
-            this._desUnSelect[1] = new ImageIcon(getClass().getResource("/images/dés/unselect/2.png"));
-            this._desUnSelect[2] = new ImageIcon(getClass().getResource("/images/dés/unselect/3.png"));
-            this._desUnSelect[3] = new ImageIcon(getClass().getResource("/images/dés/unselect/4.png"));
-            this._desUnSelect[4] = new ImageIcon(getClass().getResource("/images/dés/unselect/5.png"));
-            this._desUnSelect[5] = new ImageIcon(getClass().getResource("/images/dés/unselect/6.png"));
+            this.desUnSelect[0] = new ImageIcon(getClass().getResource("/images/dés/unselect/1.png"));
+            this.desUnSelect[1] = new ImageIcon(getClass().getResource("/images/dés/unselect/2.png"));
+            this.desUnSelect[2] = new ImageIcon(getClass().getResource("/images/dés/unselect/3.png"));
+            this.desUnSelect[3] = new ImageIcon(getClass().getResource("/images/dés/unselect/4.png"));
+            this.desUnSelect[4] = new ImageIcon(getClass().getResource("/images/dés/unselect/5.png"));
+            this.desUnSelect[5] = new ImageIcon(getClass().getResource("/images/dés/unselect/6.png"));
         }
         
         for(int i=0; i<5; i++){

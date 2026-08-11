@@ -22,15 +22,16 @@ import yams.views.JeuVue;
  * Classe gérant le jeu
  */
 public class YamModele {
-    private int _joueur;
-    private int _nbJoueur;
-    private YamControl _myControler;
+    private static final Random RANDOM = new Random();
+    private int joueur;
+    private int nbJoueur;
+    private YamControl myControler;
     
     public YamModele(int nbJoueurs, YamControl yc){
         //initialisation des variables locales
-        this._nbJoueur = nbJoueurs;
-        this._joueur = 0;
-        this._myControler = yc;
+        this.nbJoueur = nbJoueurs;
+        this.joueur = 0;
+        this.myControler = yc;
     }
     
     /*
@@ -38,11 +39,10 @@ public class YamModele {
      */
     public int[] lancer(){
          int[] resultat = new int[5];
-         Random r = new Random();
-        
+
         for(int i = 0; i < 5; i++)
         {
-            resultat[i] = 1 + r.nextInt(6);
+            resultat[i] = 1 + RANDOM.nextInt(6);
         }
          return resultat;
     }
@@ -51,7 +51,7 @@ public class YamModele {
      * Joue un son lors du lancer
      */
     public void playSoundDe(){
-        if(this._myControler.isSound()){
+        if(this.myControler.isSound()){
             AudioClip clip;
 
             clip = Applet.newAudioClip(getClass().getResource("/sons/dé_roulant.wav"));
@@ -63,7 +63,7 @@ public class YamModele {
      * Joue un son lors de la fin de la partie
      */
     public void playSoundFin(){
-        if(this._myControler.isSound()){
+        if(this.myControler.isSound()){
             AudioClip clip;
 
             clip = Applet.newAudioClip(getClass().getResource("/sons/applaudissements.wav"));
@@ -75,7 +75,7 @@ public class YamModele {
      * change le joueur en train de jouer
      */
     public void changerJoueur(){
-        this._joueur = (this._joueur + 1) % this._nbJoueur;
+        this.joueur = (this.joueur + 1) % this.nbJoueur;
     }
     
     /*
@@ -83,23 +83,23 @@ public class YamModele {
      */
     public Joueur[] sortJoueurs(Joueur[] joueurs){
         List<Joueur> liste = new ArrayList<Joueur>();
-        Joueur[] listeTriee = new Joueur[this._myControler.getNbJoueurs()];
         int min;
-        int index = 0;
-        
+
         liste.addAll(Arrays.asList(joueurs));
-        
-        for(int i = 0; i < joueurs.length; i++){
-            min = 0;
-            for(int j = 1; j < liste.size(); j++){
+
+        for(int i = 0; i < liste.size(); i++){
+            min = i;
+            for(int j = i+1; j < liste.size(); j++){
                 if(liste.get(min).getScore(16) > liste.get(j).getScore(16)){
                     min = j;
                 }
             }
-            listeTriee[i] = liste.remove(min);
+            Joueur tmp = liste.get(i);
+            liste.set(i, liste.get(min));
+            liste.set(min, tmp);
         }
-        
-        return listeTriee;
+
+        return liste.toArray(new Joueur[0]);
     }
     
     /*
@@ -253,7 +253,7 @@ public class YamModele {
         List<Integer> listDes = new ArrayList<Integer>(5);
         
         for(int i=0; i<5; i++){
-            Integer val = new Integer(des[i]);
+            Integer val = des[i];
             listDes.add(val);
         }
         Collections.sort(listDes);
@@ -298,11 +298,11 @@ public class YamModele {
         List<Integer> listDes = new ArrayList<Integer>(5);
         
         for(int i=0; i<5; i++){
-            Integer val = new Integer(des[i]);
+            Integer val = des[i];
             listDes.add(val);
         }
         Collections.sort(listDes);
-        if(listDes.get(0).equals(new Integer(1))){
+        if(listDes.get(0).equals(1)){
             for(int i=0; i<4; i++){
                 int de1 = listDes.get(i);
                 int de2 = listDes.get(i+1) - 1;
@@ -337,11 +337,11 @@ public class YamModele {
         List<Integer> listDes = new ArrayList(5);
         
         for(int i = 0; i < 5; i++){
-            Integer val = new Integer(des[i]);
+            Integer val = des[i];
             listDes.add(val);
         }
         Collections.sort(listDes);
-        if(listDes.get(0).equals(new Integer(2))){
+        if(listDes.get(0).equals(2)){
             for(int i = 0; i < 4; i++){
                 int de1 = listDes.get(i);
                 int de2 = listDes.get(i+1) - 1;
@@ -375,7 +375,7 @@ public class YamModele {
         List<Integer> listDes = new ArrayList(5);
         
         for(int i = 0; i < 5; i++){
-            Integer val = new Integer(des[i]);
+            Integer val = des[i];
             listDes.add(val);
         }
         Collections.sort(listDes);
@@ -408,19 +408,19 @@ public class YamModele {
         List<Integer> listDes = new ArrayList(5);
         
         for(int i = 0; i < 5; i++){
-            Integer val = new Integer(des[i]);
+            Integer val = des[i];
             listDes.add(val);
         }
         Collections.sort(listDes);
-        if(listDes.get(0).equals(listDes.get(1)) && listDes.get(0).equals(listDes.get(2)) && (listDes.get(0) != listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
+        boolean troisPuisDeux = listDes.get(0).equals(listDes.get(1)) && listDes.get(0).equals(listDes.get(2)) && (!listDes.get(0).equals(listDes.get(3))) && listDes.get(3).equals(listDes.get(4));
+        boolean deuxPuisTrois = listDes.get(0).equals(listDes.get(1)) && (!listDes.get(0).equals(listDes.get(2))) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4));
+        if(troisPuisDeux || deuxPuisTrois){
             full = true;
         }
-        else if(listDes.get(0).equals(listDes.get(1)) && (listDes.get(0) != listDes.get(2)) && listDes.get(2).equals(listDes.get(3)) && listDes.get(3).equals(listDes.get(4))){
-            full = true;
-        }
+        boolean rules = this.myControler.getPrefs().get(Yams.PREFRULES);
         if(full){
             score = 30;
-            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            if(rules){
                 jeu.majColorTab(tour, 14, ColorTab.VERT);
             }
             else{
@@ -428,14 +428,14 @@ public class YamModele {
             }
         }
         else {
-            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            if(rules){
                 jeu.majColorTab(tour, 14, ColorTab.ROUGE);
             }
             else{
                 jeu.majColorTab(tour, 13, ColorTab.ROUGE);
             }
         }
-        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+        if(rules){
             jeu.setScore(tour, 13, score);
         }
         else{
@@ -455,7 +455,7 @@ public class YamModele {
         List<Integer> listDes = new ArrayList<Integer>(5);
         
         for(int i = 0; i < 5; i++){
-            Integer val = new Integer(des[i]);
+            Integer val = des[i];
             listDes.add(val);
         }
         Collections.sort(listDes);
@@ -464,9 +464,10 @@ public class YamModele {
             carre = true;
         }
 
+        boolean rules = this.myControler.getPrefs().get(Yams.PREFRULES);
         if(carre){
             score = 40;
-            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            if(rules){
                 jeu.majColorTab(tour, 15, ColorTab.VERT);
             }
             else{
@@ -474,14 +475,14 @@ public class YamModele {
             }
         }
         else{
-            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            if(rules){
                 jeu.majColorTab(tour, 15, ColorTab.ROUGE);
             }
             else{
                 jeu.majColorTab(tour, 14, ColorTab.ROUGE);
             }
         }
-        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+        if(rules){
             jeu.setScore(tour, 14, score);
         }
         else{
@@ -506,9 +507,10 @@ public class YamModele {
             }
             i++;
         }
+        boolean rules = this.myControler.getPrefs().get(Yams.PREFRULES);
         if(yam){
             score = 50;
-            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            if(rules){
                 jeu.majColorTab(tour, 16, ColorTab.VERT);
             }
             else{
@@ -516,14 +518,14 @@ public class YamModele {
             }
         }
         else{
-            if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+            if(rules){
                 jeu.majColorTab(tour, 16, ColorTab.ROUGE);
             }
             else{
                 jeu.majColorTab(tour, 15, ColorTab.ROUGE);
             }
         }
-        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+        if(rules){
             jeu.setScore(tour, 15, score);
         }
         else{
@@ -555,13 +557,14 @@ public class YamModele {
     public boolean finPartie(boolean[][] scores, boolean soundPref){
         boolean result = true;
         int nbCoups;
-        if(this._myControler.getPrefs().get(Yams.PREFRULES)){
+        boolean rules = this.myControler.getPrefs().get(Yams.PREFRULES);
+        if(rules){
             nbCoups = 12;
         }
         else{
             nbCoups = 13;
         }
-        for(int i = 0; i < this._nbJoueur; i++){
+        for(int i = 0; i < this.nbJoueur; i++){
             for(int j = 0; j < nbCoups; j++){
                 if(scores[i][j]){
                     return false;
@@ -580,7 +583,7 @@ public class YamModele {
      * Retourne le code du joueur à qui c'est de jouer
      */
     public int getTour(){
-        return this._joueur;
+        return this.joueur;
     }
     
     /*

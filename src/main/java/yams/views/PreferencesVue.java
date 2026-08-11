@@ -12,27 +12,27 @@ import yams.events.YamEvents;
 
 
 public class PreferencesVue extends JFrame {
-    private YamControl _myControler;
-    private JCheckBox _sounds;
-    private List<Boolean> _prefs;
+    private transient YamControl myControler;
+    private JCheckBox sounds;
+    private List<Boolean> prefs;
     
-    private ButtonGroup _select;
-    private JRadioButton _rbGarde;
-    private JRadioButton _rbRelance;
-    private ButtonGroup _combinations;
-    private JRadioButton _rbComb1;
-    private JRadioButton _rbComb2;
+    private ButtonGroup select;
+    private JRadioButton rbGarde;
+    private JRadioButton rbRelance;
+    private ButtonGroup combinations;
+    private JRadioButton rbComb1;
+    private JRadioButton rbComb2;
 
 
     public PreferencesVue(YamControl yc, List<Boolean> prefs){
         super("Préférences");
 
         //initialisation des variables
-        this._myControler = yc;
-        this._prefs = prefs;
-        if(this._prefs.isEmpty()){
+        this.myControler = yc;
+        this.prefs = prefs;
+        if(this.prefs.isEmpty()){
             for(int i=0; i<3; i++){
-                this._prefs.add(true);
+                this.prefs.add(true);
             }
         }
         Container panel = this.getContentPane();
@@ -40,44 +40,44 @@ public class PreferencesVue extends JFrame {
         JPanel panPrefs = new JPanel(new BorderLayout());
 
         //construction des éléments
-        this._sounds = new JCheckBox("Sons");
-        this._sounds.setSelected(this._prefs.get(Yams.PREFSOUND));
-        this._select = new ButtonGroup();
-        this._combinations = new ButtonGroup();
-        panPrefs.add(this._sounds, BorderLayout.NORTH);
+        this.sounds = new JCheckBox("Sons");
+        this.sounds.setSelected(this.prefs.get(Yams.PREFSOUND));
+        this.select = new ButtonGroup();
+        this.combinations = new ButtonGroup();
+        panPrefs.add(this.sounds, BorderLayout.NORTH);
 
         JPanel panSelect = new JPanel(new GridLayout(2, 1));
         panSelect.setBorder(BorderFactory.createTitledBorder("Sélection des dés"));
-        _rbGarde = new JRadioButton();
-        _rbGarde.setText("Garder les dés sélectionnés");
-        _rbGarde.setSelected(this._prefs.get(Yams.PREFSELECT));
+        rbGarde = new JRadioButton();
+        rbGarde.setText("Garder les dés sélectionnés");
+        rbGarde.setSelected(this.prefs.get(Yams.PREFSELECT));
         
-        _rbRelance = new JRadioButton();
-        _rbRelance.setText("Relancer les dés sélectionnés");
-        _rbRelance.setSelected(!this._prefs.get(Yams.PREFSELECT));
-        this._select.add(_rbGarde);
-        this._select.add(_rbRelance);
-        panSelect.add(_rbGarde);
-        panSelect.add(_rbRelance);
+        rbRelance = new JRadioButton();
+        rbRelance.setText("Relancer les dés sélectionnés");
+        rbRelance.setSelected(!this.prefs.get(Yams.PREFSELECT));
+        this.select.add(rbGarde);
+        this.select.add(rbRelance);
+        panSelect.add(rbGarde);
+        panSelect.add(rbRelance);
         panPrefs.add(panSelect, BorderLayout.CENTER);
 
         JPanel panCombinations = new JPanel(new GridLayout(2, 1));
         panCombinations.setBorder(BorderFactory.createTitledBorder("Combinaisons"));
-        _rbComb1 = new JRadioButton();
-        _rbComb1.setText("soustraction des scores + et -");
-        _rbComb1.setSelected(this._prefs.get(Yams.PREFRULES));
-        _rbComb2 = new JRadioButton();
-        _rbComb2.setText("Brelan, petite suite, grande suite, chance");
-        _rbComb2.setSelected(!this._prefs.get(Yams.PREFRULES));
-        this._combinations.add(_rbComb1);
-        this._combinations.add(_rbComb2);
-        panCombinations.add(_rbComb1);
-        panCombinations.add(_rbComb2);
+        rbComb1 = new JRadioButton();
+        rbComb1.setText("soustraction des scores + et -");
+        rbComb1.setSelected(this.prefs.get(Yams.PREFRULES));
+        rbComb2 = new JRadioButton();
+        rbComb2.setText("Brelan, petite suite, grande suite, chance");
+        rbComb2.setSelected(!this.prefs.get(Yams.PREFRULES));
+        this.combinations.add(rbComb1);
+        this.combinations.add(rbComb2);
+        panCombinations.add(rbComb1);
+        panCombinations.add(rbComb2);
         panPrefs.add(panCombinations, BorderLayout.SOUTH);
 
         JPanel panValidate = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnValidate = new JButton("Ok");
-        btnValidate.addActionListener(new YamEvents(this._myControler));
+        btnValidate.addActionListener(new YamEvents(this.myControler));
         btnValidate.setActionCommand("changePrefs");
         panValidate.add(btnValidate);
 
@@ -92,30 +92,30 @@ public class PreferencesVue extends JFrame {
     }
 
     public List<Boolean> getPrefs(){
-        return this._prefs;
+        return this.prefs;
     }
     
     /*
      * Sauvegarde les préférences dans le tableau que récupère le controleur
      */
     public void setPrefs(){
-        this._prefs.set(Yams.PREFSOUND, this._sounds.isSelected());
-        this._prefs.set(Yams.PREFSELECT, this._rbGarde.isSelected());
-        this._prefs.set(Yams.PREFRULES, this._rbComb1.isSelected());
+        this.prefs.set(Yams.PREFSOUND, this.sounds.isSelected());
+        this.prefs.set(Yams.PREFSELECT, this.rbGarde.isSelected());
+        this.prefs.set(Yams.PREFRULES, this.rbComb1.isSelected());
     }
     
     public void enableGroup(int group, boolean enable){
         switch(group){
             case 0:
-                this._sounds.setEnabled(enable);
+                this.sounds.setEnabled(enable);
                 break;
             case 1:
-                this._rbGarde.setEnabled(enable);
-                this._rbRelance.setEnabled(enable);
+                this.rbGarde.setEnabled(enable);
+                this.rbRelance.setEnabled(enable);
                 break;
             case 2:
-                this._rbComb1.setEnabled(enable);
-                this._rbComb2.setEnabled(enable);
+                this.rbComb1.setEnabled(enable);
+                this.rbComb2.setEnabled(enable);
                 break;
             default:
                 break; //n'arrivera pas
