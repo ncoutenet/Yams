@@ -77,7 +77,7 @@ public class YamControl {
     private int nbJoueurs;
     private boolean[][] scoresValides;
     private int tour;
-    private ModeJeu mode;
+    private ModeJeu mode = ModeJeu.LIBRE;
     private List<Boolean> listPrefs;
     
     public YamControl(){
@@ -219,7 +219,7 @@ public class YamControl {
      */
     public void checkDes(){
         boolean[] select = this.jeu.getSelectedDes();
-        if(this.jeu.getLancesRestants() < 3){
+        if(this.jeu.getLancesRestants() < this.mode.getNombreLances()){
             boolean garde = this.listPrefs.get(Yams.PREFSELECT);
             if(garde){
                 this.jeu.setEnabledLancer(!(select[0] && select[1] && select[2] && select[3] && select[4]));
@@ -237,6 +237,7 @@ public class YamControl {
         int[] des;
         int lancesRestants = jeu.getLancesRestants();
         boolean sound = this.listPrefs.get(Yams.PREFSOUND);
+        boolean premierLancer = (lancesRestants == this.mode.getNombreLances());
 
         if(sound){
             modele.playSoundDe();
@@ -248,7 +249,7 @@ public class YamControl {
         boolean[] aAnimer = new boolean[5];
         boolean garde = this.listPrefs.get(Yams.PREFSELECT);
         for(int i = 0; i < 5; i++){
-            aAnimer[i] = (lancesRestants == 2) || (selDes[i] != garde);
+            aAnimer[i] = premierLancer || (selDes[i] != garde);
         }
 
         jeu.setEnabledLancer(false);
@@ -360,6 +361,7 @@ public class YamControl {
         this.confirmFinTour.setVisible(false); //ferme l'éventuelle fenêtre de confirmation ouverte
         switch(mode){
             case LIBRE:
+            case SEC:
                 finTour = new FinTourVue(scoresValides, tour, this, false, this.jeu);
                 finTour.setAffichage(true);
                 break;
@@ -504,7 +506,7 @@ public class YamControl {
      */
     public void finTour(boolean fin){
         jeu.setTour(tour);
-        if(mode == ModeJeu.LIBRE){
+        if(mode == ModeJeu.LIBRE || mode == ModeJeu.SEC){
             finTour = new FinTourVue(scoresValides, tour, this, fin, this.jeu);
             finTour.setAffichage(true);
         }
@@ -616,7 +618,7 @@ public class YamControl {
         this.jeu.setEnabledLancer(true);
         this.jeu.initDes();
         this.jeu.initScoreTour();
-        this.jeu.setNbLancers(3);
+        this.jeu.setNbLancers(this.mode.getNombreLances());
         this.modele.changerJoueur();
         this.tour = this.modele.getTour();
         this.jeu.setTour(this.tour);
@@ -729,6 +731,9 @@ public class YamControl {
 
             this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
             this.data.saveScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
+
+            this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.SEC);
+            this.data.saveScores(new ArrayList<Score>(), ModeJeu.SEC);
         }
         else{
             switch(this.hightScore.getModeJeu()){
@@ -744,6 +749,10 @@ public class YamControl {
                 case DESCENDANT:
                     this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
                     this.data.saveScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
+                    break;
+                case SEC:
+                    this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.SEC);
+                    this.data.saveScores(new ArrayList<Score>(), ModeJeu.SEC);
                     break;
                 default:
                     LOGGER.warning("Mode de jeu inexistant");
@@ -784,7 +793,7 @@ public class YamControl {
         int returnVal = jfc.showSaveDialog(null);
         
         if(returnVal == JFileChooser.APPROVE_OPTION){
-            this.data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this.hightScore.getScores(ModeJeu.LIBRE), this.hightScore.getScores(ModeJeu.MONTANT), this.hightScore.getScores(ModeJeu.DESCENDANT));
+            this.data.exportScores(jfc.getFileFilter().getDescription(), jfc.getSelectedFile().getAbsolutePath(), this.hightScore.getScores(ModeJeu.LIBRE), this.hightScore.getScores(ModeJeu.MONTANT), this.hightScore.getScores(ModeJeu.DESCENDANT), this.hightScore.getScores(ModeJeu.SEC));
         }
     }
 }

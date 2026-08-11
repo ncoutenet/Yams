@@ -40,13 +40,15 @@ public class HightScoreVue extends JFrame{
     private List<Score> scoresLibres;
     private List<Score> scoresMontants;
     private List<Score> scoresDescendants;
-    
+    private List<Score> scoresSecs;
+
     public HightScoreVue(YamControl c){
         super("Hight Scores");
         super.setResizable(false);
         this.scoresLibres = new ArrayList<Score>();
         this.scoresMontants = new ArrayList<Score>();
         this.scoresDescendants = new ArrayList<Score>();
+        this.scoresSecs = new ArrayList<Score>();
         this.myControler = c;
         this.modelScore = new ModeleTableHightScore();
         this.modelRow = new ModelRowHeader();
@@ -114,6 +116,7 @@ public class HightScoreVue extends JFrame{
         this.scoresLibres = this.myControler.loadHightScores(ModeJeu.LIBRE);
         this.scoresMontants = this.myControler.loadHightScores(ModeJeu.MONTANT);
         this.scoresDescendants = this.myControler.loadHightScores(ModeJeu.DESCENDANT);
+        this.scoresSecs = this.myControler.loadHightScores(ModeJeu.SEC);
 
         this.changeScores(ModeJeu.LIBRE);
         
@@ -202,6 +205,9 @@ public class HightScoreVue extends JFrame{
             case DESCENDANT:
                 this.scoresDescendants = scores;
                 break;
+            case SEC:
+                this.scoresSecs = scores;
+                break;
             default:
                 LOGGER.warning("Mode de jeu inexistant");
                 break;
@@ -245,6 +251,8 @@ public class HightScoreVue extends JFrame{
                 return this.scoresMontants;
             case DESCENDANT:
                 return this.scoresDescendants;
+            case SEC:
+                return this.scoresSecs;
             default:
                 return new ArrayList<>(); //n'arrivera pas
         }

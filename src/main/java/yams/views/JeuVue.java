@@ -71,6 +71,9 @@ public class JeuVue extends JFrame {
             case DESCENDANT:
                 this.setTitle("Jeu du Yam's Descendant");
                 break;
+            case SEC:
+                this.setTitle("Jeu du Yam's Sec");
+                break;
             default:
                 break;
         }
@@ -195,9 +198,6 @@ public class JeuVue extends JFrame {
         this.setAQui(this.tour);
         this.refreshDes();
         
-        //initialisation des variables locales restantes
-        this.lancesRestants = 3;
-        
         //fabrication de la fenêtre
         JPanel panJeu = new JPanel(new BorderLayout());
         panJeu.add(aQui, BorderLayout.NORTH);
@@ -225,7 +225,7 @@ public class JeuVue extends JFrame {
         this.nbLancers = new JLabel();
         this.nbLancers.setHorizontalAlignment(SwingConstants.CENTER);
         this.nbLancers.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
-        this.setNbLancers(3);
+        this.setNbLancers(mode.getNombreLances());
         btnFinTour = new JButton("Fin du Tour");
         btnFinTour.addActionListener(new YamEvents(myControler));
         btnFinTour.setActionCommand("finTour");

@@ -11,8 +11,6 @@ import yams.control.YamControl;
  * @author nicolas
  */
 
-// TODO ajouter le mode sec
-
 /*
  * Classe principale permettant le lancement du programme
  */
