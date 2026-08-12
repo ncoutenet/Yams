@@ -743,8 +743,7 @@ public class YamControl {
                     break;
                 case MONTANT:
                     this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.MONTANT);
-
-                    this.hightScore.changeScores(ModeJeu.MONTANT);
+                    this.data.saveScores(new ArrayList<Score>(), ModeJeu.MONTANT);
                     break;
                 case DESCENDANT:
                     this.hightScore.setScores(new ArrayList<Score>(), ModeJeu.DESCENDANT);
