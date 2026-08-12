@@ -43,7 +43,9 @@ All identifiers are in French throughout the codebase (`YamModele`, `YamControl`
 
 ## Testing
 
-There are no automated tests. Swing UI behavior cannot be verified by `mvn package` alone — after a change touching the UI, build with `mvn clean package` and ask the user to run `java -jar target/yams-1.0-SNAPSHOT.jar` and check manually; do not launch the application yourself and claim the feature works from the build alone.
+JUnit 5 tests exist under `src/test/java/`, mirroring the `src/main/java/` package layout (e.g. `yams.pojos.Joueur` → `yams.pojos.JoueurTest`). The established pattern is a `@BeforeEach setUp()` building the fixture, then one `@Test` per behavior (see `JoueurTest`, `ScoreTest`, `ColorTabTest`).
+
+**Any new or modified non-Swing class — a POJO, enum, model, or other class with no `javax.swing`/AWT dependency and no real I/O — must have a corresponding test class following this pattern.** Swing UI behavior (views, controllers driving components) cannot be verified by `mvn package` alone — after a change touching the UI, build with `mvn clean package` and ask the user to run `java -jar target/yams-1.0-SNAPSHOT.jar` and check manually; do not launch the application yourself and claim the feature works from the build alone.
 
 ## IDE
 
