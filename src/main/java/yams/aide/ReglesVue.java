@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import yams.ModeJeu;
 import yams.Yams;
 import yams.control.YamControl;
 
@@ -24,9 +25,9 @@ public class ReglesVue extends JFrame {
     private static final String TR_CLOSE = "        </tr>";
     private static final String TD_SOMME_DES = "            <td>Somme des dés</td>";
     private transient YamControl myControler;
-    private int mode;
+    private ModeJeu mode;
 
-    public ReglesVue(int mode, YamControl yc) {
+    public ReglesVue(ModeJeu mode, YamControl yc) {
         super("Règles du Jeu");
         
         this.mode = mode;
@@ -66,48 +67,59 @@ public class ReglesVue extends JFrame {
      * Retourne les règles suivant le mode de jeu
      */
     private void appendTitre(StringBuffer texte){
-        if(this.mode == Yams.MODELIBRE){
-            texte.append("<h1 align='center' color='red'>Règles du Yam's libre</h1>");
-        }
-        else if(this.mode == Yams.MODEMONTANT){
-            texte.append("<h1 align='center' color='red'>Règles du Yam's montant</h1>");
-        }
-        else if(this.mode == Yams.MODEDESCENDANT){
-            texte.append("<h1 align='center' color='red'>Règles du Yam's descendant</h1>");
+        switch(this.mode){
+            case LIBRE:
+                texte.append("<h1 align='center' color='red'>Règles du Yam's libre</h1>");
+                break;
+            case MONTANT:
+                texte.append("<h1 align='center' color='red'>Règles du Yam's montant</h1>");
+                break;
+            case DESCENDANT:
+                texte.append("<h1 align='center' color='red'>Règles du Yam's descendant</h1>");
+                break;
+            case SEC:
+                texte.append("<h1 align='center' color='red'>Règles du Yam's sec</h1>");
+                break;
+            default:
+                break;
         }
     }
 
     private void appendDeroulement(StringBuffer texte, boolean rules){
-        if(this.mode == Yams.MODELIBRE){
-            texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
-                    + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
-                    + "plus tard, elle est retirée des figures à obtenir.</p>");
-            if(rules){
-                texte.append("<p>Il y a 12 figures à réaliser dans le désordre:</p>");
-            }
-            else{
-                texte.append("<p>Il y a 13 figures à réaliser dans le désordre:</p>");
-            }
+        texte.append(introDeroulement());
+        int nbFigures = rules ? 12 : 13;
+        texte.append("<p>Il y a ").append(nbFigures).append(" figures à réaliser ").append(ordreFigures()).append(":</p>");
+    }
+
+    private String introDeroulement(){
+        switch(this.mode){
+            case LIBRE:
+                return "<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir une case de sa grille. "
+                        + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
+                        + "plus tard, elle est retirée des figures à obtenir.</p>";
+            case SEC:
+                return "<p>À l'issu de son unique lancer, le joueur doit remplir une case de sa grille. "
+                        + "Si le joueur choisit une case alors qu'il n'a pas fait la figure demandé il ne marque pas de point et ne pourra pas retenter la figure "
+                        + "plus tard, elle est retirée des figures à obtenir.</p>";
+            case MONTANT:
+            case DESCENDANT:
+                return "<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
+                        + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>";
+            default:
+                return "";
         }
-        else if(this.mode == Yams.MODEMONTANT){
-            texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
-                    + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
-            if(rules){
-                texte.append("<p>Il y a 12 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
-            }
-            else{
-                texte.append("<p>Il y a 13 figures à réaliser dans l'ordre du tableau (1, 2, etc...):</p>");
-            }
-        }
-        else if(this.mode == Yams.MODEDESCENDANT){
-            texte.append("<p>À l'issu du troisième lancé, ou lorsqu'il choisit de garder ses 5 dés, il doit remplir la case suivante de sa grille. "
-                    + "Si le joueur n'a pas fait la figure demandé il ne marque pas de point.</p>");
-            if(rules){
-                texte.append("<p>Il y a 12 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");
-            }
-            else{
-                texte.append("<p>Il y a 13 figures à réaliser dans l'ordre inverse du tableau (yam's, carré, etc...):</p>");
-            }
+    }
+
+    private String ordreFigures(){
+        switch(this.mode){
+            case MONTANT:
+                return "dans l'ordre du tableau (1, 2, etc...)";
+            case DESCENDANT:
+                return "dans l'ordre inverse du tableau (yam's, carré, etc...)";
+            case LIBRE:
+            case SEC:
+            default:
+                return "dans le désordre";
         }
     }
 
@@ -222,17 +234,22 @@ public class ReglesVue extends JFrame {
 
         texte.append("<p>Le nombre de joueur est limité à 10.</p>");
         texte.append("<p>Le but est, pour chaque joueur, de remplir une grille en totalisant un maximum de points. Pour remplir la grille il faut lancer des dés et réaliser des combinaisons.</p>");
-        texte.append("<p>Chaque joueur joue à tour de rôle. À chaque tour le joueur dispose de trois lancés de cinq dés. À l'issu des deux premiers lancés il peut:</p>");
-        texte.append("<ul>");
-        texte.append("  <li>garder ses 5 dés et remplir une case de sa grille,</li>");
-        texte.append("    <li>écarter une partie des dés et relancer les autre.</li>");
-        texte.append("</ul>");
-        texte.append("<p>Pour garder les 5 dés il suffit de cliquer sur le bouton 'fin du tour'.<br/>");
-        if(garde){
-            texte.append("Pour garder un dé, il suffit de cliquer dessus</p>");
+        if(this.mode == ModeJeu.SEC){
+            texte.append("<p>Chaque joueur joue à tour de rôle et ne dispose que d'un seul lancer de cinq dés avant de devoir remplir une case de sa grille.</p>");
         }
         else{
-            texte.append("Pour relancer les dés il faut cliquer sur ceux que l'on souhaite relancer puis valider en cliquant sur le bouton \"lancer\"");
+            texte.append("<p>Chaque joueur joue à tour de rôle. À chaque tour le joueur dispose de trois lancés de cinq dés. À l'issu des deux premiers lancés il peut:</p>");
+            texte.append("<ul>");
+            texte.append("  <li>garder ses 5 dés et remplir une case de sa grille,</li>");
+            texte.append("    <li>écarter une partie des dés et relancer les autre.</li>");
+            texte.append("</ul>");
+            texte.append("<p>Pour garder les 5 dés il suffit de cliquer sur le bouton 'fin du tour'.<br/>");
+            if(garde){
+                texte.append("Pour garder un dé, il suffit de cliquer dessus</p>");
+            }
+            else{
+                texte.append("Pour relancer les dés il faut cliquer sur ceux que l'on souhaite relancer puis valider en cliquant sur le bouton \"lancer\"");
+            }
         }
         this.appendDeroulement(texte, rules);
         this.appendTableau(texte, rules);

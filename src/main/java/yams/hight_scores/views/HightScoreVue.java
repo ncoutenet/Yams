@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
-import yams.Yams;
+import yams.ModeJeu;
 import yams.control.YamControl;
 import yams.hight_scores.events.ComboBoxEvents;
 import yams.hight_scores.events.HightScoreEvents;
@@ -27,29 +27,28 @@ import yams.table.ColorTab;
  */
 public class HightScoreVue extends JFrame{
     private static final Logger LOGGER = Logger.getLogger(HightScoreVue.class.getName());
-    private static final String LIBRE = "Libre";
-    private static final String MONTANT = "Montant";
-    private static final String DESCENDANT = "Descendant";
     private transient YamControl myControler;
     private JTable tableScore;
     private ModeleTableHightScore modelScore;
     private JTable rowHeader;
     private ModelRowHeader modelRow;
     private ColorTab gestionnaire;
-    
-    private JComboBox cbModeJeu;
+
+    private JComboBox<ModeJeu> cbModeJeu;
     private JButton btnRetour;
     
     private List<Score> scoresLibres;
     private List<Score> scoresMontants;
     private List<Score> scoresDescendants;
-    
+    private List<Score> scoresSecs;
+
     public HightScoreVue(YamControl c){
         super("Hight Scores");
         super.setResizable(false);
         this.scoresLibres = new ArrayList<Score>();
         this.scoresMontants = new ArrayList<Score>();
         this.scoresDescendants = new ArrayList<Score>();
+        this.scoresSecs = new ArrayList<Score>();
         this.myControler = c;
         this.modelScore = new ModeleTableHightScore();
         this.modelRow = new ModelRowHeader();
@@ -71,14 +70,8 @@ public class HightScoreVue extends JFrame{
         Container pan = this.getContentPane();
         pan.setLayout(new BorderLayout());
         
-        //initialisation du menu déroulant
-        Object[] modes = new Object[3];
-        modes[Yams.MODELIBRE] = LIBRE;
-        modes[Yams.MODEMONTANT] = MONTANT;
-        modes[Yams.MODEDESCENDANT] = DESCENDANT;
-        
-        //instanciation du menu
-        this.cbModeJeu = new JComboBox(modes);
+        //instanciation du menu déroulant
+        this.cbModeJeu = new JComboBox<>(ModeJeu.values());
         this.cbModeJeu.addActionListener(new ComboBoxEvents(this));
         JLabel labModes = new JLabel("Mode de jeu: ");
         JPanel panMod = new JPanel(new FlowLayout());
@@ -120,11 +113,12 @@ public class HightScoreVue extends JFrame{
         panBtn.add(this.btnRetour);
         pan.add(panBtn, BorderLayout.SOUTH);
         
-        this.scoresLibres = this.myControler.loadHightScores(Yams.MODELIBRE);
-        this.scoresMontants = this.myControler.loadHightScores(Yams.MODEMONTANT);
-        this.scoresDescendants = this.myControler.loadHightScores(Yams.MODEDESCENDANT);
-        
-        this.changeScores(Yams.MODELIBRE);
+        this.scoresLibres = this.myControler.loadHightScores(ModeJeu.LIBRE);
+        this.scoresMontants = this.myControler.loadHightScores(ModeJeu.MONTANT);
+        this.scoresDescendants = this.myControler.loadHightScores(ModeJeu.DESCENDANT);
+        this.scoresSecs = this.myControler.loadHightScores(ModeJeu.SEC);
+
+        this.changeScores(ModeJeu.LIBRE);
         
         this.pack();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -134,7 +128,7 @@ public class HightScoreVue extends JFrame{
     /*
      * Mise à jour du tableau
      */
-    public final void changeScores(int mode){
+    public final void changeScores(ModeJeu mode){
         int nbCol = 3;
 
         this.modelScore.delScores();
@@ -155,7 +149,7 @@ public class HightScoreVue extends JFrame{
     /**
      * Met en relief les parties en paramètre
      */
-    public void selectScores(List<Score> newScores, int mode){
+    public void selectScores(List<Score> newScores, ModeJeu mode){
         List<Score> scores = this.getScores(mode);
         int nbCol = 3;
 
@@ -183,33 +177,14 @@ public class HightScoreVue extends JFrame{
      * Permet d'afficher les score du mode de jeu choisis par l'utilisateur
      */
     public void selectMode(){
-        if(this.cbModeJeu.getSelectedItem().equals(LIBRE)){
-            this.changeScores(Yams.MODELIBRE);
-        }else if(this.cbModeJeu.getSelectedItem().equals(MONTANT)){
-            this.changeScores(Yams.MODEMONTANT);
-        }else if(this.cbModeJeu.getSelectedItem().equals(DESCENDANT)){
-            this.changeScores(Yams.MODEDESCENDANT);
-        }
+        this.changeScores((ModeJeu) this.cbModeJeu.getSelectedItem());
     }
-    
+
     /*
      * Met le menu déroulant à jour
      */
-    public void setMode(int mode){
-        switch(mode){
-            case Yams.MODELIBRE:
-                this.cbModeJeu.setSelectedIndex(Yams.MODELIBRE);
-                break;
-            case Yams.MODEMONTANT:
-                this.cbModeJeu.setSelectedIndex(Yams.MODEMONTANT);
-                break;
-            case Yams.MODEDESCENDANT:
-                this.cbModeJeu.setSelectedIndex(Yams.MODEDESCENDANT);
-                break;
-                default:
-                    LOGGER.warning("Mauvais mode de jeu");
-                    break; //n'arrivera pas
-        }
+    public void setMode(ModeJeu mode){
+        this.cbModeJeu.setSelectedItem(mode);
     }
     
     /*
@@ -219,36 +194,36 @@ public class HightScoreVue extends JFrame{
         this.dispose();
     }
     
-    public void setScores(List<Score> scores, int mode){
+    public void setScores(List<Score> scores, ModeJeu mode){
         switch(mode){
-            case Yams.MODELIBRE:
+            case LIBRE:
                 this.scoresLibres = scores;
                 break;
-            case Yams.MODEMONTANT:
+            case MONTANT:
                 this.scoresMontants = scores;
                 break;
-            case Yams.MODEDESCENDANT:
+            case DESCENDANT:
                 this.scoresDescendants = scores;
+                break;
+            case SEC:
+                this.scoresSecs = scores;
                 break;
             default:
                 LOGGER.warning("Mode de jeu inexistant");
                 break;
         }
     }
-    
+
     /*
      * Ajoute un score
      */
-    public void addScore(Score s, int mode){
-        if(mode != Yams.MODELIBRE && mode != Yams.MODEMONTANT && mode != Yams.MODEDESCENDANT){
-            return; //n'arrivera pas
-        }
+    public void addScore(Score s, ModeJeu mode){
         List<Score> scores = this.getScores(mode);
         addScoreToList(scores, s, mode);
         this.changeScores(mode);
     }
 
-    private void addScoreToList(List<Score> scores, Score s, int mode){
+    private void addScoreToList(List<Score> scores, Score s, ModeJeu mode){
         if(scores.size() < 10){
             scores.add(s);
             this.sortScores(scores);
@@ -268,14 +243,16 @@ public class HightScoreVue extends JFrame{
     /*
      * retourne la liste des scores du mode de jeu choisis
      */
-    public List<Score> getScores(int mode){
+    public List<Score> getScores(ModeJeu mode){
         switch(mode){
-            case Yams.MODELIBRE:
+            case LIBRE:
                 return this.scoresLibres;
-            case Yams.MODEMONTANT:
+            case MONTANT:
                 return this.scoresMontants;
-            case Yams.MODEDESCENDANT:
+            case DESCENDANT:
                 return this.scoresDescendants;
+            case SEC:
+                return this.scoresSecs;
             default:
                 return new ArrayList<>(); //n'arrivera pas
         }
@@ -299,19 +276,7 @@ public class HightScoreVue extends JFrame{
     /*
      * Retourne le code du mode de jeu
      */
-    public int getModeJeu(){
-        if(this.cbModeJeu.getSelectedItem().getClass().equals(String.class)){
-            if(this.cbModeJeu.getSelectedItem().equals(LIBRE)){
-                return Yams.MODELIBRE;
-            }
-            else if(this.cbModeJeu.getSelectedItem().equals(MONTANT)){
-                return Yams.MODEMONTANT;
-            }
-            else if(this.cbModeJeu.getSelectedItem().equals(DESCENDANT)){
-                return Yams.MODEDESCENDANT;
-            }
-        }
-        
-        return -1;
+    public ModeJeu getModeJeu(){
+        return (ModeJeu) this.cbModeJeu.getSelectedItem();
     }
 }
