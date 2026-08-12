@@ -19,7 +19,7 @@ This project follows the **standard Maven directory layout**:
 mvn clean package   # compile + plain JAR in target/
 ```
 
-The project has **no external dependencies**, so `mvn package` produces a plain (non-shaded) JAR: `target/yams-1.0-SNAPSHOT.jar`, executable directly with `java -jar target/yams-1.0-SNAPSHOT.jar` (`Main-Class: yams.Yams` is set via `maven-jar-plugin`).
+The project has **no external runtime dependencies** (JUnit 5 and JaCoCo in `pom.xml` are test-scope only), so `mvn package` produces a plain (non-shaded) JAR: `target/yams-1.0-SNAPSHOT.jar`, executable directly with `java -jar target/yams-1.0-SNAPSHOT.jar` (`Main-Class: yams.Yams` is set via `maven-jar-plugin`).
 
 The project was converted from a NetBeans/Ant build to Maven in 2026 (see commit "Mavenisation du projet"); the old `nbproject/`, `build.xml`, and `manifest.mf` were removed and are fully replaced by `pom.xml`.
 
