@@ -13,7 +13,7 @@ The developer is french, so speak with them in French.
 This project follows the **standard Maven directory layout**:
 - Sources: `src/main/java/`
 - Resources: `src/main/resources/`
-- No test sources exist yet (`src/test/java/` is not present).
+- Tests: `src/test/java/` (JUnit 5, see the Testing section below).
 
 ```bash
 mvn clean package   # compile + plain JAR in target/
